@@ -1,2 +1,24 @@
-div 
-    h2 Register
+extends ../layout/index
+
+block content
+    .py-10
+        h1.text-4xl.my-10.font-extrabold.text-center Bienes
+            span.font-normal Raices
+        
+        h2.text-center.text-6xl= page
+        
+        .mt-8.mx-auto.max-w-md
+            .bg-white.py-8.px-4.shadow
+                form.space-y-5
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="name") Your Name 
+                        input#name.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Your Name" type="text" name="name")
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email") Email 
+                        input#email.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Email" type="email" name="email")
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Password 
+                        input#password.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type="password" name="password")
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="confirmPassword") Confirm password 
+                        input#confirmPassword.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type="password" name="confirmPassword")
