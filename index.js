@@ -12,8 +12,11 @@ const port = 3001;
 app.set("view engine", "pug");
 app.set("views", "./views");
 
+// Public folder
+app.use(express.static("public"));
+
 // User routes
-app.use("/", userRoutes);
+app.use("/auth", userRoutes);
 
 // Open server
 app.listen(port, () => {
