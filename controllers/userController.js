@@ -10,7 +10,14 @@ const registerFormulary = (req, res) => {
     });
 }
 
+const forgotPasswordFormulary = (req, res) => {
+    res.render("auth/forgotPassword", {
+        page: "Forgot password"
+    });
+}
+
 export {
     loginFormulary,
-    registerFormulary
+    registerFormulary,
+    forgotPasswordFormulary
 }

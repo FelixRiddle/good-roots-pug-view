@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    forgotPasswordFormulary,
     loginFormulary,
     registerFormulary
 } from "../controllers/userController.js";
@@ -7,10 +8,8 @@ import {
 const router = express.Router();
 
 // Hello
-router.route("/login")
-    .get(loginFormulary);
+router.get("/login", loginFormulary);
+router.get("/register", registerFormulary);
+router.get("/forgotPassword", forgotPasswordFormulary);
 
-router.route("/register")
-    .get(registerFormulary);
-    
 export default router;
