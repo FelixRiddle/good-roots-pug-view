@@ -23,4 +23,8 @@ block content
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="confirmPassword") Confirm password 
                         input#confirmPassword.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type="password" name="confirmPassword")
                     
+                    div.flex.items-center.justify-between
+                        a.text-gray-500.text-xs(href="/auth/login") Already have an account? Log in
+                        a.text-gray-500.text-xs(href="/auth/forgotPassword") Forgot password
+                    
                     input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Create account")
