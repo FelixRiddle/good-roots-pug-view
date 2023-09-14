@@ -15,15 +15,27 @@ const registerFormulary = (req, res) => {
 };
 
 const register = async (req, res) => {
+    console.log(`Body: `, req.body);
+    
     // Validation
     await check("name").notEmpty().withMessage("Name can't be empty").run(req);
     await check("email").isEmail().withMessage("The email is wrong").run(req);
     await check("password").isLength({ min: 8 }).withMessage("The password is too short").run(req);
-    await check("confirmPassword")
-        .isLength({ min: 8})
-        .equals("password")
-        .withMessage("Passwords don't match")
-        .run(req);
+    // await check("confirmPassword")
+    //     .equals("password")
+    //     .withMessage("Passwords don't match")
+    //     .run(req);
+    if(req.body.password != req.body.confirmPassword) {
+        return res.render("auth/register", {
+            page: "Create account",
+            errors: [
+                {
+                    msg: "Passwords don't match."
+                }
+            ],
+            user: req.body,
+        });
+    }
     
     let result = validationResult(req);
     
@@ -36,8 +48,11 @@ const register = async (req, res) => {
         });
     }
     
+    // Get data
+    let { name, email, password } = req.body;
+    
     // Verify that the user is not duplicated
-    const userExists = await User.findOne({ where: { email: req.body.email } });
+    const userExists = await User.findOne({ where: { email } });
     if(userExists) {
         return res.render("auth/register", {
             page: "Create account",
@@ -51,7 +66,11 @@ const register = async (req, res) => {
     }
     
     // Create user
-    const user = await User.create(req.body);
+    const user = await User.create({
+        name, email, password,
+        token: "",
+        confirmedEmail: false,
+    });
     
     res.json(user);
 };
