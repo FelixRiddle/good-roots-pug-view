@@ -16,6 +16,10 @@ const User = db.define("users", {
     },
     token: DataTypes.STRING,
     emailConfirmed: DataTypes.BOOLEAN,
+}, {
+    hooks: {
+        
+    }
 });
 
 export default User;

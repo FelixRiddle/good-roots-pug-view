@@ -5,9 +5,16 @@ import db from "./config/db.js";
 
 const app = express();
 
+// Enable reading request body
+app.use(express.urlencoded({
+    extended: true,
+}));
+
 // Connect to db
 try {
     await db.authenticate();
+    
+    db.sync();
     
     console.log("Successfully connected to db");
 } catch(err) {
