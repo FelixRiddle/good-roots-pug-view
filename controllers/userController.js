@@ -1,6 +1,7 @@
 import { check, validationResult } from "express-validator";
 
 import User from "../models/User.js";
+import { generateId } from "../helpers/tokens.js";
 
 const loginFormulary = (req, res) => {
     res.render("auth/login", {
@@ -68,11 +69,15 @@ const register = async (req, res) => {
     // Create user
     const user = await User.create({
         name, email, password,
-        token: "",
+        token: generateId(),
         confirmedEmail: false,
     });
     
-    res.json(user);
+    // Show confirmation message
+    return res.render("templates/message", {
+        page: "Account created",
+        message: "We've sent a message to your E-Mail inbox, open it to confirm your account."
+    });
 };
 
 const forgotPasswordFormulary = (req, res) => {
