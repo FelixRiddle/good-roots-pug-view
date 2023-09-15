@@ -16,6 +16,41 @@ const registerFormulary = (req, res) => {
     });
 };
 
+// Verify that the email is correct
+const verifyEmail = async(req, res) => {
+    
+    // Get the token
+    const { token } = req.params;
+    
+    // Verify if the token is correct
+    const user = await User.findOne({
+        where: {
+            token,
+        },
+    });
+    if(!user) {
+        return res.render("auth/confirmAccount", {
+            page: "Error when confirming account",
+            message: "User non existent or incorrect token",
+            error: true,
+        });
+    }
+    
+    // Confirm account
+    if(user.token == token) {
+        user.token = "";
+        user.confirmedEmail = true;
+        
+        await user.save();
+    }
+    
+    return res.render("auth/confirmAccount", {
+        page: "Email confirmed",
+        message: "The user email has been confirmed"
+    });
+};
+
+// Register user route
 const register = async (req, res) => {
     console.log(`Body: `, req.body);
     
@@ -23,10 +58,8 @@ const register = async (req, res) => {
     await check("name").notEmpty().withMessage("Name can't be empty").run(req);
     await check("email").isEmail().withMessage("The email is wrong").run(req);
     await check("password").isLength({ min: 8 }).withMessage("The password is too short").run(req);
-    // await check("confirmPassword")
-    //     .equals("password")
-    //     .withMessage("Passwords don't match")
-    //     .run(req);
+    
+    // Check that passwords match
     if(req.body.password != req.body.confirmPassword) {
         return res.render("auth/register", {
             page: "Create account",
@@ -97,6 +130,7 @@ const forgotPasswordFormulary = (req, res) => {
 export {
     loginFormulary,
     registerFormulary,
+    verifyEmail,
     register,
     forgotPasswordFormulary
 };
