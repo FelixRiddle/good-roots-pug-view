@@ -31,6 +31,35 @@ const registerEmail = async(data) => {
     });
 }
 
+// Forgot password
+const emailForgotPassword = async(data) => {
+    // Create transport
+    const transport = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+        }
+    });
+    
+    // Deconstruct
+    const { email, name, token } = data;
+    
+    // Send E-Mail
+    await transport.sendMail({
+        from: "noreply@goodroots.com",
+        to: email,
+        subject: "Forgot password",
+        text: "Forgot password",
+        html: `
+            <p>Hello ${name}, click the following link to reset your password</p>
+            <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/auth/resetPassword/${token}">Reset password</a>
+        `
+    });
+}
+
 export {
     registerEmail,
+    emailForgotPassword,
 };

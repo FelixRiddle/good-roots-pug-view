@@ -2,7 +2,7 @@ import { check, validationResult } from "express-validator";
 
 import User from "../models/User.js";
 import { generateId } from "../helpers/tokens.js";
-import { registerEmail } from "../helpers/emails.js";
+import { registerEmail, emailForgotPassword } from "../helpers/emails.js";
 
 const loginFormulary = (req, res) => {
     res.render("auth/login", {
@@ -11,8 +11,10 @@ const loginFormulary = (req, res) => {
 };
 
 const registerFormulary = (req, res) => {
-    res.render("auth/register", {
-        page: "Register"
+    
+    return res.render("auth/register", {
+        page: "Register",
+        csrfToken: req.csrfToken(),
     });
 };
 
@@ -52,7 +54,6 @@ const verifyEmail = async(req, res) => {
 
 // Register user route
 const register = async (req, res) => {
-    console.log(`Body: `, req.body);
     
     // Validation
     await check("name").notEmpty().withMessage("Name can't be empty").run(req);
@@ -79,6 +80,7 @@ const register = async (req, res) => {
         return res.render("auth/register", {
             page: "Create account",
             errors: result.array(),
+            csrfToken: req.csrfToken(),
             user: req.body,
         });
     }
@@ -96,6 +98,7 @@ const register = async (req, res) => {
                     msg: "The given E-Mail is already in use, try another or log in."
                 }
             ],
+            csrfToken: req.csrfToken(),
             user: req.body,
         });
     }
@@ -117,20 +120,142 @@ const register = async (req, res) => {
     // Show confirmation message
     return res.render("templates/message", {
         page: "Account created",
+        csrfToken: req.csrfToken(),
         message: "We've sent a message to your E-Mail inbox, open it to confirm your account."
     });
 };
 
-const forgotPasswordFormulary = (req, res) => {
-    res.render("auth/forgotPassword", {
-        page: "Forgot password"
+// Forgot password
+const forgotPasswordFormulary = async (req, res) => {
+    return res.render("auth/forgotPassword", {
+        page: "Recover access to your account",
+        csrfToken: req.csrfToken(),
     });
 };
+
+// Reset password
+const resetPassword = async (req, res) => {
+    
+    // Validation
+    await check("email").isEmail().withMessage("The email is wrong").run(req);
+    
+    let result = validationResult(req);
+    
+    // Confirm that the user is Ok
+    if(!result.isEmpty()) {
+        return res.render("auth/forgotPassword", {
+            page: "Recover access to your account",
+            errors: result.array(),
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Search for the user
+    const { email } = req.body;
+    const user = await User.findOne({
+        where: {
+            email
+        }
+    });
+    if(!user) {
+        return res.render("auth/forgotPassword", {
+            page: "Recover access to your account",
+            errors: [{
+                msg: "The given email doesn't exists in the database"
+            }],
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Generate a token and send the id
+    user.token = generateId();
+    await user.save();
+    
+    // Send an email
+    emailForgotPassword({
+        name: user.name,
+        email,
+        token: user.token,
+    })
+    
+    // Show confirmation message
+    return res.render("templates/message", {
+        page: "Reset password",
+        message: "We've sent an email with instructions."
+    });
+}
+
+const verifyToken = async (req, res) => {
+    const { token } = req.params;
+    
+    const user = await User.findOne({
+        where: {
+            token,
+        }
+    });
+    
+    // If the user doesn't exists
+    if(!user) {
+        return res.render("auth/confirmAccount", {
+            page: "Reset your password",
+            message: "There was an error when trying to validate your account, please try again.",
+            error: true,
+        });
+    }
+    
+    // Show formulary to modify the password
+    return res.render("auth/resetPassword", {
+        page: "Reset your password",
+        csrfToken: req.csrfToken(),
+    });
+}
+
+// When resetting the password
+const createNewPassword = async (req, res) => {
+    // Validate password
+    await check("password").isLength({ min: 8 }).withMessage("The password is too short").run(req);
+    // Check that it's not bigger than 64
+    await check("password").isLength({ max: 64 }).withMessage("The password can't be bigger than 64 characters").run(req);
+    
+    // The same for confirm password
+    await check("confirmPassword").isLength({ min: 8 }).withMessage("The password is too short").run(req);
+    // Check that it's not bigger than 64
+    await check("confirmPassword").isLength({ max: 64 }).withMessage("The password can't be bigger than 64 characters").run(req);
+    
+    // Check if tests passed
+    let result = validationResult(req);
+    if(!result.isEmpty()) {
+        return res.render("auth/resetPassword", {
+            page: "Reset your password",
+            csrfToken: req.csrfToken(),
+            errors: result.array(),
+        })
+    }
+    
+    // Check that passwords match
+    if(req.body.password != req.body.confirmPassword) {
+        return res.render("auth/register", {
+            page: "Create account",
+            errors: [
+                {
+                    msg: "Passwords don't match."
+                }
+            ],
+            csrfToken: req.csrfToken(),
+            user: req.body,
+        });
+    }
+    
+    // Hash password
+}
 
 export {
     loginFormulary,
     registerFormulary,
     verifyEmail,
     register,
-    forgotPasswordFormulary
+    forgotPasswordFormulary,
+    resetPassword,
+    verifyToken,
+    createNewPassword,
 };

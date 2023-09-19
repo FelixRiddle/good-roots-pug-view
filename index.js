@@ -1,3 +1,5 @@
+import cookieParser from 'cookie-parser';
+import csurf from 'csurf';
 import express from 'express';
 
 import userRoutes from "./routes/userRoutes.js";
@@ -9,6 +11,14 @@ const app = express();
 // Enable reading request body
 app.use(express.urlencoded({
     extended: true,
+}));
+
+// Enable cookie parser
+app.use(cookieParser());
+
+// Enable CSRF protection
+app.use(csurf({
+    cookie: true,
 }));
 
 // Connect to db
