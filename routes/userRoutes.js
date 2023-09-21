@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    authenticate,
     forgotPasswordFormulary,
     registerFormulary,
     register,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 // Hello
 router.get("/login", loginFormulary);
+router.post("/login", authenticate);
 
 router.get("/register", registerFormulary);
 router.post("/register", register);

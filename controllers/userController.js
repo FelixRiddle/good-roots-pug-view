@@ -5,10 +5,96 @@ import User from "../models/User.js";
 import { generateId } from "../helpers/tokens.js";
 import { registerEmail, emailForgotPassword } from "../helpers/emails.js";
 
-const loginFormulary = (req, res) => {
-    res.render("auth/login", {
+// Backend authentication 
+const authenticate = async (req, res) => {
+    // Validation
+    await check("password")
+        .notEmpty()
+        .withMessage("The password is required")
+        .run(req);
+    await check("email")
+        .isEmail()
+        .withMessage("The email is wrong")
+        .run(req);
+    
+    // Check result
+    let result = validationResult(req);
+    
+    // Confirm that the user is Ok
+    if(!result.isEmpty()) {
+        return res.render("auth/login", {
+            page: "Login",
+            errors: result.array(),
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Get user data
+    const { email, password } = req.body;
+    
+    // Get the user
+    let user = await User.findOne({
+        where: {
+            email,
+        }
+    });
+    
+    // Check if user exists
+    if(!user) {
+        return res.render("auth/login", {
+            page: "Login",
+            errors: [
+                {
+                    // Don't tell the user it's the email
+                    msg: "Email or password is wrong."
+                }
+            ],
+            user: req.body,
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Check that the user is verified
+    if(!user.confirmedEmail) {
+        return res.render("auth/login", {
+            page: "Login",
+            errors: [
+                {
+                    msg: "The E-Mail is not verified, if you are the owner, please go to your inbox and verify it."
+                }
+            ],
+            user: req.body,
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Check if passwords match
+    if(!user.verifyPassword(password)) {
+        return res.render("auth/login", {
+            page: "Login",
+            errors: [
+                {
+                    msg: "Email or password is wrong."
+                }
+            ],
+            user: req.body,
+            csrfToken: req.csrfToken(),
+        });
+    }
+    
+    // Authenticate user
+    
+    return res.render("auth/login", {
         page: "Login"
     });
+}
+
+// Frontend authentication
+const loginFormulary = async (req, res) => {
+    return res.render("auth/login", {
+        page: "Login",
+        csrfToken: req.csrfToken()
+    })
 };
 
 const registerFormulary = (req, res) => {
@@ -289,6 +375,7 @@ const createNewPassword = async (req, res) => {
 }
 
 export {
+    authenticate,
     loginFormulary,
     registerFormulary,
     verifyEmail,
