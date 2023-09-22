@@ -1,5 +1,6 @@
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 import { generateId } from "../helpers/tokens.js";
@@ -82,7 +83,23 @@ const authenticate = async (req, res) => {
         });
     }
     
+    // Remove the password from the user object
+    const user_safe = {
+        ...user,
+        // Remove sensitive stuff
+        password: "",
+        token: "",
+    };
+    
     // Authenticate user
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const token = jwt.sign(
+        user_safe,
+        secretKey,
+        {
+            expiresIn: "7d"
+        }
+    );
     
     return res.render("auth/login", {
         page: "Login"
