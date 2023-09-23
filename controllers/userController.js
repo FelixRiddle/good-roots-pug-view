@@ -1,9 +1,8 @@
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
-import { generateId } from "../helpers/tokens.js";
+import { generateId, generateJwtToken } from "../helpers/tokens.js";
 import { registerEmail, emailForgotPassword } from "../helpers/emails.js";
 
 // Backend authentication 
@@ -85,25 +84,16 @@ const authenticate = async (req, res) => {
     
     // Remove the password from the user object
     const user_safe = {
-        ...user,
+        ...user.dataValues,
         // Remove sensitive stuff
         password: "",
         token: "",
     };
+    const token = generateJwtToken(user_safe);
     
-    // Authenticate user
-    const secretKey = process.env.JWT_SECRET_KEY;
-    const token = jwt.sign(
-        user_safe,
-        secretKey,
-        {
-            expiresIn: "7d"
-        }
-    );
-    
-    return res.render("auth/login", {
-        page: "Login"
-    });
+    return res.cookie("_token", token, {
+        httpOnly: true,
+    }).render("/user/myProperties");
 }
 
 // Frontend authentication

@@ -3,6 +3,8 @@ import csurf from 'csurf';
 import express from 'express';
 
 import userRoutes from "./routes/userRoutes.js";
+import propertyRoutes from "./routes/propertyRoutes.js";
+
 // This script also sets up the environment variables in .env
 import db from "./config/db.js";
 
@@ -41,6 +43,7 @@ app.use(express.static("public"));
 
 // User routes
 app.use("/auth", userRoutes);
+app.use("/user", propertyRoutes);
 
 // Open server
 app.listen(process.env.SERVER_PORT, () => {
