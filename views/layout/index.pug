@@ -6,11 +6,9 @@ html(lang="en")
         title Good Roots | #{page}
         link(rel="stylesheet", href="/css/app.css")
     body.min-h-screen.bg-gray-50
-        //- Title
-        header 
-            .container.mx-auto
-                h1.text-2xl.text-white.font-extrabold.text-center Good
-                    span.font-normal Roots
+        //- Header
+        if navbar
+            include header
         
         //- Website main content
         main(class="mx-auto container mt-10 px-2")
