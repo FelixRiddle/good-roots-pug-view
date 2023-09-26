@@ -6,6 +6,9 @@
     // Set map position/view
     const map = L.map('map').setView([lat, lng ], 16);
     
+    // Provider and geocoder
+    const geocodeService = L.esri.Geocoding.geocodeService();
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -29,6 +32,20 @@
         
         // Center map to the new position
         map.panTo(new L.LatLng(position.lat, position.lng));
+        
+        // Obtain street information when releasing the pin
+        geocodeService
+            .reverse()
+            .latlng(position, 13)
+            .run((err, result) => {
+                pin.bindPopup(result.address.LongLabel);
+                
+                // Fill fields
+                document.querySelector(".street").textContent = result?.address?.Address ?? "";
+                document.querySelector("#street").value = result?.address?.Address ?? "";
+                document.querySelector("#latitude").value = result?.latlng?.lat ?? "";
+                document.querySelector("#longitude").value = result?.latlng?.lng ?? "";
+            });
     });
     
 })();
