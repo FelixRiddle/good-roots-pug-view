@@ -1,5 +1,8 @@
 extends ../../layout/index
 
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
 block content 
     .py-10
         //- Title
@@ -79,6 +82,9 @@ block content
                                 - var n = 1;
                                     while n < 5
                                         option(value=n) #{n++}
+                    
+                    //- Show map
+                    #map.h-96
 
 block scripts
     //- For the map

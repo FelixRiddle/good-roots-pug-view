@@ -16,7 +16,7 @@
   \***********************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n\n\n//# sourceURL=webpack://bienesraices_mvc/./src/js/map.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n(() => {\n    // Position\n    const lat = -33.81672067629844;\n    const lng = -59.510741750004534;\n    \n    // Set map position/view\n    const map = L.map('map').setView([lat, lng ], 16);\n    \n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\n    }).addTo(map);\n    \n    // Add a marker/pin\n    // So that the user can pin where the house for renting/selling is.\n    let pin = new L.marker([\n        lat,\n        lng\n    ], {\n        draggable: true,\n        autoPan: true,\n    }).addTo(map);\n    \n    // Detect when the pin has finished being moved\n    pin.on(\"moveend\", (e) => {\n        pin = e.target;\n        \n        // Get latitude and longitude\n        const position = pin.getLatLng();\n        \n        // Center map to the new position\n        map.panTo(new L.LatLng(position.lat, position.lng));\n    });\n    \n})();\n\n\n//# sourceURL=webpack://bienesraices_mvc/./src/js/map.js?");
 
 /***/ })
 
