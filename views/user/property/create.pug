@@ -32,6 +32,12 @@ block content
                         input#title.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                             placeholder="My spectacular house" type="text" name="title" value=property ? property.title : "")
                     
+                    //- Description
+                    div
+                        label(class="block text-sm uppercase text-gray-500 mb-2 font-bold") (for="description") Description 
+                        textarea#description.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
+                            placeholder="My house description" name="description" value=property ? property.title : "")
+                    
                     //- Category and price with a select item list
                     div(class="md:flex md:gap-4 space-y-6 md:space-y-0")
                         //- Category
@@ -63,7 +69,7 @@ block content
                                         option(value=n) #{n++}
                                         
                         
-                        //- Price
+                        //- Parking
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="parking") Parking 
                             select#parking.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
@@ -73,7 +79,7 @@ block content
                                     while n < 5
                                         option(value=n) #{n++}
                         
-                        //- Price
+                        //- Bathrooms
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="bathrooms") Bathrooms 
                             select#bathrooms.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
