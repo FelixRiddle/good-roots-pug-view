@@ -26,8 +26,38 @@ const importData = async () => {
     }
 }
 
+// Delete previous inserted data
+const deleteData = async () => {
+    try {
+        
+        // Authenticate
+        await db.authenticate();
+        
+        // Generate columns
+        await db.sync();
+        
+        // Delete data
+        await Promise.all([
+            Category.destroy({ where: {}, truncate: true }),
+            Price.destroy({ where: {}, truncate: true }),
+        ]);
+        
+        console.log(`Data deleted correctly`);
+        
+        process.exit();
+    } catch(err) {
+        console.error(err);
+        process.exit(1);
+    }
+}
 
-// Check if it was executed from the command line
+// Insert command
 if(process.argv[2] === "-i") {
     await importData();
 }
+
+// Delete command
+if(process.argv[2] === "-d") {
+    await deleteData();
+}
+
