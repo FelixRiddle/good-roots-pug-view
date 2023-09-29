@@ -1,5 +1,7 @@
 import categories from "./categories.js";
+import prices from "./prices.js";
 import Category from "../models/Category.js";
+import Price from "../models/Price.js";
 import db from "../config/db.js";
 
 const importData = async () => {
@@ -11,7 +13,11 @@ const importData = async () => {
         await db.sync();
         
         // Insert data
-        await Category.bulkCreate(categories);
+        await Promise.all([
+            Category.bulkCreate(categories),
+            Price.bulkCreate(prices),
+        ]);
+        
         console.log(`Data inserted correctly`);
         
         process.exit();
@@ -19,6 +25,7 @@ const importData = async () => {
         process.exit(1);
     }
 }
+
 
 // Check if it was executed from the command line
 if(process.argv[2] === "-i") {
