@@ -1,7 +1,8 @@
 import categories from "./categories.js";
 import prices from "./prices.js";
-import Category from "../models/Category.js";
-import Price from "../models/Price.js";
+import {
+    Category, Price, Property
+} from "../models/index.js";
 import db from "../config/db.js";
 
 const importData = async () => {
@@ -39,6 +40,8 @@ const deleteData = async () => {
         // Delete data
         await Promise.all([
             Category.destroy({ where: {}, truncate: true }),
+            // The relation is property to price, so you first have to delete property
+            Property.destroy({ where: {}, truncate: true }),
             Price.destroy({ where: {}, truncate: true }),
         ]);
         

@@ -28,7 +28,12 @@ const create = async (req, res) => {
     });
 }
 
+const createProperty = async(req, res) => {
+    
+}
+
 export {
     admin,
     create,
+    createProperty,
 }

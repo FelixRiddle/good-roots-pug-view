@@ -47,6 +47,8 @@ block content
                             select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="category")
                                 option(value="") - Select one - 
+                                each category in categories
+                                    option(value=category.id)= category.name
                         
                         //- Price
                         div(class="md:w-1/2")
@@ -54,6 +56,8 @@ block content
                             select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="price")
                                 option(value="") - Select one - 
+                                each price in prices
+                                    option(value=price.id)= price.name
                     
                     //- Category and price with a select item list
                     div(class="md:flex md:gap-4 space-y-6 md:space-y-0")
