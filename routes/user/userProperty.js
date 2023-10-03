@@ -1,5 +1,5 @@
-import express from "express"
-
+import express from "express";
+import { body } from "express-validator";
 import {
     admin,
     create,
@@ -10,6 +10,10 @@ const router = express.Router();
 
 router.get("/admin", admin);
 router.get("/create", create);
-router.post("/create", createProperty);
+router.post(
+    "/create",
+    body("title").notEmpty().withMessage("The title is required"),
+    createProperty
+);
 
 export default router;

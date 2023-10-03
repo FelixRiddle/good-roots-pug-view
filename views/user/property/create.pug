@@ -19,7 +19,10 @@ block content
         
         //- Formulary
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
-            form.space-y-8
+            form.space-y-8(method="POST" action="create")
+                //- Hidden secret token
+                input(type="hidden" name="_csrf" value=csrfToken)
+                
                 //- Empty tag defaults to div
                 .space-y-8
                     h3.text-lg.leading-6.font-medium.text-gray-900 General Information
@@ -110,6 +113,13 @@ block content
                         input(type="hidden" name="street" id="street")
                         input(type="hidden" name="latitude" id="latitude")
                         input(type="hidden" name="longitude" id="longitude")
+                    
+                    //- Add image
+                    input(
+                        class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
+                        type="submit"
+                        value="Add image"
+                    )
 
 block scripts
     //- For the map
