@@ -107,10 +107,7 @@ block content
                         
                         //- Show the user the current street
                         div 
-                            if !property 
-                                p.street
-                            else
-                                p(value=property.street)
+                            p.street= property ? property.street : ""
                         
                         //- Send information about the pin location to the backend
                         input(type="hidden" value=property ? property.street : "" name="street" id="street")

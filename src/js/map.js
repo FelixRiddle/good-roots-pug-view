@@ -1,7 +1,11 @@
 (() => {
+    // Previous values
+    let prev_lat = document.querySelector("#latitude").value;
+    let prev_longitude = document.querySelector("#longitude").value;
+    
     // Position
-    const lat = -33.81672067629844;
-    const lng = -59.510741750004534;
+    const lat = prev_lat || -33.81672067629844;
+    const lng = prev_longitude || -59.510741750004534;
     
     // Set map position/view
     const map = L.map('map').setView([lat, lng ], 16);
