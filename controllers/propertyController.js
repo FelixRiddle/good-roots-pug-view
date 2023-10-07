@@ -53,6 +53,7 @@ const createProperty = async(req, res) => {
             categories,
             prices,
             errors: result.array(),
+            property: req.body,
         });
     }
 }
