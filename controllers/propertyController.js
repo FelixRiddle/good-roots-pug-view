@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 
 import Category from "../models/Category.js";
 import Price from "../models/Price.js";
+import Property from "../models/Proerty.js";
 
 // Control panel for user properties
 const admin = (req, res) => {
@@ -55,6 +56,40 @@ const createProperty = async(req, res) => {
             errors: result.array(),
             property: req.body,
         });
+    }
+    
+    // Insert on the database
+    try {
+        // Extract data
+        const {
+            title,
+            description,
+            rooms,
+            parking,
+            bathrooms,
+            street,
+            latitude,
+            longitude,
+            price: priceId,
+            category: categoryId,
+        } = req.body;
+        
+        // Store data
+        const property = Property.create({
+            title,
+            description,
+            rooms,
+            parking,
+            bathrooms,
+            street,
+            latitude,
+            longitude,
+            priceId,
+            categoryId,
+        });
+        
+    } catch(err) {
+        console.error(err);
     }
 }
 
