@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 
 import Category from "../models/Category.js";
 import Price from "../models/Price.js";
-import Property from "../models/Proerty.js";
+import Property from "../models/Property.js";
 
 // Control panel for user properties
 const admin = (req, res) => {

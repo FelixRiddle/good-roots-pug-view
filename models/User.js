@@ -28,6 +28,19 @@ const User = db.define("users", {
             console.log(`User password: ${user.password}`);
             user.password = await bcrypt.hash(user.password, salt);
         }
+    },
+    scopes: {
+        deletePassword: {
+            attributes: {
+                exclude: [
+                    "password",
+                    "token",
+                    "confirmedEmail",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            }
+        }
     }
 });
 

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../models";
+import User from "../models/User.js";
 
 const protectRoute = async (req, res, next) =>  {
     
@@ -18,13 +18,19 @@ const protectRoute = async (req, res, next) =>  {
         jwt.verify(token, process.env.JWT_SECRET_KEY);
         
         // Validate user
-        const user = await User.findByPk(decoded.id);
+        const user = await User.scope("deletePassword").findByPk(decoded.id);
         
+        // Store user on the request
+        if(user) {
+            req.user = user;
+        } else {
+            return res.redirect("/auth/login");
+        }
+        
+        return next();
     } catch(err) {
         return res.clearCookie("_token").redirect("/auth/login");
     }
-    
-    next();
 }
 
 export default protectRoute;

@@ -18,8 +18,7 @@ let property_location = "Locate the property on the map";
 
 router.get("/admin", protectRoute, admin);
 router.get("/create", protectRoute, create);
-router.post(
-    "/create",
+router.post("/create", protectRoute,
     body("title")
         .notEmpty().withMessage("The title is required")
         // Someone might be messing with endpoints so you always have to set a limit no matter what field is
