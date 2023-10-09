@@ -5,6 +5,7 @@ import {
     create,
     createProperty,
 } from "../../controllers/propertyController.js";
+import protectRoute from "../../middleware/protectRoute.js";
 
 const router = express.Router();
 
@@ -15,8 +16,8 @@ let friendly_message = "You're 'bout to get banned champ";
 // For the property location
 let property_location = "Locate the property on the map";
 
-router.get("/admin", admin);
-router.get("/create", create);
+router.get("/admin", protectRoute, admin);
+router.get("/create", protectRoute, create);
 router.post(
     "/create",
     body("title")

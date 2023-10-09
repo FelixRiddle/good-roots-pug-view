@@ -1,7 +1,8 @@
 import categories from "./categories.js";
 import prices from "./prices.js";
+import users from "./users.js";
 import {
-    Category, Price, Property
+    Category, Price, Property, User,
 } from "../models/index.js";
 import db from "../config/db.js";
 
@@ -17,6 +18,7 @@ const importData = async () => {
         await Promise.all([
             Category.bulkCreate(categories),
             Price.bulkCreate(prices),
+            User.bulkCreate(users), 
         ]);
         
         console.log(`Data inserted correctly`);
@@ -39,9 +41,9 @@ const deleteData = async () => {
         
         // Delete data
         await Promise.all([
-            Category.destroy({ where: {}, truncate: true }),
             // The relation is property to price, so you first have to delete property
             Property.destroy({ where: {}, truncate: true }),
+            Category.destroy({ where: {}, truncate: true }),
             Price.destroy({ where: {}, truncate: true }),
         ]);
         
