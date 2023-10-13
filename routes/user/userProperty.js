@@ -71,4 +71,6 @@ router.post("/create", protectRoute,
     createProperty
 );
 
+router.get("/set-image/:id", setImage);
+
 export default router;

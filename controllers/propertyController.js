@@ -8,7 +8,6 @@ import Property from "../models/Property.js";
 const admin = (req, res) => {
     return res.render("user/property/admin", {
         page: "My Properties",
-        navbar: true,
     });
 }
 
@@ -25,7 +24,6 @@ const create = async (req, res) => {
     
     return res.render("user/property/create", {
         page: "Create property",
-        navbar: true,
         csrfToken: req.csrfToken(),
         categories,
         prices,
@@ -49,7 +47,6 @@ const createProperty = async(req, res) => {
         return res.render(
             "user/property/create", {
             page: "Create property",
-            navbar: true,
             csrfToken: req.csrfToken(),
             categories,
             prices,
@@ -74,6 +71,8 @@ const createProperty = async(req, res) => {
             category: categoryId,
         } = req.body;
         
+        const { id: userId } = req.user;
+        
         // Store data
         const property = Property.create({
             title,
@@ -86,15 +85,29 @@ const createProperty = async(req, res) => {
             longitude,
             priceId,
             categoryId,
+            userId,
+            image: "",
         });
         
+        let id = property.id;
+        
+        return res.redirect(`/user/property/set-image/${id}`);
     } catch(err) {
         console.error(err);
     }
+    
+    return res.render("/user/profile");
+}
+
+const setImage = async (req, res, next) => {
+    return res.render("/user/property/set-image", {
+        page: "Set images"
+    });
 }
 
 export {
     admin,
     create,
     createProperty,
+    setImage,
 }
