@@ -100,6 +100,11 @@ const createProperty = async(req, res) => {
 }
 
 const setImage = async (req, res, next) => {
+    
+    // Validate that the property exists
+    
+    // Validate that the property is not published
+    
     return res.render("/user/property/set-image", {
         page: "Set images"
     });
