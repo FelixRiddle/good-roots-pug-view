@@ -1,7 +1,7 @@
 extends ../../layout/admin
 
 block styles 
-    
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.css")
 
 block content 
     .py-10
@@ -19,7 +19,11 @@ block content
         
         //- Formulary
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
-            form.space-y-8(method="POST" action="create")
+            form(
+                class="mt-5 dropzone border-dashed border-2 w-full
+                min:h-96 h-auto rounded flex-col justify-center items-center"
+                method="POST"
+                action="create")
                 //- Hidden secret token
                 input(type="hidden" name="_csrf" value=csrfToken)
                 
@@ -36,3 +40,4 @@ block content
                     )
 
 block scripts
+    script(src="/js/insertImage.js") 

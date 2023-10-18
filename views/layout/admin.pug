@@ -4,8 +4,12 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Good Roots | #{page}
-        link(rel="stylesheet", href="/css/app.css")
+        
+        //- Package styles
         block styles
+        
+        //- Tailwind styles
+        link(rel="stylesheet", href="/css/app.css")
     body.min-h-screen.bg-gray-50
         //- Header
         include includes/header-admin

@@ -4,6 +4,7 @@ import {
     admin,
     create,
     createProperty,
+    setImage
 } from "../../controllers/propertyController.js";
 import protectRoute from "../../middleware/protectRoute.js";
 
