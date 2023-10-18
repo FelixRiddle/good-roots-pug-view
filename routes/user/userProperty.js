@@ -17,6 +17,9 @@ let friendly_message = "You're 'bout to get banned champ";
 // For the property location
 let property_location = "Locate the property on the map";
 
+router.get("/myProperties", (req, res) => {
+    return res.redirect("/user/property/admin");
+});
 router.get("/admin", protectRoute, admin);
 router.get("/create", protectRoute, create);
 router.post("/create", protectRoute,

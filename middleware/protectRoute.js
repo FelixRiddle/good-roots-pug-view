@@ -9,6 +9,7 @@ const protectRoute = async (req, res, next) =>  {
     
     // If there's no token, send the user to the login page
     if(!token) {
+        console.log("No token found");
         return res.redirect("/auth/login");
     }
     
@@ -22,13 +23,16 @@ const protectRoute = async (req, res, next) =>  {
         
         // Store user on the request
         if(user) {
+            console.log(`User is Ok`);
             req.user = user;
         } else {
+            console.log(`User not existent going back`);
             return res.redirect("/auth/login");
         }
         
         return next();
     } catch(err) {
+        console.log(`Logging out the user`);
         return res.clearCookie("_token").redirect("/auth/login");
     }
 }

@@ -93,7 +93,7 @@ const authenticate = async (req, res) => {
     
     return res.cookie("_token", token, {
         httpOnly: true,
-    }).render("/user/myProperties");
+    }).render("/user/property/myProperties");
 }
 
 // Frontend authentication
