@@ -1,3 +1,11 @@
+# Public folder
+public/css
+public/js
+
+# Don't ignore images, it's just here to make you remember that
+# images should be pushed to the repository
+# public/img
+
 # Logs
 logs
 *.log
