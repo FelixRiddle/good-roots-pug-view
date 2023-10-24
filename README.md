@@ -6,6 +6,12 @@ Done in english because the default language of programming is english.
 
 This is not a serious project, I won't keep developing it too much.
 
+# Notes
+
+- csurf package was deprecated
+
+Because the package was deprecated, I'll be not using it anymore.
+
 # About
 
 The project is about real state, in which you can register, login, publish your house, add images, etc.

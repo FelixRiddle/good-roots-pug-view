@@ -8,9 +8,8 @@ const loginFormulary = async (req, res) => {
     }
     
     return res.render("auth/login", {
-        page: "Login",
-        csrfToken: req.csrfToken()
-    })
+        page: `Login`,
+    });
 };
 
 export default loginFormulary;
