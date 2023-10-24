@@ -3,13 +3,13 @@ import {
     authenticate,
     forgotPasswordFormulary,
     registerFormulary,
-    register,
     loginFormulary,
     verifyEmail,
     resetPassword,
     verifyToken,
     createNewPassword,
 } from "../controllers/userController.js";
+import register from "../controllers/user/register.js";
 
 const router = express.Router();
 

@@ -93,7 +93,10 @@ const authenticate = async (req, res) => {
     
     return res.cookie("_token", token, {
         httpOnly: true,
-    }).render("/user/property/myProperties");
+    }).render("/user/property/myProperties", {
+        page: "My properties",
+        csrfToken: req.csrfToken(),
+    });
 }
 
 // Frontend authentication
@@ -146,78 +149,79 @@ const verifyEmail = async(req, res) => {
     });
 };
 
-// Register user route
-const register = async (req, res) => {
+// // Register user route
+// const register = async (req, res) => {
     
-    // Validation
-    await check("name").notEmpty().withMessage("Name can't be empty").run(req);
-    await check("email").isEmail().withMessage("The email is wrong").run(req);
-    await check("password").isLength({ min: 8 }).withMessage("The password is too short").run(req);
+//     // Validation
+//     await check("name").notEmpty().withMessage("Name can't be empty").run(req);
+//     await check("email").isEmail().withMessage("The email is wrong").run(req);
+//     await check("password").isLength({ min: 8 }).withMessage("The password is too short").run(req);
     
-    // Check that passwords match
-    if(req.body.password != req.body.confirmPassword) {
-        return res.render("auth/register", {
-            page: "Create account",
-            errors: [
-                {
-                    msg: "Passwords don't match."
-                }
-            ],
-            user: req.body,
-        });
-    }
+//     // Check that passwords match
+//     if(req.body.password != req.body.confirmPassword) {
+//         return res.render("auth/register", {
+//             page: "Create account",
+//             errors: [
+//                 {
+//                     msg: "Passwords don't match."
+//                 }
+//             ],
+//             user: req.body,
+//             csrfToken: req.csrfToken(),
+//         });
+//     }
     
-    let result = validationResult(req);
+//     let result = validationResult(req);
     
-    // Confirm that the user is Ok
-    if(!result.isEmpty()) {
-        return res.render("auth/register", {
-            page: "Create account",
-            errors: result.array(),
-            csrfToken: req.csrfToken(),
-            user: req.body,
-        });
-    }
+//     // Confirm that the user is Ok
+//     if(!result.isEmpty()) {
+//         return res.render("auth/register", {
+//             page: "Create account",
+//             errors: result.array(),
+//             csrfToken: req.csrfToken(),
+//             user: req.body,
+//         });
+//     }
     
-    // Get data
-    let { name, email, password } = req.body;
+//     // Get data
+//     let { name, email, password } = req.body;
     
-    // Verify that the user is not duplicated
-    const userExists = await User.findOne({ where: { email } });
-    if(userExists) {
-        return res.render("auth/register", {
-            page: "Create account",
-            errors: [
-                {
-                    msg: "The given E-Mail is already in use, try another or log in."
-                }
-            ],
-            csrfToken: req.csrfToken(),
-            user: req.body,
-        });
-    }
+//     // Verify that the user is not duplicated
+//     const userExists = await User.findOne({ where: { email } });
+//     if(userExists) {
+//         return res.render("auth/register", {
+//             page: "Create account",
+//             errors: [
+//                 {
+//                     msg: "The given E-Mail is already in use, try another or log in."
+//                 }
+//             ],
+//             csrfToken: req.csrfToken(),
+//             user: req.body,
+//         });
+//     }
     
-    // Create user
-    const user = await User.create({
-        name, email, password,
-        token: generateId(),
-        confirmedEmail: false,
-    });
+//     // Create user
+//     const user = await User.create({
+//         name, email, password,
+//         token: generateId(),
+//         confirmedEmail: false,
+//     });
     
-    // Send confirmation email
-    registerEmail({
-        name,
-        email,
-        token: user.token,
-    });
+//     // Send confirmation email
+//     registerEmail({
+//         name,
+//         email,
+//         token: user.token,
+//     });
     
-    // Show confirmation message
-    return res.render("templates/message", {
-        page: "Account created",
-        csrfToken: req.csrfToken(),
-        message: "We've sent a message to your E-Mail inbox, open it to confirm your account."
-    });
-};
+//     // Show confirmation message
+//     return res.render("templates/message", {
+//         page: "Account created",
+//         csrfToken: req.csrfToken(),
+//         message: "We've sent a message to your E-Mail inbox, open it to confirm your account."
+//     });
+// };
 
 // Forgot password
 const forgotPasswordFormulary = async (req, res) => {
@@ -386,7 +390,6 @@ export {
     loginFormulary,
     registerFormulary,
     verifyEmail,
-    register,
     forgotPasswordFormulary,
     resetPassword,
     verifyToken,
