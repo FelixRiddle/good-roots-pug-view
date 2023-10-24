@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from "cors";
 import csurf from 'csurf';
 import express from 'express';
 
@@ -10,9 +11,17 @@ import db from "./config/db.js";
 
 const app = express();
 
-// Enable reading request body
-app.use(express.urlencoded({
-    extended: true,
+// Cors whitelist
+let whitelist = [process.env.ORIGIN];
+
+// Add another one
+let new_origin = process.env.ORIGIN_1;
+if(new_origin) whitelist.push(new_origin);
+
+app.use(cors({
+    origin: [
+        ...whitelist,
+    ]
 }));
 
 // Enable cookie parser

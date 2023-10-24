@@ -35,6 +35,9 @@ EMAIL_HOST=sandbox.smtp.mailtrap.io
 EMAIL_PORT=2525
 EMAIL_USER=YOUR_MAILTRAP_USER
 EMAIL_PASSWORD=YOUR_MAILTRAP_PASSWORD
+
+# Allowed origins
+ORIGIN=http://localhost:3000
 ```
 
 Warning: In case you are new, don't ever share anything you put in '.env' file, with anyone.
