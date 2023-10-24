@@ -1,7 +1,7 @@
 import { check, validationResult } from "express-validator";
 
-import { generateJwtToken } from "../../../helpers/tokens.js";
-import User from "../../../models/User.js";
+import { generateJwtToken } from "../../../../helpers/tokens.js";
+import User from "../../../../models/User.js";
 
 // Backend authentication 
 const authenticate = async (req, res) => {
@@ -18,6 +18,8 @@ const authenticate = async (req, res) => {
     // Check result
     let result = validationResult(req);
     
+    console.log(`Validating password and email`);
+    
     // Confirm that the user is Ok
     if(!result.isEmpty()) {
         return res.render("auth/login", {
@@ -26,6 +28,8 @@ const authenticate = async (req, res) => {
             csrfToken: req.csrfToken(),
         });
     }
+    
+    console.log(`Validated`);
     
     // Get user data
     const { email, password } = req.body;
@@ -52,6 +56,8 @@ const authenticate = async (req, res) => {
         });
     }
     
+    console.log(`User found`);
+    
     // Check that the user is verified
     if(!user.confirmedEmail) {
         return res.render("auth/login", {
@@ -65,6 +71,8 @@ const authenticate = async (req, res) => {
             csrfToken: req.csrfToken(),
         });
     }
+    
+    console.log(`User has confirmed email`);
     
     // Check if passwords match
     if(!user.verifyPassword(password)) {
@@ -80,6 +88,8 @@ const authenticate = async (req, res) => {
         });
     }
     
+    console.log(`The password is correct`);
+    
     // Remove the password from the user object
     const user_safe = {
         ...user.dataValues,
@@ -88,6 +98,8 @@ const authenticate = async (req, res) => {
         token: "",
     };
     const token = generateJwtToken(user_safe);
+    
+    console.log(`Validation Ok, sending to their properties`);
     
     return res.cookie("_token", token, {
         httpOnly: true,

@@ -3,7 +3,7 @@ import cors from "cors";
 import csurf from 'csurf';
 import express from 'express';
 
-import userRoutes from "./routes/userRoutes.js";
+import userRoutes from "./routes/user/auth/userRoutes.js";
 import userProperty from "./routes/user/userProperty.js";
 
 // This script also sets up the environment variables in .env
