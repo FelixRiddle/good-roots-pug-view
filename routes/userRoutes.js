@@ -1,15 +1,17 @@
 import express from "express";
-import {
-    authenticate,
-    forgotPasswordFormulary,
-    loginFormulary,
-    resetPassword,
-    verifyToken,
-    createNewPassword,
-} from "../controllers/userController.js";
-import register from "../controllers/user/auth/register/register.js";
+
+// Formularies
 import registerFormulary from "../controllers/user/auth/register/registerFormulary.js";
+import loginFormulary from "../controllers/user/auth/login/loginFormulary.js";
+import forgotPasswordFormulary from "../controllers/user/auth/password/forgotPasswordFormulary.js";
+
+// Endpoints
+import register from "../controllers/user/auth/register/register.js";
 import verifyEmail from "../controllers/user/auth/email/verifyEmail.js";
+import authenticate from "../controllers/user/auth/authenticate.js";
+import verifyToken from "../controllers/user/auth/verifyToken.js";
+import createNewPassword from "../controllers/user/auth/password/createNewPassword.js";
+import resetPassword from "../controllers/user/auth/password/resetPassword.js";
 
 const router = express.Router();
 
