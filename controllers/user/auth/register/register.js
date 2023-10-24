@@ -1,8 +1,8 @@
 import { check, validationResult } from "express-validator";
 
-import { registerEmail } from "../../helpers/emails.js";
-import { generateId } from "../../helpers/tokens.js";
-import User from "../../models/User.js";
+import { registerEmail } from "../../../../helpers/emails.js";
+import { generateId } from "../../../../helpers/tokens.js";
+import User from "../../../../models/User.js";
 
 // Register user route
 const register = async (req, res) => {
