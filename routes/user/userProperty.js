@@ -75,10 +75,16 @@ router.post("/create", protectRoute,
     createProperty
 );
 
+// Set image
 router.get(
     "/set-image/:id",
     protectRoute,
     setImage
 );
+router.post(
+    "/set-image/:id",
+    protectRoute,
+    
+)
 
 export default router;

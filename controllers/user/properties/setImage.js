@@ -1,6 +1,6 @@
 import Property from "../../../models/Property.js";
 
-const setImage = async (req, res, next) => {
+const setImage = async (req, res) => {
     
     const { id } = req.params;
     
@@ -22,7 +22,7 @@ const setImage = async (req, res, next) => {
     }
     
     return res.render("/user/property/set-image", {
-        page: "Set images"
+        page: `Set images for ${property.title}`
     });
 }
 
