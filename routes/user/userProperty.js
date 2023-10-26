@@ -7,6 +7,8 @@ import {
 } from "../../controllers/propertyController.js";
 import protectRoute from "../../middleware/protectRoute.js";
 import setImage from "../../controllers/user/properties/setImage.js";
+import upload from "../../middleware/updloadImage.js";
+import storeImage from "../../controllers/user/properties/storeImage.js";
 
 const router = express.Router();
 
@@ -84,7 +86,8 @@ router.get(
 router.post(
     "/set-image/:id",
     protectRoute,
-    
-)
+    upload.single("image"),
+    storeImage
+);
 
 export default router;

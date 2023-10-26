@@ -8,4 +8,5 @@ Dropzone.options.image = {
     parallelUploads: 1,
     autoProcessQueue: false,
     addRemoveLinks: true,
+    paramName: "image",
 }

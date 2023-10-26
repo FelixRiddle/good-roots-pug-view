@@ -10,6 +10,11 @@ import db from "./config/db.js";
 
 const app = express();
 
+// IDK
+app.use(express.urlencoded({
+    extended: true,
+}));
+
 // Cors whitelist
 let whitelist = [process.env.ORIGIN];
 
