@@ -89,10 +89,8 @@ const authenticate = async (req, res) => {
     
     console.log(`Going to endpoint myProperties`);
     return res.cookie("_token", token, {
-        httpOnly: true,
-    }).render("/user/property/myProperties", {
-        page: "My properties",
-    });
+        httpOnly: false,
+    }).redirect("/user/property/myProperties");
 }
 
 export default authenticate;

@@ -10,6 +10,15 @@ import db from "./config/db.js";
 
 const app = express();
 
+// Set CSP
+app.use((req, res, next) => {
+    res.setHeader(
+        'Content-Security-Policy-Report-Only',
+        "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+    );
+    next();
+});
+
 // IDK
 app.use(express.urlencoded({
     extended: true,
@@ -17,6 +26,7 @@ app.use(express.urlencoded({
 
 // Cors whitelist
 let whitelist = [process.env.ORIGIN];
+console.log(`Origin allowed: ${process.env.ORIGIN}`);
 
 // Add another one
 let new_origin = process.env.ORIGIN_1;

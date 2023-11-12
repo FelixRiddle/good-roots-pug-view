@@ -3,6 +3,8 @@ import User from "../models/User.js";
 
 const protectRoute = async (req, res, next) =>  {
     
+    console.log(`Validating user token...`);
+    
     // Check token
     // Get and rename token
     let { _token: token } = req.cookies;
@@ -32,6 +34,7 @@ const protectRoute = async (req, res, next) =>  {
         
         return next();
     } catch(err) {
+        console.error(err);
         console.log(`Logging out the user`);
         return res.clearCookie("_token").redirect("/auth/login");
     }
