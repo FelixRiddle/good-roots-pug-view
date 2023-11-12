@@ -18,6 +18,8 @@ const authenticate = async (req, res) => {
     // Check result
     let result = validationResult(req);
     
+    console.log(`User validated!`);
+    
     // Confirm that the user is Ok
     if(!result.isEmpty()) {
         return res.render("auth/login", {
@@ -85,6 +87,7 @@ const authenticate = async (req, res) => {
     };
     const token = generateJwtToken(user_safe);
     
+    console.log(`Going to endpoint myProperties`);
     return res.cookie("_token", token, {
         httpOnly: true,
     }).render("/user/property/myProperties", {
