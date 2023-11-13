@@ -10,11 +10,40 @@ import db from "./config/db.js";
 
 const app = express();
 
+// CSP policy
+let cspPolicy = (() => {
+    // Array of allowed domains
+    // Note that subdomains are disallowed by default, so you must set the star
+    // to allow every subdomain.
+    let allowedDomains = [
+        "unpkg.com",
+        "*.unpkg.com",
+        "openstreetmap.org",
+        "*.openstreetmap.org",
+        "cloudflare.com",
+        "*.cloudflare.com",
+        "cdnjs.cloudflare.com"
+    ];
+    let domains = "";
+    for(let domain of allowedDomains) {
+        domains += `${domain} `;
+    }
+    let scriptSrc = `script-src ${domains}'self';`;
+    let styleSrc = `style-src ${domains}'self';`
+    
+    // Allow self
+    let allowSelf = "font-src 'self'; img-src 'self'; frame-src 'self';";
+    let cspPolicy = `${allowSelf} ${scriptSrc} ${styleSrc}`;
+    console.log(`Csp policy: ${cspPolicy}`);
+    
+    return cspPolicy;
+})();
+
 // Set CSP
 app.use((req, res, next) => {
     res.setHeader(
-        'Content-Security-Policy-Report-Only',
-        "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+        'Content-Security-Policy',
+        cspPolicy
     );
     next();
 });
@@ -26,7 +55,6 @@ app.use(express.urlencoded({
 
 // Cors whitelist
 let whitelist = [process.env.ORIGIN];
-console.log(`Origin allowed: ${process.env.ORIGIN}`);
 
 // Add another one
 let new_origin = process.env.ORIGIN_1;

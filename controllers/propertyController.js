@@ -24,7 +24,6 @@ const create = async (req, res) => {
     
     return res.render("user/property/create", {
         page: "Create property",
-        csrfToken: req.csrfToken(),
         categories,
         prices,
     });
