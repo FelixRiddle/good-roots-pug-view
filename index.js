@@ -28,12 +28,13 @@ let cspPolicy = (() => {
     for(let domain of allowedDomains) {
         domains += `${domain} `;
     }
-    let scriptSrc = `script-src ${domains}'self';`;
-    let styleSrc = `style-src ${domains}'self';`
+    let scriptSrc = `script-src ${domains}'self' 'unsafe-eval';`;
+    let styleSrc = `style-src ${domains}'self';`;
+    let imgSrc = `img-src ${domains}'self';`;
     
     // Allow self
-    let allowSelf = "font-src 'self'; img-src 'self'; frame-src 'self';";
-    let cspPolicy = `${allowSelf} ${scriptSrc} ${styleSrc}`;
+    let allowSelf = "font-src 'self'; frame-src 'self';";
+    let cspPolicy = `${allowSelf} ${scriptSrc} ${styleSrc} ${imgSrc}`;
     console.log(`Csp policy: ${cspPolicy}`);
     
     return cspPolicy;
