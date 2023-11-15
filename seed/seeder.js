@@ -66,3 +66,8 @@ if(process.argv[2] === "-d") {
     await deleteData();
 }
 
+
+export {
+    deleteData,
+    importData,
+}
