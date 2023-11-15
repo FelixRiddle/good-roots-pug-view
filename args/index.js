@@ -11,7 +11,7 @@ const parser = new ArgumentParser({
 // Create arguments
 parser.add_argument("--seedCategories", {
     help: "Insert categories data into the database",
-    action: "storeTrue"
+    action: "store_true"
 });
 
 // Parse arguments
@@ -20,8 +20,10 @@ console.log(args);
 
 // Execute everything asynchronously
 (async () => {
-    if(args.seed_categories) {
+    if(args.seedCategories) {
         // Insert category data
         await insertCategoriesData();
     }
 })();
+
+process.exit(0);
