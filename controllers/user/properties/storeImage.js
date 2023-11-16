@@ -1,6 +1,6 @@
+import Property from "../../../models/Property.js";
 
-
-const storeImage = async (req, res) => {
+const storeImage = async (req, res, next) => {
     const { id } = req.params;
     
     // Validate that the property exists
@@ -30,6 +30,7 @@ const storeImage = async (req, res) => {
         // Store
         await property.save();
         
+        next();
     } catch(err) {
         console.error(err);
     }

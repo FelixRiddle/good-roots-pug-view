@@ -9,4 +9,18 @@ Dropzone.options.image = {
     autoProcessQueue: false,
     addRemoveLinks: true,
     paramName: "image",
+    init: () => {
+        const dropzone = this;
+        const publishBtn = document.querySelector("#publish");
+        
+        publishBtn.addEventListener("click", () => {
+            dropzone.processQueue();
+        });
+        
+        dropzone.on("queuecomplete", () => {
+            if(dropzone.getActiveFiles().length === 0) {
+                window.location.href = "/user/property/admin"
+            }
+        });
+    }
 }
