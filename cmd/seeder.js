@@ -1,8 +1,41 @@
+import db from "../config/db.js";
 import {
     Category,
 } from "../models/index.js";
+import Price from "../models/index.js";
+import User from "../models/index.js";
+import users from "../seed/users.js";
+import prices from "../seed/prices.js";
 import categories from "../seed/categories.js";
-import db from "../config/db.js";
+
+// Main function
+async function main(args) {
+    // Seed categories
+    if(args.seedCategories) {
+        // Insert category data
+        await insertCategoriesData();
+    }
+    
+    // Seed prices
+    if(args.seedPrices) {
+        // Insert property prices data
+        await insertPricesData();
+    }
+    
+    // Seed users
+    if(args.seedUsers) {
+        // Insert users
+        await insertUserData();
+    }
+    
+    // Seed properties
+    if(args.seedProperties) {
+        // Insert properties
+        await insertPropertiesData();
+    }
+    
+    return args;
+}
 
 // Insert categories data
 async function insertCategoriesData() {
@@ -26,6 +59,76 @@ async function insertCategoriesData() {
     }
 }
 
+// Insert prices data
+async function insertPricesData() {
+    try {
+        // Authenticate
+        await db.authenticate();
+        
+        // Generate columns
+        await db.sync();
+        
+        // Insert data
+        await Promise.all([
+            Price.bulkCreate(prices),
+        ]);
+        
+        console.log(`Data inserted correctly`);
+        
+        process.exit();
+    } catch(err) {
+        process.exit(1);
+    }
+}
+
+// Insert user data
+async function insertUserData() {
+    try {
+        // Authenticate
+        await db.authenticate();
+        
+        // Generate columns
+        await db.sync();
+        
+        // Insert data
+        await Promise.all([
+            User.bulkCreate(users),
+        ]);
+        
+        console.log(`Data inserted correctly`);
+        
+        process.exit();
+    } catch(err) {
+        process.exit(1);
+    }
+}
+
+// Insert properties
+async function insertPropertiesData() {
+    try {
+        // Authenticate
+        await db.authenticate();
+        
+        // Generate columns
+        await db.sync();
+        
+        // Insert data
+        await Promise.all([
+        ]);
+        
+        console.log(`Data inserted correctly`);
+        
+        process.exit();
+    } catch(err) {
+        process.exit(1);
+    }
+}
+
 export {
     insertCategoriesData,
+    insertPricesData,
+    insertPropertiesData,
+    insertUserData
 }
+
+export default main;

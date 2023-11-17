@@ -1,6 +1,6 @@
 import { ArgumentParser } from "argparse";
 import packageJson from "../package.json" assert { type: 'json' };
-import { insertCategoriesData } from "./seeder.js";
+import seeder from "./seeder.js";
 
 const version = packageJson.version;
 
@@ -9,8 +9,25 @@ const parser = new ArgumentParser({
 });
 
 // Create arguments
+// --- Database ---
+// --- Seeder ---
 parser.add_argument("--seedCategories", {
     help: "Insert categories data into the database",
+    action: "store_true"
+});
+
+parser.add_argument("--seedPrices", {
+    help: "Insert prices data into the database",
+    action: "store_true"
+});
+
+parser.add_argument("--seedUsers", {
+    help: "Insert users into the database",
+    action: "store_true"
+});
+
+parser.add_argument("--seedProperties", {
+    help: "Insert properties into the database",
     action: "store_true"
 });
 
@@ -20,10 +37,8 @@ console.log(args);
 
 // Execute everything asynchronously
 (async () => {
-    if(args.seedCategories) {
-        // Insert category data
-        await insertCategoriesData();
-    }
+    // Seeder
+    await seeder(args);
 })();
 
 process.exit(0);
