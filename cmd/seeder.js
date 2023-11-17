@@ -1,9 +1,10 @@
 import db from "../config/db.js";
-import {
-    Category,
-} from "../models/index.js";
-import Price from "../models/index.js";
-import User from "../models/index.js";
+
+import Category from "../models/Category.js";
+import Price from "../models/Price.js";
+import User from "../models/User.js";
+import Property from "../models/Property.js";
+
 import users from "../seed/users.js";
 import prices from "../seed/prices.js";
 import categories from "../seed/categories.js";

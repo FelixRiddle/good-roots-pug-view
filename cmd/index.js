@@ -1,6 +1,9 @@
 import { ArgumentParser } from "argparse";
+
 import packageJson from "../package.json" assert { type: 'json' };
+
 import seeder from "./seeder.js";
+import tables from "./tables.js";
 
 const version = packageJson.version;
 
@@ -31,12 +34,31 @@ parser.add_argument("--seedProperties", {
     action: "store_true"
 });
 
+// --- Tables ---
+parser.add_argument("--upAll", {
+    help: "Create every project table",
+    action: "store_true"
+});
+
+parser.add_argument("--downAll", {
+    help: "Drop every table",
+    action: "store_true"
+});
+
+parser.add_argument("--resetTables", {
+    help: "Destroy and create the tables again with the default data",
+    action: "store_true"
+})
+
 // Parse arguments
 let args = parser.parse_args();
-console.log(args);
 
 // Execute everything asynchronously
 (async () => {
+    
+    // Tables
+    await tables(args);
+    
     // Seeder
     await seeder(args);
 })();
