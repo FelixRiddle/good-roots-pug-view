@@ -1,6 +1,7 @@
 import Property from "../../../models/Property.js";
 
 const setImage = async (req, res) => {
+    console.log(`Body: `, req.body);
     
     const { id } = req.params;
     
@@ -16,8 +17,8 @@ const setImage = async (req, res) => {
         return res.redirect("/user/property/admin");
     }
     
-    // Validate that the property belongs to the own who made the request
-    if(req.user.id.to_string() !== property.id.to_string()) {
+    // Validate that the property belongs to the user that made the request
+    if(req.body.user.id.to_string() !== property.id.to_string()) {
         return res.redirect("/user/property/admin");
     }
     

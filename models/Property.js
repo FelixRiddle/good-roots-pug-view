@@ -48,7 +48,11 @@ const Property = db.define("property", {
     published: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        deafultValue: false,
+        defaultValue: false,
+    },
+    ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     }
 });
 

@@ -57,14 +57,15 @@ const createProperty = async(req, res) => {
             priceId,
             categoryId,
             userId,
+            published: false,
             image: "",
         });
         let id = property.id;
         
-        await property.save();
-        
+        console.log(`Success the user will be going to set the image`);
         return res.redirect(`/user/property/set-image/${id}`);
     } catch(err) {
+        console.log(`Error detected, the user will be redirected to its profile`);
         console.error(err);
     }
     

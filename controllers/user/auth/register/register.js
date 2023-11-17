@@ -22,7 +22,6 @@ const register = async (req, res) => {
                 }
             ],
             user: req.body,
-            csrfToken: req.csrfToken(),
         });
     }
     
@@ -33,7 +32,6 @@ const register = async (req, res) => {
         return res.render("auth/register", {
             page: "Create account",
             errors: result.array(),
-            csrfToken: req.csrfToken(),
             user: req.body,
         });
     }
@@ -51,7 +49,6 @@ const register = async (req, res) => {
                     msg: "The given E-Mail is already in use, try another or log in."
                 }
             ],
-            csrfToken: req.csrfToken(),
             user: req.body,
         });
     }
@@ -73,7 +70,6 @@ const register = async (req, res) => {
     // Show confirmation message
     return res.render("templates/message", {
         page: "Account created",
-        csrfToken: req.csrfToken(),
         message: "We've sent a message to your E-Mail inbox, open it to confirm your account."
     });
 };
