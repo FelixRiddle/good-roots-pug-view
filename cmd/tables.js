@@ -13,7 +13,6 @@ import categories from "../seed/categories.js";
 async function main(args) {
     // Drop all
     if(args.downAll) {
-        console.log(`Down all`);
         await downAll();
     }
     
@@ -63,23 +62,23 @@ async function upAll() {
 // Destroy the data of every table
 async function downAll() {
     try {
-        // console.log(`Authenticating`);
+        console.log(`Authenticating`);
         
-        // // Authenticate
-        // await db.authenticate()
-        //     .then((res) => {
-        //         console.log(`Connected`);
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     });
+        // Authenticate
+        await db.authenticate()
+            .then((res) => {
+                console.log(`Connected`);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         
-        // console.log(`Synching`);
+        console.log(`Synching`);
         
-        // // Generate columns
-        // await db.sync();
+        // Generate columns
+        await db.sync();
         
-        // console.log(`Destroying tables`);
+        console.log(`Destroying tables`);
         
         // Delete data
         await Promise.all([

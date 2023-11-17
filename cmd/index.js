@@ -61,6 +61,6 @@ let args = parser.parse_args();
     
     // Seeder
     await seeder(args);
+    
+    process.exit(0);
 })();
-
-process.exit(0);
