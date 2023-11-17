@@ -55,8 +55,7 @@ async function insertCategoriesData() {
         
         console.log(`Categories inserted`);
     } catch(err) {
-        console.log(`Big ass error: `);
-        console.error(err);
+        console.log(err);
     }
 }
 
@@ -75,10 +74,8 @@ async function insertPricesData() {
         ]);
         
         console.log(`Data inserted correctly`);
-        
-        process.exit();
     } catch(err) {
-        process.exit(1);
+        console.log(err);
     }
 }
 
@@ -97,10 +94,8 @@ async function insertUserData() {
         ]);
         
         console.log(`Data inserted correctly`);
-        
-        process.exit();
     } catch(err) {
-        process.exit(1);
+        console.log(err);
     }
 }
 
@@ -118,10 +113,8 @@ async function insertPropertiesData() {
         ]);
         
         console.log(`Data inserted correctly`);
-        
-        process.exit();
     } catch(err) {
-        process.exit(1);
+        console.log(err);
     }
 }
 

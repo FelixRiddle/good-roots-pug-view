@@ -51,11 +51,8 @@ async function upAll() {
         ]);
         
         console.log(`Data inserted correctly`);
-        
-        process.exit();
     } catch(err) {
         console.log(err);
-        process.exit(1);
     }
 }
 
@@ -90,12 +87,9 @@ async function downAll() {
         ]);
         
         console.log(`Data deleted correctly`);
-        
-        process.exit();
     } catch(err) {
         console.log(`Error`);
         console.log(err);
-        process.exit(1);
     }
 }
 
