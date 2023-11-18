@@ -1,0 +1,13 @@
+//- Display row
+div(
+    class="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 gap-4"
+)
+    div(class="sm:w-1/4 md:w-1/6 lg:w-1/6")
+        img(
+            src=`uploads/${property.image}`,
+            alt=`Image of the property ${property.title}`
+            class="w-full block"
+            )
+    div(class="sm:w-2/4 md:w-3/6 lg:w-4/6")
+    div(class="sm:w-1/4 md:w-2/6 lg:w-1/6")
+
