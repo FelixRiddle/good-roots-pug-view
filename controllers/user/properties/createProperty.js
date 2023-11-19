@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator";
+import { v4 as uuidv4 } from 'uuid';
 
 import Property from "../../../models/Property.js";
 
@@ -42,10 +43,12 @@ const createProperty = async(req, res) => {
             category: categoryId,
         } = req.body;
         
-        const { id: userId } = req.user;
+        const { id: ownerId } = req.user;
+        console.log(`Owner id: `, ownerId);
         
         // Store data
         const property = Property.create({
+            // id(The uuid is generated automatically by the database)
             title,
             description,
             rooms,
@@ -54,12 +57,24 @@ const createProperty = async(req, res) => {
             street,
             latitude,
             longitude,
+            image: "",
+            published: false,
+            ownerId,
             priceId,
             categoryId,
-            userId,
-            published: false,
-            image: "",
         });
+        // id(uuid),
+        // title,
+        // description,
+        // rooms,
+        // parking,
+        // bathrooms,
+        // street,
+        // latitude,
+        // longitude,
+        // image,
+        // published,
+        // ownerId,
         let id = property.id;
         
         console.log(`Success the user will be going to set the image`);
