@@ -39,7 +39,8 @@ const setImage = async (req, res) => {
         }
         
         return res.render(`user/property/set-image`, {
-            page: `Set images for ${property.title}`
+            page: `Set images for ${property.title}`,
+            property
         });
     } catch(err) {
         console.log(err);
