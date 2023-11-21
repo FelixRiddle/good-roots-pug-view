@@ -10,17 +10,41 @@ Dropzone.options.image = {
     addRemoveLinks: true,
     paramName: "image",
     init: () => {
-        const dropzone = this;
-        const publishBtn = document.querySelector("#publish");
-        
-        publishBtn.addEventListener("click", () => {
-            dropzone.processQueue();
-        });
-        
-        dropzone.on("queuecomplete", () => {
-            if(dropzone.getActiveFiles().length === 0) {
-                window.location.href = "/user/property/admin"
+        try {
+            // Get dropzone
+            const dropzone = this;
+            const publishBtn = document.querySelector("#publish");
+            
+            // Check if it exists
+            if(!dropzone) {
+                console.log(`Couldn't get dropzone.`);
             }
-        });
-    }
+            
+            publishBtn.addEventListener("click", () => {
+                console.log(`First dropzone publish`);
+                dropzone.processQueue();
+            });
+            
+            dropzone.on("queuecomplete", () => {
+                if(dropzone.getActiveFiles().length === 0) {
+                    window.location.href = "/user/property/admin"
+                }
+            });
+        } catch(err) {
+            console.log(err);
+        }
+    },
 }
+
+// Dropzone
+let dropzoneTest = new Dropzone("#image");
+dropzoneTest.on("addedFile", file => {
+    console.log(`Second dropzone add image`);
+    console.log(`File added: ${file.name}`);
+});
+
+// const publish2 = document.querySelector("#testDropzone");
+// publish2.addEventListener("click", () => {
+//     console.log(`Second dropzone publish`);
+//     dropzone.processQueue();
+// });

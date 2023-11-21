@@ -28,9 +28,9 @@ let cspPolicy = (() => {
     for(let domain of allowedDomains) {
         domains += `${domain} `;
     }
-    let scriptSrc = `script-src ${domains}'self' 'unsafe-eval';`;
-    let styleSrc = `style-src ${domains}'self';`;
-    let imgSrc = `img-src ${domains}'self';`;
+    let scriptSrc = `script-src ${domains}'self' 'unsafe-eval' 'unsafe-inline';`;
+    let styleSrc = `style-src ${domains}'self' 'unsafe-inline';`;
+    let imgSrc = `img-src ${domains}'self' data:;`;
     
     // Allow self
     let allowSelf = "font-src 'self'; frame-src 'self';";

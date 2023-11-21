@@ -24,7 +24,7 @@ block content
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
             form(
                 id="image"
-                class="mt-5 dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
+                class="dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
                 method="POST"
                 action=`/user/property/set-image/${property.id}`
             )
@@ -32,14 +32,34 @@ block content
                 .space-y-8
                     h3.text-lg.leading-6.font-medium.text-gray-900 Select images
                     p.text-gray-600 Select one or more images for the property
-                    
-                    //- Add image
-                    button(
-                        id="publish"
-                        class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
-                        type="submit"
-                        value="Publish property"
-                    )
+            
+            //- Add image
+            input(
+                id="publish"
+                class="w-full mt-5 py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
+                type="submit"
+                value="Publish property"
+            )
+        
+        //- //- Formulary
+        //- div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
+        //-     //- Test formulary
+        //-     form(
+        //-         id="testDropzone"
+        //-         class="dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
+        //-         method="POST"
+        //-         action=`/user/property/set-image/${property.id}`
+        //-     )
+        //-         h3.text-lg.leading-6.font-medium.text-gray-900 Select images
+        //-         p.text-gray-600 Select one or more images for the property
+                
+        //-         //- Add image
+        //-         input(
+        //-             id="publish"
+        //-             class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
+        //-             type="submit"
+        //-             value="Publish property(2)"
+        //-         )
 
 block scripts
     script(src="/js/insertImage.js")
