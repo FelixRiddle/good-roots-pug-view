@@ -1,7 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
 import {
-    admin,
     create,
 } from "../../controllers/propertyController.js";
 import protectRoute from "../../middleware/protectRoute.js";
@@ -9,6 +8,7 @@ import setImage from "../../controllers/user/properties/setImage.js";
 import upload from "../../middleware/updloadImage.js";
 import storeImage from "../../controllers/user/properties/storeImage.js";
 import createProperty from "../../controllers/user/properties/createProperty.js";
+import admin from "../../controllers/user/properties/admin.js";
 
 const router = express.Router();
 

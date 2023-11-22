@@ -30,8 +30,6 @@ dropzone.options.image = {
             const dropzone = this;
             const publishBtn = document.querySelector("#publish");
             
-            console.log(`Current dropzone: `, dropzone);
-            console.log(`Window dropzone: `, window.Dropzone);
             // Check if it exists
             if(!dropzone) {
                 console.log(`Couldn't get dropzone.`);
