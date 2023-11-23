@@ -50,10 +50,6 @@ const Property = db.define("property", {
         allowNull: false,
         defaultValue: false,
     },
-    ownerId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    }
 });
 
 export default Property;

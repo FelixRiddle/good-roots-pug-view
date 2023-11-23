@@ -5,7 +5,7 @@ import User from "./User.js";
 
 Property.belongsTo(Price);
 Property.belongsTo(Category);
-Property.belongsTo(User)
+Property.belongsTo(User);
 
 export {
     Category,

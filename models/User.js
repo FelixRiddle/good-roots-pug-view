@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
 
 import db from "../config/db.js";
+import Property from "./Property.js";
 
 const User = db.define("users", {
     name: {
@@ -48,5 +49,7 @@ const User = db.define("users", {
 User.prototype.verifyPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 }
+
+Property.belongsTo(User);
 
 export default User;

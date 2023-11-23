@@ -43,8 +43,8 @@ const createProperty = async(req, res) => {
             category: categoryId,
         } = req.body;
         
-        const { id: ownerId } = req.user;
-        console.log(`Owner id: `, ownerId);
+        const { id: userId } = req.user;
+        console.log(`Owner id: `, userId);
         
         // Store data
         const property = Property.create({
@@ -59,22 +59,10 @@ const createProperty = async(req, res) => {
             longitude,
             image: "",
             published: false,
-            ownerId,
+            userId,
             priceId,
             categoryId,
         });
-        // id(uuid),
-        // title,
-        // description,
-        // rooms,
-        // parking,
-        // bathrooms,
-        // street,
-        // latitude,
-        // longitude,
-        // image,
-        // published,
-        // ownerId,
         let id = property.id;
         
         console.log(`Success the user will be going to set the image`);
