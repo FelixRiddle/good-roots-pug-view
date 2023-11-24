@@ -9,14 +9,30 @@ const admin = async (req, res) => {
     
     console.log(`ID: ${id}`);
     
-    const properties = await Property.findAll({
+    // Fetch properties from the database that are owned by this user
+    const properties_res = await Property.findAll({
         where: {
-            id,
+            userId: id,
         },
         include: [
-            { model: Category, as: 'category' }
+            {
+                raw: true,
+                model: Category,
+                as: 'category'
+            }, {
+                raw: true,
+                model: Price,
+                as: "price"
+            }
         ]
     });
+    
+    // Thanks sensei for this incredible response
+    // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
+    const properties = properties_res.map(x => x.get({ plain: true }))
+    
+    console.log(`Properties`);
+    console.log(properties);
     
     return res.render("user/property/admin", {
         page: "My Properties",
