@@ -27,26 +27,26 @@ div(
             = property.price.name
     
     //- Edit property
-    div(class="sm:w-1/4 md:w-2/6 lg:w-1/6 flex flex-col")
+    div(class="sm:w-1/4 md:w-2/6 lg:flex-1 flex flex-col gap-2 lg:flex-row")
         //- Set published
         form(action="#") 
             input(
                 type="submit"
-                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer ${property.published ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`
+                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer w-full ${property.published ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`
                 value=`${property.published ? "Published" : "Not published"}`
                 )
-            
+        
         //- Edit property
         a(
             href="#"
-            class="px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-indigo-100 text-indigo-800"
+            class="px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-indigo-100 text-indigo-800 text-center"
         ) Edit
         
         //- Delete
         form(action="#") 
             input(
                 type="submit"
-                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800`
+                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800 w-full`
                 value=`Delete`
                 )
 
