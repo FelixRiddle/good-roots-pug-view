@@ -12,6 +12,7 @@ import authenticate from "../../../controllers/user/auth/login/authenticate.js";
 import verifyToken from "../../../controllers/user/auth/verifyToken.js";
 import createNewPassword from "../../../controllers/user/auth/password/createNewPassword.js";
 import resetPassword from "../../../controllers/user/auth/password/resetPassword.js";
+import getUser from "../../../middleware/auth/getUser.js";
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get("/register", registerFormulary);
 router.post("/register", register);
 
 // Login
-router.get("/login", loginFormulary);
+router.get("/login", getUser, loginFormulary);
 router.post("/login", authenticate);
 
 // Email

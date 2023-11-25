@@ -9,6 +9,7 @@ import upload from "../../middleware/updloadImage.js";
 import storeImage from "../../controllers/user/properties/storeImage.js";
 import createProperty from "../../controllers/user/properties/createProperty.js";
 import admin from "../../controllers/user/properties/admin.js";
+import edit from "../../controllers/user/properties/edit.js";
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ let friendly_message = "You're 'bout to get banned champ";
 // For the property location
 let property_location = "Locate the property on the map";
 
+router.get("/edit/:id", protectRoute, edit);
 router.get("/myProperties", (req, res) => {
     console.log(`Redirecting to admin`)
     return res.redirect("/user/property/admin");
