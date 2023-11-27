@@ -46,18 +46,24 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="category") Category 
                             select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="category")
-                                option(value=property ? property.category : "") - Select one - 
+                                option(value="") - Select one - 
                                 each category in categories
-                                    option(value=category.id)= category.name
+                                    option(
+                                        value=category.id
+                                        selected=property ? property.categoryId == category.id ? true : false : null
+                                    )=category.name
                         
                         //- Price
                         div(class="md:w-1/2")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="price") Price 
                             select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="price")
-                                option(value=property ? property.price : "") - Select one - 
+                                option(value="") - Select one - 
                                 each price in prices
-                                    option(value=price.id)= price.name
+                                    option(
+                                        value=price.id
+                                        selected=property ? property.priceId == price.id ? true : false : null
+                                    )=price.name
                     
                     //- Category and price with a select item list
                     div(class="md:flex md:gap-4 space-y-6 md:space-y-0")
