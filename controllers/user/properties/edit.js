@@ -28,7 +28,7 @@ const edit = async (req, res) => {
     
     return res.render(
         "user/property/edit", {
-        page: "Edit property",
+        page: `Edit property: ${property.title}`,
         categories,
         prices,
         property: req.body,
