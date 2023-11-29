@@ -1,21 +1,13 @@
+import Price from "../../../models/Price.js";
 import Property from "../../../models/Property.js";
 
 const edit = async (req, res) => {
+    console.log(`Entered edit mode`);
     
     const { id } = req.params;
     
     // Check that property exists
     const property = Property.findByPk(id);
-    
-    if(!property) {
-        return res.redirect("/admin");
-    }
-    
-    // Check that person that accessed this url
-    // is the person that owns this property
-    if(property.userId.toString() !== req.user.id.toString()) {
-        return res.redirect("/admin");
-    }
     
     // Get price and category
     const [
@@ -26,13 +18,35 @@ const edit = async (req, res) => {
         Price.findAll(),
     ]);
     
-    return res.render(
-        "user/property/edit", {
-        page: `Edit property: ${property.title}`,
-        categories,
-        prices,
-        property: req.body,
-    });
+    try {
+        if(!property) {
+            return res.redirect("/admin");
+        }
+        
+        // Check that person that accessed this url
+        // is the person that owns this property
+        if(property.userId.toString() !== req.user.id.toString()) {
+            return res.redirect("/admin");
+        }
+        
+        return res.render(
+            "user/property/edit", {
+            page: `Edit property: ${property.title}`,
+            categories,
+            prices,
+            property: req.body,
+        });
+    } catch(err) {
+        console.log(err);
+        
+        return res.render(
+            "user/property/edit", {
+            page: `Edit property: ${property.title}`,
+            categories,
+            prices,
+            property: req.body,
+        });
+    }
 }
 
 export default edit;

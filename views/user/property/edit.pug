@@ -43,9 +43,9 @@ block content
                         //- Category
                         //- value=category ? property.category : ""
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="category") Category 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="categoryId") Category 
                             select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="category")
+                                name="categoryId")
                                 option(value="") - Select one - 
                                 each category in categories
                                     option(
@@ -55,9 +55,9 @@ block content
                         
                         //- Price
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="price") Price 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="priceId") Price 
                             select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="price")
+                                name="priceId")
                                 option(value="") - Select one - 
                                 each price in prices
                                     option(
