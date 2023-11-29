@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
-import { v4 as uuidv4 } from 'uuid';
 
 import Property from "../../../models/Property.js";
+import Price from "../../../models/Price.js";
 
 const createProperty = async(req, res) => {
     // Validation

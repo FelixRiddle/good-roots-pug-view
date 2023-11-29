@@ -3,6 +3,7 @@ import Property from "../../../models/Property.js";
 
 const edit = async (req, res) => {
     console.log(`Entered edit mode`);
+    console.log("Body: ", req.body);
     
     const { id } = req.params;
     

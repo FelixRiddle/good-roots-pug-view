@@ -3,6 +3,9 @@ import Property from "../../../models/Property.js";
 const setImage = async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(`Body: `, req.body);
+        console.log(`Id: ${id}`);
+        console.log(`Params: `, req.params);
         console.log(`User: `, req.user);
         
         let user = req.user.dataValues;
