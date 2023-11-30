@@ -19,7 +19,7 @@ block content
         
         //- Formulary
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
-            form.space-y-8(method="POST" action="create")
+            form.space-y-8()
                 //- Empty tag defaults to div
                 .space-y-8
                     h3.text-lg.leading-6.font-medium.text-gray-900 General Information
@@ -43,11 +43,18 @@ block content
                         //- Category
                         //- value=category ? property.category : ""
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="category") Category 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="categoryId") Category 
+                            
+                            //- Selector
                             select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="category")
+                                name="categoryId")
+                                //- Empty selection
                                 option(value="") - Select one - 
+                                
+                                //- Search in categories
                                 each category in categories
+                                    //- The selected part, checks if the category is selected(this is for when
+                                    //- the website is refreshed for example)
                                     option(
                                         value=category.id
                                         selected=property ? property.categoryId == category.id ? true : false : null
@@ -55,9 +62,9 @@ block content
                         
                         //- Price
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="price") Price 
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="priceId") Price 
                             select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="price")
+                                name="priceId")
                                 option(value="") - Select one - 
                                 each price in prices
                                     option(
@@ -120,6 +127,7 @@ block content
                     //- Add image
                     input(
                         class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
+                        id="createProperty"
                         type="submit"
                         value="Add image"
                     )
@@ -133,3 +141,4 @@ block scripts
     
     //- Load map
     script(src="/js/map.js")
+    script(src="/js/routes/user/property/create.js")

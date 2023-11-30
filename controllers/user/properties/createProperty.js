@@ -39,9 +39,9 @@ const createProperty = async(req, res) => {
             street,
             latitude,
             longitude,
-            price: priceId,
-            category: categoryId,
-        } = req.body;
+            priceId,
+            categoryId,
+        } = req.body.property;
         
         const { id: userId } = req.user;
         console.log(`Owner id: `, userId);

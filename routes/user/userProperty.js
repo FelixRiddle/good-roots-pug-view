@@ -21,11 +21,10 @@ let friendly_message = "You're 'bout to get banned champ";
 // For the property location
 let property_location = "Locate the property on the map";
 
-router.get("/myProperties", (req, res) => {
-    console.log(`Redirecting to admin`)
-    return res.redirect("/user/property/admin");
-});
+// All of this go to the same page
+router.get("/myProperties", protectRoute, admin);
 router.get("/admin", protectRoute, admin);
+router.get("/index", protectRoute, admin);
 
 // Create property route
 router.get("/create", protectRoute, create);
@@ -96,8 +95,8 @@ router.post(
 );
 
 // Edit property
-router.get("/edit/:id", protectRoute, edit);
-router.post("/edit/:id", protectRoute,
+router.get("/edit", protectRoute, edit);
+router.post("/edit", protectRoute,
     body("title")
         .notEmpty().withMessage("The title is required")
         // Someone might be messing with endpoints so you always have to set a limit no matter what field is
