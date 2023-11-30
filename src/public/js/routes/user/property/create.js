@@ -1,4 +1,4 @@
-import formFetchAllValues from "./lib/form/formFetchAllValues";
+import formFetchAllValues from "../../../lib/form/formFetchAllValues.js";
 
 // Get submit button
 let submitBtn = document.getElementById("createProperty");

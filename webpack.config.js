@@ -1,18 +1,28 @@
 import path from "path";
 
-let someFn = () => {
-    
-    return {
-        insert: "./src/public/js/insertImage.js",
-    }
-}
+let jsPath = "./src/public/js/";
 
 export default {
     mode: "development",
     entry: {
-        map: "./src/public/js/map.js",
-        insertImage: "./src/public/js/insertImage.js",
-        ...someFn()
+        map: `${jsPath}map.js`,
+        insertImage: `${jsPath}insertImage.js`,
+        // Libraries
+        lib: {
+            import: [
+                `${jsPath}lib/form/formFetchAllValues.js`
+            ]
+        },
+        // Comunication with routes
+        routes: {
+            import: [
+                `${jsPath}routes/user/property/create.js`
+            ],
+            // To what does it depends on
+            dependOn: [
+                "lib"
+            ]
+        }
     },
     output: {
         filename: "[name].js",
