@@ -47,3 +47,13 @@ ORIGIN=http://localhost:3000
 ```
 
 Warning: In case you are new, don't ever share anything you put in '.env' file, with anyone.
+
+# Security concerns
+
+Currently the CSP policy is almost useless as it allows everything, it must be setted up more strictly.
+
+# Production
+
+Some helpful links
+
+- [Webpack Production](https://webpack.js.org/guides/production/)

@@ -1,4 +1,4 @@
-import ValidationResult from "./validationResult"
+import ValidationResult from "./validationResult.js";
 
 /** Validate E-Mail
  * 
