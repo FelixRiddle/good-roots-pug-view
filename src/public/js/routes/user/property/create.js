@@ -34,6 +34,9 @@ submitBtn.addEventListener("click", async (event) => {
         console.log(`Data: `, resultObject);
     } else {
         console.log(`Couldn't fetch form values!`);
+        
+        // Get outta here
+        return;
     }
     
     // TODO: Frontend validation
