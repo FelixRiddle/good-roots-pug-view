@@ -2,10 +2,14 @@
 public/css
 public/js
 
+# Package lock backup
+package-lock.json.backup
+
 # Don't ignore images, it's just here to make you remember that
-# images should be pushed to the repository
+# images should be pushed to the repository.
 # public/img
 
+### Node default ignores ###
 # Logs
 logs
 *.log
