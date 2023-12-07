@@ -52,12 +52,10 @@ submitBtn.addEventListener("click", async (event) => {
     resultObject.latitude = parseFloat(resultObject.latitude);
     resultObject.longitude = parseFloat(resultObject.longitude);
     
-    console.log(`Property parsed: `, resultObject);
-    
     // Check that validation passes
     let result = validateProperty(resultObject);
     if(result.length > 0) {
-        console.log(`Errors: `, result);
+        console.log(`Validation didn't pass`);
         return result;
     }
     console.log(`Validation passed`);

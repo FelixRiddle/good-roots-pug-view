@@ -38,7 +38,6 @@ function validateProperty(property) {
     // Check that validation passes
     let result = val.validate();
     if(result.length > 0) {
-        console.log(`Errors: `, result);
         return result;
     }
     

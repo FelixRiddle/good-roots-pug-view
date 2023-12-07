@@ -1,34 +1,15 @@
-import { validationResult } from "express-validator";
-
 import Property from "../../../models/Property.js";
-import Price from "../../../models/Price.js";
+import validateProperty from "../../../public/js/validation/validateProperty.js";
 
 const createProperty = async(req, res) => {
     console.log(`Body: `, req.body);
     
-    
-    // // Validation
-    // let result = validationResult(req);
-    
-    // if(!result.isEmpty()) {
-    //     // Get price and category
-    //     const [
-    //         categories,
-    //         prices,
-    //     ] = await Promise.all([
-    //         Category.findAll(),
-    //         Price.findAll(),
-    //     ]);
-        
-    //     return res.render(
-    //         "user/property/create", {
-    //         page: "Create property",
-    //         categories,
-    //         prices,
-    //         errors: result.array(),
-    //         property: req.body,
-    //     });
-    // }
+    let result = validateProperty(req.body.property);
+    if(result.length > 0) {
+        return res.send({
+            errors: result
+        });
+    }
     
     // Insert on the database
     try {
