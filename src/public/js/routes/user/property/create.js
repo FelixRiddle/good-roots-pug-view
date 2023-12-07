@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Validator, formFetchAllValues } from "felixriddle.checkpoint";
 
+import validateProperty from "../../../validation/validateProperty.js";
+
 // Get submit button
 let submitBtn = document.getElementById("createProperty");
 if(!submitBtn) {
@@ -52,44 +54,16 @@ submitBtn.addEventListener("click", async (event) => {
     
     console.log(`Property parsed: `, resultObject);
     
-    // Frontend validation
-    let idBasedScope = "id_based";
-    let coordinateScope = "coordinate_scope";
-    let val = new Validator()
-        // Title scope    
-        .createScope("title", "title", resultObject.title)
-            .isNotFalsy()
-            .lengthRange(3, 128)
-        // Description scope
-        .createScope("description", "description", resultObject.description)
-            .isNotFalsy()
-            .lengthRange(10, 512)
-        // Categories and price
-        .createScope(idBasedScope, "categoryId", resultObject.categoryId)
-            .isNotFalsy()
-            .isInt()
-            .numRange(0, 20)
-        // Others
-        .useScope(idBasedScope, "priceId", resultObject.priceId)
-        .useScope(idBasedScope, "rooms", resultObject.rooms)
-        .useScope(idBasedScope, "parking", resultObject.parking)
-        .useScope(idBasedScope, "bathrooms", resultObject.bathrooms)
-        .createScope(coordinateScope, "latitude", resultObject.latitude)
-            .isNotFalsy()
-            .isFloat()
-        .useScope(coordinateScope, "longitude", resultObject.longitude)
-        .createScope("street", "street", resultObject.street)
-            .isNotFalsy();
-    
     // Check that validation passes
-    let result = val.validate();
+    let result = validateProperty(resultObject);
     if(result.length > 0) {
         console.log(`Errors: `, result);
-        return;
+        return result;
     }
+    console.log(`Validation passed`);
     
     // Post data
-    await axios.post('/create', {
+    await axios.post('/user/property/create', {
         property: resultObject,
     }).then(function (response) {
         console.log(response);

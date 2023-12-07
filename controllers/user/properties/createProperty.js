@@ -4,28 +4,31 @@ import Property from "../../../models/Property.js";
 import Price from "../../../models/Price.js";
 
 const createProperty = async(req, res) => {
-    // Validation
-    let result = validationResult(req);
+    console.log(`Body: `, req.body);
     
-    if(!result.isEmpty()) {
-        // Get price and category
-        const [
-            categories,
-            prices,
-        ] = await Promise.all([
-            Category.findAll(),
-            Price.findAll(),
-        ]);
+    
+    // // Validation
+    // let result = validationResult(req);
+    
+    // if(!result.isEmpty()) {
+    //     // Get price and category
+    //     const [
+    //         categories,
+    //         prices,
+    //     ] = await Promise.all([
+    //         Category.findAll(),
+    //         Price.findAll(),
+    //     ]);
         
-        return res.render(
-            "user/property/create", {
-            page: "Create property",
-            categories,
-            prices,
-            errors: result.array(),
-            property: req.body,
-        });
-    }
+    //     return res.render(
+    //         "user/property/create", {
+    //         page: "Create property",
+    //         categories,
+    //         prices,
+    //         errors: result.array(),
+    //         property: req.body,
+    //     });
+    // }
     
     // Insert on the database
     try {
