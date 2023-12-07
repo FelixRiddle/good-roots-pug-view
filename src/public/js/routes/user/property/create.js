@@ -31,8 +31,8 @@ submitBtn.addEventListener("click", async (event) => {
     ];
     
     // Take the form and fetch every value from the names
-    let resultObject = formFetchAllValues(inputElementsNames);
-    if(resultObject) {
+    let property = formFetchAllValues(inputElementsNames);
+    if(property) {
         console.log(`Fetch form values Ok`);
     } else {
         console.log(`Couldn't fetch form values!`);
@@ -42,30 +42,39 @@ submitBtn.addEventListener("click", async (event) => {
     }
     
     // Parse values
-    resultObject.categoryId = parseInt(resultObject.categoryId);
-    resultObject.priceId = parseInt(resultObject.priceId);
-    resultObject.bathrooms = parseInt(resultObject.bathrooms);
-    resultObject.parking = parseInt(resultObject.parking);
-    resultObject.rooms = parseInt(resultObject.rooms);
+    property.categoryId = parseInt(property.categoryId);
+    property.priceId = parseInt(property.priceId);
+    property.bathrooms = parseInt(property.bathrooms);
+    property.parking = parseInt(property.parking);
+    property.rooms = parseInt(property.rooms);
     
     // Place
-    resultObject.latitude = parseFloat(resultObject.latitude);
-    resultObject.longitude = parseFloat(resultObject.longitude);
+    property.latitude = parseFloat(property.latitude);
+    property.longitude = parseFloat(property.longitude);
     
     // Check that validation passes
-    let result = validateProperty(resultObject);
+    let result = validateProperty(property);
     if(result.length > 0) {
         console.log(`Validation didn't pass`);
         return result;
     }
     console.log(`Validation passed`);
     
+    // Create axios instance
+    const instance = axios.create({
+        baseUrl: "http://localhost:3001",
+        timeout: 1000,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    
     // Post data
-    await axios.post('/user/property/create', {
-        property: resultObject,
+    await instance.post("/user/property/create", {
+        property,
     }).then(function (response) {
-        console.log(response);
+        console.log(`Success: `, response);
     }).catch(function (error) {
-        console.log(error);
+        console.log(`Error: `, error);
     });
 });

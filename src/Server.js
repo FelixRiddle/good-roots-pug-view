@@ -96,6 +96,9 @@ export default class Server {
             extended: true,
         }));
         
+        // Json parser middleware
+        this.app.use(express.json())
+        
         // Cors whitelist
         let whitelist = [process.env.ORIGIN];
         

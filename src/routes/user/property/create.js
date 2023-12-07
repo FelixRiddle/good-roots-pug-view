@@ -1,14 +1,15 @@
 import express from "express";
 
 import Property from "../../../models/Property.js";
-import validateProperty from "../../../public/js/validation/validateProperty.js";
 import Price from "../../../models/Price.js";
 import Category from "../../../models/Category.js";
+import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 
 const createPropertyRouter = express.Router();
 
 // Routes
 createPropertyRouter.get(`/create`, async (req, res) => {
+    
     // Get price and category
     const [
         categories,
@@ -25,16 +26,7 @@ createPropertyRouter.get(`/create`, async (req, res) => {
     });
 });
 
-createPropertyRouter.post(`/create`, async (req, res) => {
-    console.log(`Body: `, req.body);
-    
-    let result = validateProperty(req.body.property);
-    if(result.length > 0) {
-        return res.send({
-            errors: result
-        });
-    }
-    
+createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
     // Insert on the database
     try {
         // Extract data
