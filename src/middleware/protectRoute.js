@@ -2,8 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const protectRoute = async (req, res, next) =>  {
-    
-    console.log(`Validating user token...`);
+    console.log(`Route is protected!`);
     
     // Check token
     // Get and rename token

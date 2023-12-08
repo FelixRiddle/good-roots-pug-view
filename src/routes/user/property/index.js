@@ -1,7 +1,12 @@
 import express from "express";
 
-import createPropertyRouter from "./create.js";
 import protectRoute from "../../../middleware/protectRoute.js";
+
+// Routers
+import adminRoutes from "./admin.js";
+import createPropertyRouter from "./create.js";
+import editRouter from "./edit.js";
+import setImageRouter from "./setImage.js";
 
 const propertyRoutes = express.Router();
 
@@ -9,6 +14,9 @@ const propertyRoutes = express.Router();
 propertyRoutes.use(protectRoute);
 
 // Use these routers
-propertyRoutes.use(createPropertyRouter)
+propertyRoutes.use(adminRoutes);
+propertyRoutes.use(createPropertyRouter);
+propertyRoutes.use(editRouter);
+propertyRoutes.use(setImageRouter);
 
 export default propertyRoutes;
