@@ -4,38 +4,41 @@ import Price from "../../../models/Price.js";
 import Category from "../../../models/Category.js";
 import Property from "../../../models/Property.js";
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
+import expand from "../../../controllers/expand.js";
 
 const editRouter = express.Router();
 
 editRouter.get("/edit/:id", async (req, res) => {
-    console.log(`Entered edit mode`);
-    console.log("Body: ", req.body);
-    
-    const { id } = req.params;
-    
-    // Check that property exists
-    const property = Property.findByPk(id);
-    
-    // Get price and category
-    const [
-        categories,
-        prices,
-    ] = await Promise.all([
-        Category.findAll(),
-        Price.findAll(),
-    ]);
-    
+    const adminPanel = "user/property/admin";
     try {
+        const { id } = req.params;
+        
+        // Check that property exists
+        const propertyController = await Property.findByPk(id);
+        const property = propertyController.get({plain:true});
+        
+        // Get price and category
+        const [
+            categories,
+            prices,
+        ] = await Promise.all([
+            Category.findAll(),
+            Price.findAll(),
+        ]);
+        
         if(!property) {
-            return res.redirect("/admin");
+            console.log(`Property doesn't exists!`);
+            return res.redirect(adminPanel);
         }
         
         // Check that person that accessed this url
         // is the person that owns this property
         if(property.userId.toString() !== req.user.id.toString()) {
-            return res.redirect("/admin");
+            console.log(`The user is not the owner of the property!`);
+            return res.redirect(adminPanel);
         }
         
+        console.log(`Ok, rendering edit`);
         return res.render(
             "user/property/edit", {
             page: `Edit property: ${property.title}`,
@@ -45,20 +48,19 @@ editRouter.get("/edit/:id", async (req, res) => {
             ...expand(req),
         });
     } catch(err) {
-        console.log(err);
+        console.log(`Error: `, err);
         
         return res.render(
-            "user/property/edit", {
-            page: `Edit property: ${property.title}`,
-            categories,
-            prices,
-            property: req.body,
+            adminPanel, {
+            page: `Admin panel`,
+            ...expand(req),
         });
     }
 });
 
 // For post, we have to validate the property data again
 editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
+    const adminPanel = "user/property/admin";
     try {
         // Validation
         let result = validationResult(req);
@@ -89,12 +91,12 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         
         // Check that property exists
         if(!property) {
-            return res.redirect("/admin");
+            return res.redirect(adminPanel);
         }
         
         // Check that the property owner is the user that made the request
         if(property.userId.toString() !== req.user.id.toString()) {
-            return res.redirect("/admin")
+            return res.redirect(adminPanel)
         }
         
         // Extract data
@@ -127,11 +129,11 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         
         await property.save();
         
-        return res.redirect("/admin");
+        return res.redirect(adminPanel);
     } catch(err) {
         console.log(err);
         
-        return res.redirect("/admin");
+        return res.redirect(adminPanel);
     }
 });
 
