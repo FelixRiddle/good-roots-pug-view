@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/User.js";
+import expand from "../../controllers/expand.js";
 
 const protectRoute = async (req, res, next) =>  {
     // Check token
@@ -7,9 +8,10 @@ const protectRoute = async (req, res, next) =>  {
     let { _token: token } = req.cookies;
     
     // If there's no token, send the user to the login page
-    let loginPage = "auth/login";
+    let expanded = expand(req);
+    let loginPage = `${expanded.websiteInfo.baseUrl}/auth/login`;
     if(!token) {
-        console.log("No token found, redirecting to ");
+        console.log(`No token found, redirecting to ${loginPage}`);
         return res.redirect(loginPage);
     }
     
