@@ -39,12 +39,13 @@ editRouter.get("/edit/:id", async (req, res) => {
         }
         
         console.log(`Ok, rendering edit`);
+        console.log(`Property: `, property);
         return res.render(
             "user/property/edit", {
             page: `Edit property: ${property.title}`,
             categories,
             prices,
-            property: req.body,
+            property,
             ...expand(req),
         });
     } catch(err) {

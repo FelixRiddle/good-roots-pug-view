@@ -30,13 +30,13 @@ block content
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="title") Property title 
                         input#title.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                            placeholder="My spectacular house" type="text" name="title" value=property ? property.title : "")
+                            placeholder="My spectacular house" type="text" name="title" value=property.title)
                     
                     //- Description
                     div
                         label(class="block text-sm uppercase text-gray-500 mb-2 font-bold" for="description") Description 
                         textarea#description.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                            placeholder="My house description" name="description" value=property ? property.description : "")
+                            placeholder="My house description" name="description" value=property.description)
                     
                     //- Category and price with a select item list
                     div(class="md:flex md:gap-4 space-y-6 md:space-y-0")
@@ -46,11 +46,11 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="categoryId") Category 
                             select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="categoryId")
-                                option(value="") - Select one - 
+                                option(value=property.categoryId) - Select one - 
                                 each category in categories
+                                    //- selected=property.categoryId == category.id ? true : false
                                     option(
                                         value=category.id
-                                        selected=property ? property.categoryId == category.id ? true : false : null
                                     )=category.name
                         
                         //- Price
@@ -58,11 +58,10 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="priceId") Price 
                             select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="priceId")
-                                option(value="") - Select one - 
+                                option(value=property.priceId) - Select one - 
                                 each price in prices
                                     option(
                                         value=price.id
-                                        selected=property ? property.priceId == price.id ? true : false : null
                                     )=price.name
                     
                     //- Category and price with a select item list
@@ -73,7 +72,7 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="rooms") Rooms 
                             select#rooms.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="rooms")
-                                option(value=property ? property.rooms : "") - Select one - 
+                                option(value=property.rooms) - Select one - 
                                 - var n = 1;
                                     while n < 10
                                         option(value=n) #{n++}
@@ -84,7 +83,7 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="parking") Parking 
                             select#parking.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="parking")
-                                option(value=property ? property.parking : "") - Select one - 
+                                option(value=property.parking) - Select one - 
                                 - var n = 1;
                                     while n < 5
                                         option(value=n) #{n++}
@@ -94,7 +93,7 @@ block content
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="bathrooms") Bathrooms 
                             select#bathrooms.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
                                 name="bathrooms")
-                                option(value=property ? property.bathrooms : "") - Select one - 
+                                option(value=property.bathrooms) - Select one - 
                                 - var n = 1;
                                     while n < 5
                                         option(value=n) #{n++}
@@ -110,12 +109,24 @@ block content
                         
                         //- Show the user the current street
                         div 
-                            p.street= property ? property.street : ""
+                            p.street=property.street
                         
                         //- Send information about the pin location to the backend
-                        input(type="hidden" value=property ? property.street : "" name="street" id="street")
-                        input(type="hidden" value=property ? property.latitude : "" name="latitude" id="latitude")
-                        input(type="hidden" value=property ? property.longitude : "" name="longitude" id="longitude")
+                        input(
+                            type="hidden"
+                            value=property.street
+                            name="street"
+                            id="street")
+                        input(
+                            type="hidden"
+                            value=property.latitude
+                            name="latitude"
+                            id="latitude")
+                        input(
+                            type="hidden"
+                            value=property.longitude
+                            mame="longitude"
+                            id="longitude")
                     
                     //- Add image
                     input(
