@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Validator, formFetchAllValues } from "felixriddle.checkpoint";
+
+import { formFetchAllValues } from "felixriddle.checkpoint";
 
 import validateProperty from "../../../validation/validateProperty.js";
 

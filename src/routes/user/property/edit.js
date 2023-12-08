@@ -7,7 +7,7 @@ import validatePropertyData from "../../../middleware/property/validatePropertyD
 
 const editRouter = express.Router();
 
-editRouter.get("/edit:id", async (req, res) => {
+editRouter.get("/edit/:id", async (req, res) => {
     console.log(`Entered edit mode`);
     console.log("Body: ", req.body);
     
@@ -42,6 +42,7 @@ editRouter.get("/edit:id", async (req, res) => {
             categories,
             prices,
             property: req.body,
+            ...expand(req),
         });
     } catch(err) {
         console.log(err);
@@ -57,7 +58,7 @@ editRouter.get("/edit:id", async (req, res) => {
 });
 
 // For post, we have to validate the property data again
-editRouter.post("/edit:id", validatePropertyData, async (req, res) => {
+editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
     try {
         // Validation
         let result = validationResult(req);

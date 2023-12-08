@@ -3,6 +3,7 @@ import express from "express";
 import Property from "../../../models/Property.js";
 import Category from "../../../models/Category.js";
 import Price from "../../../models/Price.js";
+import expand from "../../../controllers/expand.js";
 
 const adminRoutes = express.Router();
 
@@ -35,6 +36,7 @@ const admin = async(req, res) => {
     return res.render("user/property/admin", {
         page: "My Properties",
         properties,
+        ...expand(req),
     });
 }
 

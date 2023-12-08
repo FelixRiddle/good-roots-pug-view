@@ -23,7 +23,7 @@ export default class Server {
      */
     mountRoutes() {
         // User routes
-        this.app.use("/auth", userRoutes);
+        // this.app.use("/auth", userRoutes);
         this.app.use(routes);
     }
     
@@ -34,6 +34,10 @@ export default class Server {
         // Open server
         this.app.listen(process.env.SERVER_PORT, () => {
             console.log(`Server running at http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`);
+            console.log(
+                `Warning: Concurrently and friends don't auto-detect changes in ./views,\n`,
+                `you have to manually restart the server`
+            );
         });
     }
     
@@ -47,9 +51,9 @@ export default class Server {
     }
     
     /**
-     * Setup some things
+     * Enable CSP
      */
-    async setupMiddleware() {
+    enableCsp() {
         // CSP policy
         let cspPolicy = (() => {
             // Array of allowed domains
@@ -71,10 +75,10 @@ export default class Server {
             let scriptSrc = `script-src ${domains}'self' 'unsafe-eval' 'unsafe-inline';`;
             let styleSrc = `style-src ${domains}'self' 'unsafe-inline';`;
             let imgSrc = `img-src ${domains}'self' data:;`;
+            let defaultSrc = `default-src ${domains}'self' 'unsafe-eval' 'unsafe-inline';`;
+            let fontAndFrame = "font-src 'self'; frame-src 'self';";
             
-            // Allow self
-            let allowSelf = "font-src 'self'; frame-src 'self';";
-            let cspPolicy = `${allowSelf} ${scriptSrc} ${styleSrc} ${imgSrc}`;
+            let cspPolicy = `${fontAndFrame} ${defaultSrc} ${scriptSrc} ${styleSrc} ${imgSrc}`;
             console.log(`Csp policy: ${cspPolicy}`);
             
             return cspPolicy;
@@ -88,8 +92,15 @@ export default class Server {
             );
             next();
         });
+    }
+    
+    /**
+     * Setup some things
+     */
+    async setupMiddleware() {
+        this.enableCsp();
         
-        // IDK
+        // I don't know
         this.app.use(express.urlencoded({
             extended: true,
         }));
@@ -124,11 +135,20 @@ export default class Server {
             console.error(err);
         }
         
-        // Enable pug
-        this.app.set("view engine", "pug");
-        this.app.set("views", "./views");
+        this.usePugView();
         
         // Public assets folder
         this.app.use(express.static("public"));
+    }
+    
+    /**
+     * Enable pug
+     */
+    usePugView() {
+        // this.app.enable("view cache");
+        
+        // Enable pug
+        this.app.set("view engine", "pug");
+        this.app.set("views", "./views");
     }
 }

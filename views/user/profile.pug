@@ -1,0 +1,10 @@
+extends ../index
+
+block content
+    h1.font-bold.text-center User profile 
+    
+    if user
+        p Name:
+            div=user.name
+        p E-Mail:
+            div=user.email

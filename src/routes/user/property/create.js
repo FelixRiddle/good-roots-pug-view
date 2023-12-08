@@ -5,6 +5,8 @@ import Price from "../../../models/Price.js";
 import Category from "../../../models/Category.js";
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 
+import expand from "../../../controllers/expand.js";
+
 const createPropertyRouter = express.Router();
 
 // Routes
@@ -23,6 +25,7 @@ createPropertyRouter.get(`/create`, async (req, res) => {
         page: "Create property",
         categories,
         prices,
+        ...expand(req),
     });
 });
 
@@ -74,7 +77,7 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         console.error(err);
     }
     
-    return res.render("/user/admin");
+    return res.redirect("/user/admin");
 });
 
 export default createPropertyRouter;

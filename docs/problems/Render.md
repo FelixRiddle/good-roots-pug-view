@@ -17,3 +17,10 @@ res.render("user/property/admin");
 ```
 
 Notice that the first slash is not there.
+
+## Render absolute paths
+
+In the previous case the problem is not fixed, it just keeps looking down the chain, but what if I want to render a file at the root of the app?
+
+You could use the absolute path of the file.
+

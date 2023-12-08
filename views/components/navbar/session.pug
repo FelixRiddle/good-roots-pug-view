@@ -1,0 +1,11 @@
+block session
+    //- Navigation bar
+    nav(class="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white hidden")
+        //- Navigation bar
+        if user
+            a(href=`${websiteInfo.baseUrl}/user/property/admin`) My properties
+            a(href=`${websiteInfo.baseUrl}/user/profile`) Profile
+            a(class="bg-indigo-800 py-2 px-10 rounded-lg" href=`${websiteInfo.baseUrl}`) Log out
+        else
+            a(class="bg-indigo-800 py-2 px-10 rounded-lg" href=`${websiteInfo.baseUrl}/user/auth/login`) Log in
+    

@@ -18,21 +18,21 @@ const router = express.Router();
 
 // --- Auth ---
 // Register
-router.get("/register", registerFormulary);
-router.post("/register", register);
+// router.get("/register", registerFormulary);
+// router.post("/register", register);
 
-// Login
-router.get("/login", getUser, loginFormulary);
-router.post("/login", authenticate);
+// // Login
+// router.get("/login", getUser, loginFormulary);
+// router.post("/login", authenticate);
 
 // Email
 router.get("/confirmEmail/:token", verifyEmail);
 
-// Forgot password
-router.get("/forgotPassword", forgotPasswordFormulary);
-router.post("/forgotPassword", resetPassword);
+// // Forgot password
+// router.get("/forgotPassword", forgotPasswordFormulary);
+// router.post("/forgotPassword", resetPassword);
 
-router.get("/resetPassword/:token", verifyToken);
-router.post("/resetPassword/:token", createNewPassword);
+// router.get("/resetPassword/:token", verifyToken);
+// router.post("/resetPassword/:token", createNewPassword);
 
 export default router;

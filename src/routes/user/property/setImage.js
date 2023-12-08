@@ -2,6 +2,7 @@ import express from "express";
 
 import Property from "../../../models/Property.js";
 import upload from "../../../middleware/updloadImage.js";
+import expand from "../../../controllers/expand.js";
 
 const setImageRouter = express.Router();
 
@@ -14,22 +15,22 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         let user = req.user.dataValues;
         
         // Validate that the property exists
-        const property = await Property.findByPk(id);
+        const propertyController = await Property.findByPk(id);
         
-        if(!property) {
+        if(!propertyController) {
             console.log(`The requested property doesn't exists!`);
             return res.redirect("/user/property/admin");
         }
         
         // Validate that the property is not published
-        if(property.published) {
+        if(propertyController.published) {
             console.log(`This property has already been published`);
             return res.redirect("/user/property/admin");
         }
         
         // Validate that the property belongs to the own who made the request
         if(user) {
-            if(user.id.toString() !== property.userId.toString()) {
+            if(user.id.toString() !== propertyController.userId.toString()) {
                 console.log(`The user doesn't own this property going back...`);
                 console.log(`User: `, req.user.name);
                 return res.redirect("/user/property/admin");
@@ -39,15 +40,23 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             return res.redirect("/user/property/admin");
         }
         
+        // Remove sequelize stuff and leave just the data
+        let property = propertyController.get({ plain: true });
+        
         // Ok, render the page to set the image
-        let nextUrl = `/user/property/set_image`;
-        console.log(`All validations ok, going to ${nextUrl}`)
-        return res.render(nextUrl, {
+        let nextUrl = `user/property/setImage`;
+        console.log(`All validations ok`);
+        console.log(`Rendering: ${nextUrl}`);
+        return res.render(
+            nextUrl, {
             page: `Set images for ${property.title}`,
-            property
+            property,
+            ...expand(req),
         });
     } catch(err) {
         console.log(err);
+        console.log(`Error: `, err);
+        console.log(`Couldn't render /set_image`);
         return res.redirect("/user/property/admin");
     }
 });
