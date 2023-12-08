@@ -37,18 +37,13 @@ div(
             )
         
         //- Edit property
-        //- Note the replace, express interprets hyphens diferrently, so we have to remove them.
-        //- References:
-        //- https://expressjs.com/en/guide/routing.html
-        //- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
         a(
-            href=`/user/properties/edit/${property.id.replaceAll("-", "")}`
+            href=`/user/properties/edit/${property.id}`
             class="px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-indigo-100 text-indigo-800 text-center"
         ) Edit
         
         //- Delete
-        //- The same, we have to replace it each time we use property.id
-        form(action=`/user/properties/edit/${property.id.replaceAll("-", "")}`) 
+        form(action=`/user/properties/edit/${property.id}`) 
             input(
                 type="submit"
                 class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800 w-full`

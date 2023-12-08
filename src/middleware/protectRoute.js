@@ -2,8 +2,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const protectRoute = async (req, res, next) =>  {
-    console.log(`Route is protected!`);
-    
     // Check token
     // Get and rename token
     let { _token: token } = req.cookies;
@@ -24,7 +22,6 @@ const protectRoute = async (req, res, next) =>  {
         
         // Store user on the request
         if(user) {
-            console.log(`User is Ok`);
             req.user = user;
         } else {
             console.log(`User not existent going back`);

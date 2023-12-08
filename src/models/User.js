@@ -5,6 +5,12 @@ import db from "../config/db.js";
 import Property from "./Property.js";
 
 const User = db.define("users", {
+    id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false,

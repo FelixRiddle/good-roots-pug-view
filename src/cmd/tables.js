@@ -78,9 +78,14 @@ async function downAll() {
         console.log(`Destroying tables`);
         
         // Delete data
+        // You can't put everything together
+        // First those that depend on others, go down
         await Promise.all([
             // The relation is property to price, so you first have to delete property
             Property.destroy({ where: {}, truncate: true }),
+        ]);
+        // Now the ones that don't depend on anything
+        await Promise.all([
             Category.destroy({ where: {}, truncate: true }),
             User.destroy({ where: {}, truncate: true }),
             Price.destroy({ where: {}, truncate: true }),

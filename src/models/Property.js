@@ -3,10 +3,15 @@ import db from "../config/db.js";
 
 const Property = db.define("property", {
     id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        primaryKey: true,
     },
     title: {
         type: DataTypes.STRING(128),

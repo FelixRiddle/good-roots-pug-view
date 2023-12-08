@@ -43,11 +43,11 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
             categoryId,
         } = req.body.property;
         
+        // Get user 'id' and rename it to 'userId'
         const { id: userId } = req.user;
-        console.log(`Owner id: `, userId);
         
         // Store data
-        const property = Property.create({
+        const property = await Property.create({
             // id(The uuid is generated automatically by the database)
             title,
             description,
@@ -66,13 +66,15 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         let id = property.id;
         
         console.log(`Success the user will be going to set the image`);
-        return res.redirect(`/user/property/set-image/${id}`);
+        let setImageUrl = `/user/property/set_image/${id}`;
+        console.log(`Set image url: ${setImageUrl}`);
+        return res.redirect(setImageUrl);
     } catch(err) {
-        console.log(`Error detected, the user will be redirected to its profile`);
+        console.log(`Error detected, the user will be redirected to properties`);
         console.error(err);
     }
     
-    return res.render("/user/profile");
+    return res.render("/user/admin");
 });
 
 export default createPropertyRouter;

@@ -128,7 +128,7 @@ export default class Server {
         this.app.set("view engine", "pug");
         this.app.set("views", "./views");
         
-        // Public folder
+        // Public assets folder
         this.app.use(express.static("public"));
     }
 }

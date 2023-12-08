@@ -8,17 +8,10 @@ const setImageRouter = express.Router();
 // Set image
 // I just remembered, id doesn't work here
 // We have to remove the hyphens from it.
-setImageRouter.get("/set-image/:id", async (req, res) => {
+setImageRouter.get("/set_image/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(`Get set-image with id: ${id}`);
-        console.log(`Body: `, req.body);
-        console.log(`Id: ${id}`);
-        console.log(`Params: `, req.params);
-        console.log(`User: `, req.user);
-        
         let user = req.user.dataValues;
-        console.log(`User: `, user);
         
         // Validate that the property exists
         const property = await Property.findByPk(id);
@@ -36,11 +29,7 @@ setImageRouter.get("/set-image/:id", async (req, res) => {
         
         // Validate that the property belongs to the own who made the request
         if(user) {
-            console.log(`User id: `, user.id);
-            console.log(`Type: `, typeof(user.id));
-            console.log(`Property owner id: ${property.ownerId}`)
-            
-            if(user.id.toString() !== property.ownerId.toString()) {
+            if(user.id.toString() !== property.userId.toString()) {
                 console.log(`The user doesn't own this property going back...`);
                 console.log(`User: `, req.user.name);
                 return res.redirect("/user/property/admin");
@@ -50,7 +39,10 @@ setImageRouter.get("/set-image/:id", async (req, res) => {
             return res.redirect("/user/property/admin");
         }
         
-        return res.render(`user/property/set-image`, {
+        // Ok, render the page to set the image
+        let nextUrl = `/user/property/set_image`;
+        console.log(`All validations ok, going to ${nextUrl}`)
+        return res.render(nextUrl, {
             page: `Set images for ${property.title}`,
             property
         });
@@ -60,7 +52,7 @@ setImageRouter.get("/set-image/:id", async (req, res) => {
     }
 });
 
-setImageRouter.post("/set-image/:id", upload.single("image"), async (req, res) => {
+setImageRouter.post("/set_image/:id", upload.single("image"), async (req, res) => {
     try {
         const { id } = req.params;
         console.log(`Inserting the image on the server with id(property): ${id}`);
