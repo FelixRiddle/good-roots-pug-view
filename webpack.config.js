@@ -6,13 +6,31 @@ let publicRoutes = "./src/public/js/routes/";
 export default {
     mode: "development",
     entry: {
-        map: `${jsPath}map.js`,
-        insertImage: `${jsPath}insertImage.js`,
-        create: {
+        property1: {
             import: [
-                `${publicRoutes}user/property/create.js`
+                `${publicRoutes}user/property/edit.js`
+            ],
+            filename: `routes/user/property/edit.js`
+        },
+        property2: {
+            import: [
+                `${publicRoutes}user/property/create.js`,
             ],
             filename: `routes/user/property/create.js`
+        },
+        formularies: {
+            import: [
+                `${jsPath}formularies/index.js`
+            ],
+            filename: "formularies/index.js"
+        },
+        insertImage: `${jsPath}insertImage.js`,
+        map: `${jsPath}map.js`,
+        navbar: {
+            import: [
+                `${jsPath}navbar/index.js`
+            ],
+            filename: "navbar/index.js"
         },
         validation: {
             import: [
@@ -20,15 +38,9 @@ export default {
             ],
             filename: `validation/validation.js`
         },
-        navbar: {
-            import: [
-                `${jsPath}navbar/index.js`
-            ],
-            filename: "navbar/index.js"
-        }
     },
     output: {
-        filename: "[name].js",
+        // filename: "[name].js",
         path: path.resolve("public/js")
     }
 };

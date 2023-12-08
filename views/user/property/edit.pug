@@ -19,7 +19,11 @@ block content
         
         //- Formulary
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
-            form.space-y-8(method="POST" action="edit")
+            form.space-y-8(
+                method="POST"
+                action="edit"
+                id="edit:form"
+            )
                 //- Empty tag defaults to div
                 .space-y-8
                     h3.text-lg.leading-6.font-medium.text-gray-900 General Information
@@ -35,8 +39,12 @@ block content
                     //- Description
                     div
                         label(class="block text-sm uppercase text-gray-500 mb-2 font-bold" for="description") Description 
-                        textarea#description.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                            placeholder="My house description" name="description" value=property.description)
+                        textarea(
+                            id="description"
+                            class="w-full px-3 py-4 border border-gray-300 rounded-md placeholder-gray-400"
+                            placeholder="My house description"
+                            name="description"
+                        )=property.description
                     
                     //- Category and price with a select item list
                     div(class="md:flex md:gap-4 space-y-6 md:space-y-0")
@@ -48,9 +56,9 @@ block content
                                 name="categoryId")
                                 option(value=property.categoryId) - Select one - 
                                 each category in categories
-                                    //- selected=property.categoryId == category.id ? true : false
                                     option(
                                         value=category.id
+                                        selected=property.categoryId == category.id ? true : false
                                     )=category.name
                         
                         //- Price
@@ -62,6 +70,7 @@ block content
                                 each price in prices
                                     option(
                                         value=price.id
+                                        selected=property.priceId == price.id ? true : false
                                     )=price.name
                     
                     //- Category and price with a select item list
@@ -75,7 +84,10 @@ block content
                                 option(value=property.rooms) - Select one - 
                                 - var n = 1;
                                     while n < 10
-                                        option(value=n) #{n++}
+                                        option(
+                                            value=n
+                                            selected=property.rooms == n ? true : false
+                                        ) #{n++}
                                         
                         
                         //- Parking
@@ -86,7 +98,10 @@ block content
                                 option(value=property.parking) - Select one - 
                                 - var n = 1;
                                     while n < 5
-                                        option(value=n) #{n++}
+                                        option(
+                                            value=n
+                                            selected=property.parking == n ? true : false
+                                            ) #{n++}
                         
                         //- Bathrooms
                         div(class="md:w-1/3")
@@ -96,7 +111,10 @@ block content
                                 option(value=property.bathrooms) - Select one - 
                                 - var n = 1;
                                     while n < 5
-                                        option(value=n) #{n++}
+                                        option(
+                                            value=n
+                                            selected=property.bathrooms == n ? true : false
+                                            ) #{n++}
                     
                     //- Location information
                     div.border-gray-200.border-t.py-5.space-y-5
@@ -144,3 +162,4 @@ block scripts
     
     //- Load map
     script(src="/js/map.js")
+    script(src="/js/routes/user/property/edit.js")
