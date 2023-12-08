@@ -5,6 +5,7 @@ import express from 'express';
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
 import routes from './routes/index.js';
+import getUser from './middleware/auth/getUser.js';
 
 /**
  * Server
@@ -20,7 +21,7 @@ export default class Server {
      * Mount routes
      */
     mountRoutes() {
-        this.app.use(routes);
+        this.app.use(getUser, routes);
     }
     
     /**

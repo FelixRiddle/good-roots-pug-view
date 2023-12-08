@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../../models/User.js";
 
 const protectRoute = async (req, res, next) =>  {
     // Check token
@@ -7,10 +7,10 @@ const protectRoute = async (req, res, next) =>  {
     let { _token: token } = req.cookies;
     
     // If there's no token, send the user to the login page
-    let loginPage = "/user/auth/login";
+    let loginPage = "auth/login";
     if(!token) {
         console.log("No token found, redirecting to ");
-        return res.redirect("/user/");
+        return res.redirect(loginPage);
     }
     
     // Validate token
@@ -26,14 +26,14 @@ const protectRoute = async (req, res, next) =>  {
             req.user = user;
         } else {
             console.log(`User not existent going back`);
-            return res.redirect("/auth/login");
+            return res.redirect(loginPage);
         }
         
         return next();
     } catch(err) {
         console.error(err);
         console.log(`Logging out the user`);
-        return res.clearCookie("_token").redirect("/auth/login");
+        return res.clearCookie("_token").redirect(loginPage);
     }
 }
 

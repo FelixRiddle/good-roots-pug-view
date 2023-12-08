@@ -33,10 +33,13 @@ const admin = async(req, res) => {
     // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
     const properties = propertiesRes.map(x => x.get({ plain: true }));
     
+    let expanded = expand(req);
+    console.log(`Expanded: `, expanded);
+    console.log(`Rendering /user/property/admin`);
     return res.render("user/property/admin", {
         page: "My Properties",
         properties,
-        ...expand(req),
+        ...expanded,
     });
 }
 

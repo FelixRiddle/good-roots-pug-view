@@ -1,7 +1,8 @@
-/* Get the user
-
-But if not user is found, it will let the user still access the requested page
-*/
+/**
+ * Get user
+ * 
+ * But if not user is found, it will let the user still access the requested page
+ */
 import jwt from "jsonwebtoken";
 
 import User from "../../models/User.js";
@@ -10,7 +11,6 @@ import User from "../../models/User.js";
 const getUser = async (req, res, next) =>  {
     // Validate token
     try {
-    
         // Check token
         // Get and rename token
         let { _token: token } = req.cookies;
@@ -24,7 +24,6 @@ const getUser = async (req, res, next) =>  {
             
             // Store user on the request
             if(user) {
-                console.log(`User is Ok`);
                 req.user = user;
             }
         }

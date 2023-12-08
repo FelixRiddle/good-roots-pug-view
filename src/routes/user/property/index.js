@@ -1,6 +1,6 @@
 import express from "express";
 
-import protectRoute from "../../../middleware/protectRoute.js";
+import protectRoute from "../../../middleware/auth/protectRoute.js";
 
 // Routers
 import adminRoutes from "./admin.js";

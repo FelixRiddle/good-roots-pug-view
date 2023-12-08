@@ -1,7 +1,7 @@
 import express from "express";
 
 import userRoutes from "./user/index.js";
-import protectRoute from "../middleware/protectRoute.js";
+import protectRoute from "../middleware/auth/protectRoute.js";
 import homeRouter from "./home.js";
 import authRoutes from "./auth/index.js";
 
