@@ -7,7 +7,7 @@ import userProperty from "./routes/user/userProperty.js";
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
-import router from './routes/user/property/index.js';
+import routes from './routes/index.js';
 
 /**
  * Server
@@ -25,8 +25,8 @@ export default class Server {
     mountRoutes() {
         // User routes
         this.app.use("/auth", userRoutes);
-        this.app.use("/user/property", router)
         this.app.use("/user/property", userProperty);
+        this.app.use(routes);
     }
     
     /**

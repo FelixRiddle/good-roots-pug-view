@@ -3,12 +3,12 @@ import express from "express";
 import createPropertyRouter from "./create.js";
 import protectRoute from "../../../middleware/protectRoute.js";
 
-const router = express.Router();
+const propertyRoutes = express.Router();
 
 // This router middleware
-router.use(protectRoute);
+propertyRoutes.use(protectRoute);
 
 // Use these routers
-router.use(createPropertyRouter)
+propertyRoutes.use(createPropertyRouter)
 
-export default router;
+export default propertyRoutes;
