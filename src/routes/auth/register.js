@@ -1,9 +1,9 @@
 import { check, validationResult } from "express-validator";
-
-import { registerEmail } from "../../../helpers/emails.js";
-import { generateId } from "../../../helpers/tokens.js";
-import User from "../../../models/User.js";
 import express from "express";
+
+import { registerEmail } from "../../helpers/emails.js";
+import { generateId } from "../../helpers/tokens.js";
+import User from "../../models/User.js";
 
 const registerRouter = express.Router();
 

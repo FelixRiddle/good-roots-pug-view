@@ -2,8 +2,6 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import express from 'express';
 
-import userRoutes from "./routes/user/auth/userRoutes.js";
-
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
 import routes from './routes/index.js';
@@ -22,8 +20,6 @@ export default class Server {
      * Mount routes
      */
     mountRoutes() {
-        // User routes
-        // this.app.use("/auth", userRoutes);
         this.app.use(routes);
     }
     

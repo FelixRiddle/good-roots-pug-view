@@ -7,9 +7,10 @@ const protectRoute = async (req, res, next) =>  {
     let { _token: token } = req.cookies;
     
     // If there's no token, send the user to the login page
+    let loginPage = "/user/auth/login";
     if(!token) {
-        console.log("No token found");
-        return res.redirect("/auth/login");
+        console.log("No token found, redirecting to ");
+        return res.redirect("/user/");
     }
     
     // Validate token

@@ -2,8 +2,8 @@ import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import express from "express";
 
-import expand from "../../../../controllers/expand.js";
-import User from "../../../../models/User.js";
+import expand from "../../../controllers/expand.js";
+import User from "../../../models/User.js";
 
 // When resetting the password
 const createRouter = express.Router();

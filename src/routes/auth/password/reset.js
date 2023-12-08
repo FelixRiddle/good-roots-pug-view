@@ -1,10 +1,10 @@
 import { check, validationResult } from "express-validator";
 import express from "express";
 
-import { emailForgotPassword } from "../../../../helpers/emails.js";
-import { generateId } from "../../../../helpers/tokens.js";
-import User from "../../../../models/User.js";
-import expand from "../../../../controllers/expand.js";
+import { emailForgotPassword } from "../../../helpers/emails.js";
+import { generateId } from "../../../helpers/tokens.js";
+import User from "../../../models/User.js";
+import expand from "../../../controllers/expand.js";
 
 const resetRouter = express.Router();
 

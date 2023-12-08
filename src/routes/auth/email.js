@@ -1,7 +1,10 @@
-import User from "../../../../models/User.js";
+import express from "express";
+import User from "../../models/User.js";
+
+const emailRouter = express.Router();
 
 // Verify that the email is correct
-const verifyEmail = async(req, res) => {
+emailRouter.get("/email/:token", async(req, res) => {
     
     // Get the token
     const { token } = req.params;
@@ -13,7 +16,7 @@ const verifyEmail = async(req, res) => {
         },
     });
     if(!user) {
-        return res.render("auth/confirmAccount", {
+        return res.render("home", {
             page: "Error when confirming account",
             message: "User non existent or incorrect token",
             error: true,
@@ -28,10 +31,10 @@ const verifyEmail = async(req, res) => {
         await user.save();
     }
     
-    return res.render("auth/confirmAccount", {
+    return res.render("home", {
         page: "Email confirmed",
         message: "The user email has been confirmed"
     });
-};
+});
 
-export default verifyEmail;
+export default emailRouter;

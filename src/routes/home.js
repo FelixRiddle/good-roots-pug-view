@@ -7,11 +7,11 @@ const homeRouter = express.Router();
 const renderHome = (req, res) => {
     console.log(`Rendering home!`);
     
-    let data = expand(req);
-    console.log(`Data: `, data);
+    let expanded = expand(req);
+    console.log(`Data: `, expanded);
     return res.render(
-        "/home/felix/Repositories/Tutorials/bienesraices_mvc/views/home.pug", {
-            ...data
+        "home", {
+            ...expanded
         }
     );
 };

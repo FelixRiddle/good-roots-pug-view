@@ -1,7 +1,7 @@
 import path from "path";
 
 let jsPath = "./src/public/js/";
-let publicRoutes = "public/js/routes/";
+let publicRoutes = "./src/public/js/routes/";
 
 export default {
     mode: "development",
@@ -10,7 +10,7 @@ export default {
         insertImage: `${jsPath}insertImage.js`,
         create: {
             import: [
-                `${jsPath}routes/user/property/create.js`
+                `${publicRoutes}user/property/create.js`
             ],
             filename: `routes/user/property/create.js`
         },
@@ -19,6 +19,12 @@ export default {
                 `${jsPath}validation/validateProperty.js`
             ],
             filename: `validation/validation.js`
+        },
+        navbar: {
+            import: [
+                `${jsPath}navbar/index.js`
+            ],
+            filename: "navbar/index.js"
         }
     },
     output: {

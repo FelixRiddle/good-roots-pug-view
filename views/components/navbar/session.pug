@@ -5,7 +5,15 @@ block session
         if user
             a(href=`${websiteInfo.baseUrl}/user/property/admin`) My properties
             a(href=`${websiteInfo.baseUrl}/user/profile`) Profile
-            a(class="bg-indigo-800 py-2 px-10 rounded-lg" href=`${websiteInfo.baseUrl}`) Log out
+            a(class="bg-indigo-800 py-2 px-10 rounded-lg" href=`${websiteInfo.baseUrl}/user/auth/logout`) Log out
         else
-            a(class="bg-indigo-800 py-2 px-10 rounded-lg" href=`${websiteInfo.baseUrl}/user/auth/login`) Log in
-    
+            //- Doesn't work, don't know why, don't even want to know
+            //- href=`${websiteInfo.baseUrl}/user/auth/login`
+            a(
+                id="navbar:session:login"
+                class="bg-indigo-800 py-2 px-10 rounded-lg"
+                href=`${websiteInfo.baseUrl}/auth/login`
+            ) Log in
+
+block scripts
+    script(src="/js/navbar/index.js")
