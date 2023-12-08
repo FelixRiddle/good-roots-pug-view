@@ -3,7 +3,6 @@ import cors from "cors";
 import express from 'express';
 
 import userRoutes from "./routes/user/auth/userRoutes.js";
-import userProperty from "./routes/user/userProperty.js";
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
@@ -25,7 +24,6 @@ export default class Server {
     mountRoutes() {
         // User routes
         this.app.use("/auth", userRoutes);
-        this.app.use("/user/property", userProperty);
         this.app.use(routes);
     }
     

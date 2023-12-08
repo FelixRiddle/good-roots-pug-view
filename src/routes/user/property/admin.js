@@ -1,6 +1,8 @@
 import express from "express";
 
 import Property from "../../../models/Property.js";
+import Category from "../../../models/Category.js";
+import Price from "../../../models/Price.js";
 
 const adminRoutes = express.Router();
 

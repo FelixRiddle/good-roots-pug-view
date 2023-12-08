@@ -3,6 +3,7 @@ import express from "express";
 import Price from "../../../models/Price.js";
 import Category from "../../../models/Category.js";
 import Property from "../../../models/Property.js";
+import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 
 const editRouter = express.Router();
 
@@ -55,7 +56,8 @@ editRouter.get("/edit:id", async (req, res) => {
     }
 });
 
-editRouter.post("/edit:id", async (req, res) => {
+// For post, we have to validate the property data again
+editRouter.post("/edit:id", validatePropertyData, async (req, res) => {
     try {
         // Validation
         let result = validationResult(req);
