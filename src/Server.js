@@ -31,10 +31,6 @@ export default class Server {
         // Open server
         this.app.listen(process.env.SERVER_PORT, () => {
             console.log(`Server running at http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`);
-            console.log(
-                `Warning: Concurrently and friends don't auto-detect changes in ./views,\n`,
-                `you have to manually restart the server`
-            );
         });
     }
     

@@ -19,8 +19,12 @@ registerRouter.get("/register", (req, res) => {
 registerRouter.post("/register", async (req, res) => {
     try {
         // Check that passwords match
+        let expanded = expand(req);
         if(req.body.password != req.body.confirmPassword) {
             return res.render("auth/register", {
+                // Expanded data
+                ...req.body,
+                ...expanded,
                 page: "Create account",
                 messages: [{
                     message: "Passwords don't match.",
@@ -34,6 +38,10 @@ registerRouter.post("/register", async (req, res) => {
         let val = validateRegister(req.body);
         if(val.length > 0) {
             return res.render("auth/register", {
+                // Expanded data
+                ...req.body,
+                ...expanded,
+                // New data
                 page: "Create account",
                 errors: [...val],
                 user: req.body,
@@ -47,6 +55,9 @@ registerRouter.post("/register", async (req, res) => {
         const userExists = await User.findOne({ where: { email } });
         if(userExists) {
             return res.render("auth/register", {
+                // Expanded data
+                ...req.body,
+                ...expanded,
                 page: "Create account",
                 errors: [{
                     message: "The given E-Mail is already in use, try another or log in.",
@@ -72,6 +83,9 @@ registerRouter.post("/register", async (req, res) => {
         
         // Show confirmation message
         return res.render("home", {
+            // Expanded data
+            ...req.body,
+            ...expanded,
             page: "Account created",
             messages: [{
                 message: "We've sent a message to your E-Mail inbox, open it to confirm your account.",
@@ -82,6 +96,20 @@ registerRouter.post("/register", async (req, res) => {
         });
     } catch(err) {
         console.log(`Error: `, err);
+        let expanded = expand(req);
+        // Show confirmation message
+        return res.render("auth/register", {
+            // Expanded data
+            ...req.body,
+            ...expanded,
+            page: "Create account",
+            messages: [{
+                message: "Internal error, if the error persists, please report it.",
+                // Some messages should be notified, others not
+                shouldNotify: true,
+                error: true,
+            }]
+        });
     }
 });
 

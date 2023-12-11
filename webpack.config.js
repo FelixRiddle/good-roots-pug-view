@@ -18,6 +18,12 @@ export default {
             ],
             filename: `routes/user/property/create.js`
         },
+        global1: {
+            import: [
+                `${jsPath}global/location.js`
+            ],
+            filename: `js/global/location.js`
+        },
         formularies: {
             import: [
                 `${jsPath}formularies/index.js`

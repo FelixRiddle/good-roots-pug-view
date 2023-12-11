@@ -20,12 +20,12 @@ export default function expand(req) {
         user = userController.get({ plain: true });
     }
     
-    let ip = process.env.IP;
-    let port = process.env.PORT;
+    // let ip = process.env.IP;
+    // let port = process.env.PORT;
     return {
         user,
-        websiteInfo: {
-            baseUrl: `http://${ip ? ip : "127.0.0.1"}:${port ? port : "3000"}`
-        }
+        // websiteInfo: {
+        //     baseUrl: `http://${ip ? ip : "127.0.0.1"}:${port ? port : "3000"}`
+        // }
     };
 }
