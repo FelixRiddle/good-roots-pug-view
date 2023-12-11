@@ -4,13 +4,7 @@ block session
         //- Navigation bar
         
         //- Status messages
-        button(id="statusMessages:button") Status
-            //- If there are more than zero unseen messages
-            div(hidden)
-                <p>(</p>
-                //- Here show a number containing the amount of messages
-                <p>)</p>
-        include ../status_messages/index
+        include ../statusMessages
         
         //- User
         if user
