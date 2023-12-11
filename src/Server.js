@@ -45,6 +45,9 @@ export default class Server {
     
     /**
      * Enable CSP
+     * 
+     * TODO: Eval should be removed, but there's a package that uses it, I don't even know which one.
+     * TODO: A lot of things should be banned, that's the point of CSP.
      */
     enableCsp() {
         // CSP policy

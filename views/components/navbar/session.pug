@@ -2,6 +2,17 @@ block session
     //- Navigation bar
     nav(class="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white hidden")
         //- Navigation bar
+        
+        //- Status messages
+        button(id="statusMessages:button") Status
+            //- If there are more than zero unseen messages
+            div(hidden)
+                <p>(</p>
+                //- Here show a number containing the amount of messages
+                <p>)</p>
+        include ../status_messages/index
+        
+        //- User
         if user
             a(href=`/user/property/admin`) My properties
             a(href=`/user/profile`) Profile
