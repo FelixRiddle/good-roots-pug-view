@@ -6,6 +6,12 @@ let publicRoutes = "./src/public/js/routes/";
 export default {
     mode: "development",
     entry: {
+        auth: {
+            import: [
+                `${publicRoutes}auth/register.js`
+            ],
+            filename: "routes/auth/register.js"
+        },
         controller1: {
             import: [
                 `${jsPath}controller/statusMessages.js`

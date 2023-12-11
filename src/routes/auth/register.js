@@ -43,7 +43,7 @@ registerRouter.post("/register", async (req, res) => {
                 ...expanded,
                 // New data
                 page: "Create account",
-                errors: [...val],
+                messages: [...val],
                 user: req.body,
             });
         }
@@ -59,7 +59,7 @@ registerRouter.post("/register", async (req, res) => {
                 ...req.body,
                 ...expanded,
                 page: "Create account",
-                errors: [{
+                messages: [{
                     message: "The given E-Mail is already in use, try another or log in.",
                     error: false,
                 }],
