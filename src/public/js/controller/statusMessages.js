@@ -1,4 +1,7 @@
-import { toggleVisibleOnClick } from "../lib/visibility/toggleVisible.js"
+import NavbarVisibilityHandler from "../lib/visibility/PopUpElementVisibilityHandler.js";
 
-// Toggle visibility on click
-toggleVisibleOnClick("statusMessages", "statusMessages:button", "statusMessages:close")
+let navHandler = new NavbarVisibilityHandler(
+    "statusMessages",
+    "statusMessages:open",
+    "statusMessages:close"
+);

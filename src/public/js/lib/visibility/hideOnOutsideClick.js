@@ -11,7 +11,7 @@
  * 
  * @param {HTMLElement} element 
  */
-function hideOnClickOutside(element) {
+function hideOnOutsideClick(element) {
     const outsideClickListener = event => {
         // Checks to hide
         if(!element.contains(event.target) && isVisible(element)) {
@@ -30,7 +30,22 @@ function hideOnClickOutside(element) {
 
 const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 
+/**
+ * Get and hide element on outside click
+ * 
+ * Gets the element by id
+ * 
+ * @param {string} elementId Element id to get and hide
+ */
+function getAndHideOnOutsideClick(elementId) {
+    let element = document.getElementById(elementId);
+    if(element) {
+        hideOnOutsideClick(element);
+    }
+}
+
 export {
-    hideOnClickOutside,
+    getAndHideOnOutsideClick,
+    hideOnOutsideClick,
     isVisible,
 }

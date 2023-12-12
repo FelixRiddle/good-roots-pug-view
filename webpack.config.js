@@ -39,6 +39,7 @@ export default {
         lib_visibility: {
             import: [
                 `${jsPath}lib/visibility/hideOnOutsideClick.js`,
+                `${jsPath}lib/visibility/PopUpElementVisibilityHandler.js`,
                 `${jsPath}lib/visibility/toggleVisible.js`
             ],
             filename: `js/lib/visibility.js`
