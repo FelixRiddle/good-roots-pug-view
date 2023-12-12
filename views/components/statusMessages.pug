@@ -6,12 +6,12 @@ button(id="statusMessages:button") Status
         //- Here show a number containing the amount of messages
         <p>)</p>
 
-div(class="fixed mr-40 mt-40 bg-indigo-300 rounded shadow-black shadow-lg" id="statusMessages" hidden)
+div(class="fixed mr-40 mt-40 bg-indigo-500 rounded shadow-gray-500 shadow-lg" id="statusMessages" hidden)
     //- Messages
     if messages
         ul 
         - for(msg of messages)
-            li(class=`${msg.error ? "bg-pink-300" : "bg-green-300"} rounded p-1 m-1 shadow-black shadow`)
+            li(class=`${msg.error ? "bg-pink-300" : "bg-green-300"} rounded p-1 m-1 shadow-gray shadow`)
                 p=msg.message
     
     //- Top bar
@@ -19,7 +19,7 @@ div(class="fixed mr-40 mt-40 bg-indigo-300 rounded shadow-black shadow-lg" id="s
         p Status messages
         button(
             id="statusMessages:close"
-            class="rounded-lg p-2 m-2 inline bg-sky-600 hover:bg-sky-200"
+            class="rounded-lg p-2 m-2 inline bg-sky-600 hover:bg-sky-400"
             ) Close
 
 //- Controller

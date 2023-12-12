@@ -3,6 +3,9 @@ import path from "path";
 let jsPath = "./src/public/js/";
 let publicRoutes = "./src/public/js/routes/";
 
+/**
+ * This is awful, but I don't know and I don't have time to improve it.
+ */
 export default {
     mode: "development",
     entry: {
@@ -30,6 +33,15 @@ export default {
                 `${jsPath}global/location.js`
             ],
             filename: `js/global/location.js`
+        },
+        // Lib
+        // Libraries shouldn't be separated into different scripts upon build
+        lib_visibility: {
+            import: [
+                `${jsPath}lib/visibility/hideOnOutsideClick.js`,
+                `${jsPath}lib/visibility/toggleVisible.js`
+            ],
+            filename: `js/lib/visibility.js`
         },
         map: `${jsPath}map.js`,
         navbar: {
