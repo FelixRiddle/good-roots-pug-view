@@ -5,6 +5,8 @@ let publicRoutes = "./src/public/js/routes/";
 
 /**
  * This is awful, but I don't know and I don't have time to improve it.
+ * 
+ * I really have to learn webpack haha
  */
 export default {
     mode: "development",
@@ -70,6 +72,19 @@ export default {
             ],
             filename: `validation/validation.js`
         },
+        // Routes examples
+        routes_examples_map_live_user: {
+            import: [
+                `${publicRoutes}examples/map/live_user.js`
+            ],
+            filename: "routes/examples/map/live_user.js"
+        },
+        routes_examples_map_quick_start: {
+            import: [
+                `${publicRoutes}examples/map/quick_start.js`
+            ],
+            filename: "routes/examples/map/quick_start.js"
+        }
     },
     output: {
         // filename: "[name].js",
