@@ -62,7 +62,8 @@ export default class Server {
                 "*.openstreetmap.org",
                 "cloudflare.com",
                 "*.cloudflare.com",
-                "cdnjs.cloudflare.com"
+                "cdnjs.cloudflare.com",
+                "geocode-api.arcgis.com"
             ];
             let domains = "";
             for(let domain of allowedDomains) {

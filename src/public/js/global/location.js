@@ -7,6 +7,4 @@ function rootLocation() {
     return location.protocol + "//" + location.host;
 }
 
-let root = rootLocation();
-
 export default rootLocation;
