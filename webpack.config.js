@@ -90,7 +90,13 @@ export default {
                 `${publicRoutes}examples/map/quick_start.js`
             ],
             filename: "routes/examples/map/quick_start.js"
-        }
+        },
+        routes_examples_map_street_name: {
+            import: [
+                `${publicRoutes}examples/map/street_name.js`
+            ],
+            filename: "routes/examples/map/street_name.js"
+        },
     },
     output: {
         // filename: "[name].js",
