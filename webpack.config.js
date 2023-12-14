@@ -73,6 +73,12 @@ export default {
             filename: `validation/validation.js`
         },
         // Routes examples
+        routes_examples_map_draggable_marker: {
+            import: [
+                `${publicRoutes}examples/map/draggable_marker.js`
+            ],
+            filename: "routes/examples/map/draggable_marker.js"
+        },
         routes_examples_map_live_user: {
             import: [
                 `${publicRoutes}examples/map/live_user.js`

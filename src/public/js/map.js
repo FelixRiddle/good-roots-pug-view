@@ -68,10 +68,12 @@ async function renderMap() {
     const map = L.map('map').setView([lat, lng ], 16);
     
     // Provider and geocoder
-    const geocode = L.esri.Geocoding.geocode({ apiKey });
-    const geocodeService = L.esri.Geocoding.geocodeService();
+    // const geocode = L.esri.Geocoding.geocode({ apiKey });
     // const geocodeService = geocode.geocodeService();
     // const geocodeService = L.esri.Geocoding.geocodeService({apiKey});
+    
+    // Original
+    const geocodeService = L.esri.Geocoding.geocodeService();
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

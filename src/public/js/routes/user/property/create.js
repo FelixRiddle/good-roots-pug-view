@@ -6,7 +6,7 @@ import validateProperty from "../../../validation/validateProperty.js";
 import rootLocation from "../../../global/location.js";
 
 // Get submit button
-document.addEventListener("DOMContentLoaded", function() { 
+document.addEventListener("DOMContentLoaded", function() {
     let submitBtn = document.getElementById("createProperty");
     if(!submitBtn) {
         // An error has occurred

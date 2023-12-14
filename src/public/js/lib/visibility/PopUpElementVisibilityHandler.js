@@ -1,5 +1,3 @@
-import { hideOnOutsideClick } from "./hideOnOutsideClick.js";
-
 /**
  * Handles the visibility of a 'pop-up element'
  * 
@@ -12,8 +10,6 @@ export default class PopUpElementVisibilityHandler {
     visibilityEnabledTime = undefined
     
     /**
-     * 
-     * 
      * @param {string} elementId The id of the element to close and open
      * @param {string} openElementId The open button id
      * @param {string} closeElementId The close button id
