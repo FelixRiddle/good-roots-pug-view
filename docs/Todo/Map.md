@@ -8,14 +8,25 @@ Functionality
 
 - [x] Click and drag
 - [x] Get the position
+
 - [ ] Default position to user position
 
-The process of converting from latitude/longitude to street name back and forth is called "Geocoding", here is a list of plugins from leaflet website.
+[Leaflet GeoIP Locator](https://github.com/jakubdostal/leaflet-geoip)
+
+- [x] Address lookup
+
+The process of looking up the address from a search bar, and go straight to its position
+
+The process of converting street name to lat/long is called geocoding, here is a list of plugins from leaflet website.
 [Geocoding](https://leafletjs.com/plugins.html#geocoding)
+[Leaflet Geosearch](https://github.com/smeijer/leaflet-geosearch)
+[leaflet-control-geocoder](https://github.com/perliedman/leaflet-control-geocoder)
 
 - [ ] Street name from position
 
-The process of looking up the address from a search bar, and go straight to its position
-[Leaflet Geosearch](https://github.com/smeijer/leaflet-geosearch)
+This is called 'Reverse Geocoding'.
 
-- [x] Address lookup
+Reference/s:
+[leaflet latlng to name of location](https://stackoverflow.com/questions/47909266/leaflet-latlng-to-name-of-location)
+[Reverse Geocoding](https://en.wikipedia.org/wiki/Reverse_geocoding)
+[Leaflet Control Geocoder](https://github.com/perliedman/leaflet-control-geocoder)
