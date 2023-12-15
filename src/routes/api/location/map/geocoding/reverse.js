@@ -37,9 +37,7 @@ reverseRouter.use("/reverse", async (req, res) => {
         
         // Send back the data
         if(response) {
-            return res.send({
-                response
-            });
+            return res.send(response);
         } else {
             // Error
             return res.send({

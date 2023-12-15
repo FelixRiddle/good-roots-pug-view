@@ -5,6 +5,8 @@
  * Note: This hasn't been even tested, just discovered that this functionality is already included in leaflet.
  * Reference/s:
  * https://gis.stackexchange.com/questions/80306/leaflet-draggable-marker
+ * 
+ * @deprecated https://gis.stackexchange.com/questions/80306/leaflet-draggable-marker
  */
 export default class DragMarker {
     /**
