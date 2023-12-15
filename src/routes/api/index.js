@@ -1,4 +1,5 @@
 import express from "express";
+
 import locationRouter from "./location/index.js";
 
 const apiRouter = express.Router();

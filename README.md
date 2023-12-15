@@ -56,6 +56,13 @@ EMAIL_PASSWORD=YOUR_MAILTRAP_PASSWORD
 # It should have a minimum of 64 characters by JWT standard
 JWT_SECRET_KEY=YOUR_SECRET
 
+# Google
+# Used for reverse-geocoding
+# Remember to check that the geocding api is enabled, and the key doesn't restrict access to your domain
+# nor the geocoding api.
+GOOGLE_API_KEY=YOUR_API_KEY
+
+### Unused keys(don't add these) ###
 # Arcgis client side tokens(OAuth 2.0)
 ARCGIS_CLIENT_ID=CLIENT_ID
 ARCGIS_CLIENT_SECRET=CLIENT_SECRET

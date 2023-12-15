@@ -11,13 +11,13 @@ block styles
     
     //- Geocoding/Reverse
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
 //- Page content
 block content
     h1 Street name
     p Search place by street name
-    p Get street name by marker position 
+    p Get street name by marker position(Reverse Geocoding)
+    p Currently, I can't do it, the link of the leaflet plugin for this doesn't work IDK why.
     
     div#map(style="height: 720px;")
     
@@ -34,9 +34,7 @@ block scripts
     )
     
     //- Geocoding
-    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
-    //- Reverse geocoding
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js" crossorigin=""></script>
     
     script(src="/js/routes/examples/map/street_name.js")
 

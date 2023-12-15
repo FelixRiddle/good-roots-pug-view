@@ -1,5 +1,7 @@
 import { Marker } from "leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import rootLocation from "../../../global/location.js";
+import axios from "axios";
 
 /**
  * Class to mark a single position in a map
@@ -22,6 +24,9 @@ class MarkPositionManager {
         
         // Geocoding
         this.bindSearchGeocoding();
+        this.bindMarkerDragendUpdatePosition();
+        
+        // User position
     }
     
     /**
@@ -76,9 +81,10 @@ class MarkPositionManager {
      */
     bindMarkerToClickPosition() {
         // Update marker position on click
-        this.map.addEventListener("click", (e) => {
+        this.map.addEventListener("click", async (e) => {
             // Update marker position
             this.marker.setLatLng(e.latlng);
+            await this.onMarkerChangePosition();
         });
     }
     
@@ -91,7 +97,6 @@ class MarkPositionManager {
         // Use openstreetmap as provider
         const provider = new OpenStreetMapProvider();
         
-        // GeoSearchControl??
         const searchControl = new GeoSearchControl({
             noutFoundMessage: "Sorry, the given address couldn't be found.",
             provider,
@@ -101,10 +106,44 @@ class MarkPositionManager {
         // Add it to the map
         this.map.addControl(searchControl);
     }
+    
+    /**
+     * On marker change position
+     * 
+     * Call this function each time the marker changes position
+     * This is done in the backend, because leaflet plugin didn't work for me D:.
+     */
+    async onMarkerChangePosition() {
+        let coordinates = this.marker.getLatLng();
+        console.log(`Coordinates: `, coordinates);
+        
+        let client = axios.create({
+            baseUrl: rootLocation(),
+            timeout: 2000,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        
+        let response = await client.post("/api/location/map/geocoding/reverse", coordinates).then((res) => res)
+            .catch((err) => {
+                console.log(`Error when reverse geocoding the coordinates.`);
+                console.log(`Error: `, err);
+            });
+        
+        console.log(`Response: `, response.body);
+        
+        this.street = "";
+    }
+    
+    /**
+     * On marker drag end call onMarkerChangePosition
+     */
+    bindMarkerDragendUpdatePosition() {
+        this.marker.addEventListener("dragend", async (pos) => {
+            this.onMarkerChangePosition();
+        });
+    }
 }
 
-let markPos = new MarkPositionManager(map);
-
-// // Add control
-// let control = L.Control.geocoder();
-// control.addTo(map);
+let markPos = new MarkPositionManager();

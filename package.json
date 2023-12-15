@@ -29,13 +29,14 @@
     "express-validator": "^7.0.1",
     "felixriddle.checkpoint": "^2.0.1",
     "jsonwebtoken": "^9.0.2",
-    "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.11.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.0",
+    "node-geocoder": "^4.2.0",
     "nodemailer": "^6.9.5",
     "pug": "^3.0.2",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "source-map-loader": "^4.0.1"
   },
   "devDependencies": {
     "@types/dropzone": "^5.7.8",

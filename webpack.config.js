@@ -100,6 +100,6 @@ export default {
     },
     output: {
         // filename: "[name].js",
-        path: path.resolve("public/js")
-    }
+        path: path.resolve("public/js"),
+    },
 };
