@@ -63,7 +63,8 @@ export default class Server {
                 "cloudflare.com",
                 "*.cloudflare.com",
                 "cdnjs.cloudflare.com",
-                "geocode-api.arcgis.com"
+                "geocode-api.arcgis.com",
+                "cdn.jsdelivr.net"
             ];
             let domains = "";
             for(let domain of allowedDomains) {

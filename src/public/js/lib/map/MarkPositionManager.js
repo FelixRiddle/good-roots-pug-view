@@ -29,6 +29,7 @@ export default class MarkPositionManager {
         this.bindMarkerDragendUpdatePosition();
         
         // User position
+        this.setPositionToUserPosition();
     }
     
     // --- Create stuff ---
@@ -46,6 +47,21 @@ export default class MarkPositionManager {
         }).addTo(map);
         
         this.map = map;
+    }
+    
+    /**
+     * Set position to user position
+     */
+    setPositionToUserPosition() {
+        let thisObj = this;
+        this.map.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
+            .on('locationfound', function(e) {
+                thisObj.marker.setLatLng(e.latlng);
+            })
+            .on('locationerror', function(e) {
+                console.log(e);
+                console.log(`Couldn't access user location`);
+            });
     }
     
     // --- Marker ---
@@ -135,7 +151,8 @@ export default class MarkPositionManager {
                 "Content-Type": "application/json",
             }
         });
-        let response = await client.post("/api/location/map/geocoding/reverse", coordinates).then((res) => res)
+        let response = await client.post("/api/location/map/geocoding/reverse", coordinates)
+            .then((res) => res)
             .catch((err) => {
                 console.log(`Error when reverse geocoding the coordinates.`);
                 console.log(`Error: `, err);
