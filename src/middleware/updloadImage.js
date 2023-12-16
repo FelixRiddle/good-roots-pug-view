@@ -5,11 +5,14 @@ import { generateId } from "../helpers/tokens.js";
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
+        console.log(`Destination done`);
         
-        cb(null, "./public/uploads/");
+        return cb(null, "./public/uploads/");
     },
     filename: function(req, file, cb) {
-        cb(null, generateId() + path.extname(file.originalName));
+        let filename = generateId() + path.extname(file.originalName);
+        console.log(`Filename: ${filename}`);
+        return cb(null, filename);
     }
 });
 

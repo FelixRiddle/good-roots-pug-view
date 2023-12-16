@@ -97,6 +97,13 @@ export default {
             ],
             filename: "routes/examples/map/street_name.js"
         },
+        // User routes
+        routes_user_property_set_image: {
+            import: [
+                `${publicRoutes}user/property/set_image.js`
+            ],
+            filename: "routes/user/property/set_image.js"
+        }
     },
     output: {
         // filename: "[name].js",

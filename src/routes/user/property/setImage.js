@@ -65,47 +65,55 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
     }
 });
 
-setImageRouter.post("/set_image/:id", upload.single("image"), async (req, res) => {
-    try {
+setImageRouter.post("/set_image/:id", (req, res, next) => {
+        console.log(`Uploading an image`);
         const { id } = req.params;
-        console.log(`Inserting the image on the server with id(property): ${id}`);
+        console.log(`Id: ${id}`);
         
-        // Validate that the property exists
-        const property = await Property.findByPk(id);
-        
-        if(!property) {
-            return res.redirect("/user/property/admin");
-        }
-        
-        // Validate that the property is not published
-        if(property.published) {
-            return res.redirect("/user/property/admin");
-        }
-        
-        // Validate that the property belongs to the own who made the request
-        if(req.user) {
-            if(req.user.id.to_string() !== property.ownerId.to_string()) {
+        return next();
+    },
+    upload.single("image"),
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+            console.log(`Inserting the image on the server with id(property): ${id}`);
+            
+            // Validate that the property exists
+            const property = await Property.findByPk(id);
+            
+            if(!property) {
                 return res.redirect("/user/property/admin");
             }
-        } else {
-            console.log(`Req user doesn't exists`);
+            
+            // Validate that the property is not published
+            if(property.published) {
+                return res.redirect("/user/property/admin");
+            }
+            
+            // Validate that the property belongs to the own who made the request
+            if(req.user) {
+                if(req.user.id.to_string() !== property.ownerId.to_string()) {
+                    return res.redirect("/user/property/admin");
+                }
+            } else {
+                console.log(`Req user doesn't exists`);
+                return res.redirect("/user/property/admin");
+            }
+            
+            // Store image
+            property.image = req.file.filename;
+            
+            // Publish property
+            property.published = 1;
+            
+            // Store
+            await property.save();
+            
+            next();
+        } catch(err) {
+            console.error(err);
             return res.redirect("/user/property/admin");
         }
-        
-        // Store image
-        property.image = req.file.filename;
-        
-        // Publish property
-        property.published = 1;
-        
-        // Store
-        await property.save();
-        
-        next();
-    } catch(err) {
-        console.error(err);
-        return res.redirect("/user/property/admin");
-    }
-});
+    });
 
 export default setImageRouter;

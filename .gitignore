@@ -1,6 +1,7 @@
 # Public folder
 public/css
 public/js
+public/img/test
 
 # Package lock backup
 package-lock.json.backup
