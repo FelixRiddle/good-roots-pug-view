@@ -1,3 +1,7 @@
+//
+// This whole file is
+// @deprecated Use 'MarkPositionManager' class instead.
+//
 import axios from "axios";
 
 import rootLocation from "./global/location.js";

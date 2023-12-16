@@ -9,8 +9,8 @@ block styles
         crossorigin=""
     )
     
-    //- Esri leaflet
-    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.css" integrity="sha512-BkZKghR9DV2LpDgmb/Uvl8bdoQj9O6OkkgbfXVpFfHTGcrHGqJIk1J5t+ZY5E3peLfTBazzjScnBguwthKvC1g==" crossorigin="" />
+    //- //- Esri leaflet
+    //- <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.css" integrity="sha512-BkZKghR9DV2LpDgmb/Uvl8bdoQj9O6OkkgbfXVpFfHTGcrHGqJIk1J5t+ZY5E3peLfTBazzjScnBguwthKvC1g==" crossorigin="" />
     
     //- For street location
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css" />
@@ -123,7 +123,7 @@ block content
                         
                         //- Show the user the current street
                         div 
-                            p.street= property ? property.street : ""
+                            p#show_street.street=property ? property.street : ""
                         
                         //- Send information about the pin location to the backend
                         input(type="hidden" value=property ? property.street : "" name="street" id="street")
@@ -146,14 +146,15 @@ block scripts
         crossorigin=""
     )
     
-    //- Esri leaflet, for extra functionality
-    //- It's a service of ArcGis
-    <script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js" integrity="sha512-G4+fuKc1B96F0sUG7eKtgiJr0JM3iQC4bfc8WtYvmm7msHES0Hst2mLWASPb8zZk91tqMG86AjP0tgXIEFPPUA==" crossorigin=""></script>
-    <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js" integrity="sha512-ODcrBUbBplqiGXL2S0tWNVYStUTTWYyQcSrCLjIW8vL+CEb758m7Dm0v5vyl8qrT8stBwKaYVWZTGymf7vj9jg==" crossorigin=""></script>
+    //- Too complicated for me
+    //- //- Esri leaflet, for extra functionality
+    //- //- It's a service of ArcGis
+    //- <script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js" integrity="sha512-G4+fuKc1B96F0sUG7eKtgiJr0JM3iQC4bfc8WtYvmm7msHES0Hst2mLWASPb8zZk91tqMG86AjP0tgXIEFPPUA==" crossorigin=""></script>
+    //- <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.4/dist/esri-leaflet-geocoder.js" integrity="sha512-ODcrBUbBplqiGXL2S0tWNVYStUTTWYyQcSrCLjIW8vL+CEb758m7Dm0v5vyl8qrT8stBwKaYVWZTGymf7vj9jg==" crossorigin=""></script>
     
     //- For locating the street
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     
     //- Load map
-    script(src="/js/map.js")
+    //- script(src="/js/map.js")
     script(src="/js/routes/user/property/create.js")

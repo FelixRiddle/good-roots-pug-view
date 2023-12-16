@@ -3,7 +3,40 @@ import axios from "axios";
 import { formFetchAllValues } from "felixriddle.checkpoint";
 
 import validateProperty from "../../../validation/validateProperty.js";
-import rootLocation from "../../../global/location.js";
+import MarkPositionManager from "../../../lib/map/MarkPositionManager.js";
+
+let markerPosition = new MarkPositionManager();
+
+// Position change callback
+let positionChangeCallback = (newPosition) => {
+    console.log(`New position: `, newPosition);
+    
+    // We have to set street, latitude and longitude.
+    // Street
+    let streetName = `${newPosition.streetName} ${newPosition.streetNumber}`;
+    let street = document.getElementById("street");
+    if(street) {
+        street.value = streetName;
+    }
+    let showStreet = document.getElementById("show_street");
+    if(showStreet) {
+        showStreet.innerHTML = streetName;
+    }
+    
+    // Latitude
+    let latitude = document.getElementById("latitude");
+    if(latitude) {
+        latitude.value = newPosition.latitude;
+    }
+    
+    // Longitude
+    let longitude = document.getElementById("longitude");
+    if(longitude) {
+        longitude.value = newPosition.longitude;
+    }
+}
+
+markerPosition.setPositionChangeCallback(positionChangeCallback);
 
 // Get submit button
 document.addEventListener("DOMContentLoaded", function() {
@@ -55,6 +88,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // Place
         property.latitude = parseFloat(property.latitude);
         property.longitude = parseFloat(property.longitude);
+        
+        console.log(`Property: `, property);
         
         // Check that validation passes
         let result = validateProperty(property);
