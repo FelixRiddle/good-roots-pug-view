@@ -32,6 +32,7 @@ createPropertyRouter.get(`/create`, async (req, res) => {
 createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
     // Insert on the database
     try {
+        console.log(`Create property`);
         // Extract data
         const {
             title,
@@ -71,13 +72,15 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         console.log(`Success the user will be going to set the image`);
         let setImageUrl = `/user/property/set_image/${id}`;
         console.log(`Set image url: ${setImageUrl}`);
-        return res.redirect(setImageUrl);
+        return res.send({
+            nextUrl: setImageUrl,
+        });
     } catch(err) {
         console.log(`Error detected, the user will be redirected to properties`);
         console.error(err);
     }
     
-    return res.redirect("/user/admin");
+    return res.redirect("user/admin");
 });
 
 export default createPropertyRouter;

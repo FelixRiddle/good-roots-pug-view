@@ -11,21 +11,25 @@ const setImageRouter = express.Router();
 // We have to remove the hyphens from it.
 setImageRouter.get("/set_image/:id", async (req, res) => {
     try {
+        console.log(`At set_image`);
+        
         const { id } = req.params;
         let user = req.user.dataValues;
+        
+        console.log(`Property id: ${id}`);
         
         // Validate that the property exists
         const propertyController = await Property.findByPk(id);
         
         if(!propertyController) {
             console.log(`The requested property doesn't exists!`);
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Validate that the property is not published
         if(propertyController.published) {
             console.log(`This property has already been published`);
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Validate that the property belongs to the own who made the request
@@ -33,18 +37,18 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             if(user.id.toString() !== propertyController.userId.toString()) {
                 console.log(`The user doesn't own this property going back...`);
                 console.log(`User: `, req.user.name);
-                return res.redirect("/user/property/admin");
+                return res.redirect("user/property/admin");
             }
         } else {
             console.log(`Req user doesn't exists`);
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Remove sequelize stuff and leave just the data
         let property = propertyController.get({ plain: true });
         
         // Ok, render the page to set the image
-        let nextUrl = `user/property/setImage`;
+        let nextUrl = `user/property/set_image`;
         console.log(`All validations ok`);
         console.log(`Rendering: ${nextUrl}`);
         return res.render(
@@ -57,7 +61,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         console.log(err);
         console.log(`Error: `, err);
         console.log(`Couldn't render /set_image`);
-        return res.redirect("/user/property/admin");
+        return res.redirect("user/property/admin");
     }
 });
 

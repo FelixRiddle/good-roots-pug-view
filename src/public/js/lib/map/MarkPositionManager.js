@@ -59,7 +59,7 @@ export default class MarkPositionManager {
                 thisObj.marker.setLatLng(e.latlng);
             })
             .on('locationerror', function(e) {
-                console.log(e);
+                console.error(e);
                 console.log(`Couldn't access user location`);
             });
     }

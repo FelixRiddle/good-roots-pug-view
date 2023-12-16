@@ -2,14 +2,15 @@
 
 In the udemy course the guy makes a movable marker, but using esri, which now is subscription-walled.
 
-- [ ] Remake the movable marker
+- [x] Remake the movable marker
 
 Functionality
 
+- [ ] On page restart, the previous marker position is remembered.
 - [x] Click and drag
 - [x] Get the position
 
-- [ ] Default position to user position
+- [x] Default position to user position
 
 [Leaflet GeoIP Locator](https://github.com/jakubdostal/leaflet-geoip)
 
@@ -22,7 +23,7 @@ The process of converting street name to lat/long is called geocoding, here is a
 [Leaflet Geosearch](https://github.com/smeijer/leaflet-geosearch)
 [leaflet-control-geocoder](https://github.com/perliedman/leaflet-control-geocoder)
 
-- [ ] Street name from position
+- [x] Street name from position
 
 This is called 'Reverse Geocoding'.
 
