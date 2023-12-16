@@ -4,10 +4,16 @@ import { formFetchAllValues } from "felixriddle.checkpoint";
 
 import validateProperty from "../../../validation/validateProperty.js";
 import MarkPositionManager from "../../../lib/map/MarkPositionManager.js";
+import rootLocation from "../../../global/location.js";
 
+const siteUrl = rootLocation();
 let markerPosition = new MarkPositionManager();
 
-// Position change callback
+/**
+ * Position change callback
+ * 
+ * @param {Object} newPosition The new position, contains tons of information
+ */
 let positionChangeCallback = (newPosition) => {
     console.log(`New position: `, newPosition);
     
@@ -38,8 +44,16 @@ let positionChangeCallback = (newPosition) => {
 
 markerPosition.setPositionChangeCallback(positionChangeCallback);
 
-// Get submit button
-document.addEventListener("DOMContentLoaded", function() {
+// On button click send request
+hookRequestOnButtonClick();
+
+/**
+ * Send a request on button click
+ * 
+ * @returns 
+ */
+function hookRequestOnButtonClick() {
+    // Get submit button
     let submitBtn = document.getElementById("createProperty");
     if(!submitBtn) {
         // An error has occurred
@@ -100,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log(`Validation passed`);
         
         // Create axios instance
-        let rootLocation = rootLocation();
+        let rootLocation = siteUrl;
         console.log(`Root location: ${rootLocation}`);
         const instance = axios.create({
             baseUrl: "http://localhost:3001",
@@ -119,4 +133,4 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(`Error: `, error);
         });
     });
-});
+}
