@@ -1,7 +1,21 @@
+// Simple example
 import express from "express";
 import multer from "multer";
 
-const upload = multer({ dest: "public/img/test" });
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/img/test");
+    },
+    filename: (req, file, cb) => {
+        console.log("File information: ", file);
+        
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + `-${file.originalname}`);
+    }
+});
+const upload = multer({
+    storage,
+});
 
 import expand from "../../../controllers/expand.js";
 
@@ -17,7 +31,6 @@ multerExampleRouter.get("/multer_example", (req, res) => {
 multerExampleRouter.post("/multer_example", upload.single("avatar"), (req, res) => {
     console.log("File uploaded, file: ");
     console.log(req.file);
-    console.log(`Content type: ${req.headers["content-type"]}`);
 });
 
 export default multerExampleRouter;
