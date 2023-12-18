@@ -11,6 +11,7 @@ html(lang="en")
         
         //- Tailwind styles
         link(rel="stylesheet", href="/css/app.css")
+        
     body.min-h-screen.bg-gray-50
         //- Navbar
         include components/navbar/navbar
@@ -19,4 +20,6 @@ html(lang="en")
         main(class="mx-auto container mt-10 px-2")
             block content
         
+        //- It always throws an error on first render that it can't find elements I don't know why
         block scripts
+        

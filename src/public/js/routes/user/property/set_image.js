@@ -1,6 +1,5 @@
 import { Dropzone } from "dropzone";
 
-
 // Dropzone
 let dropzone = new Dropzone("#image");
 dropzone.on("addedFile", file => {

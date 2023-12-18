@@ -1,0 +1,45 @@
+extends ../index
+
+block styles
+    //- Styles
+
+block content
+    h1 Dropzone
+    p Dropzone example
+    
+    //- Body
+    //- Formulary
+    div(class="bg-white shadow p-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
+        form(
+            action="/examples/publish_image/dropzone" method="post" enctype="multipart/form-data"
+            class="p-3 dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
+        )
+            //- Empty tag defaults to div
+            .space-y-8
+                h3.text-lg.leading-6.font-medium.text-gray-900 Select images
+                p.text-gray-600 Select one or more images for the property
+            
+            //- If you use an input, there will be two prompts for uploading images
+            //- Very annoying, but it works though
+            //- //- Image uploading container
+            //- label(for="images") Upload images 
+            //- input(
+            //-     id="images"
+            //-     type="file" 
+            //-     multiple="multiple"
+            //-     name="images"
+            //-     accept="image/jpeg, image/png, image/jpg"
+            //-     class="p-3 dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
+            //- )
+            
+            //- Image uploading container
+            div#images(
+                name="images"
+                class="p-3 dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
+            )
+            
+            button(type="submit" class="rounded p-2 m-2 block bg-sky-500 hover:bg-sky-300") Submit image
+
+block scripts
+    //- Scripts
+    script(src="/js/routes/examples/publish_image/dropzone.js")
