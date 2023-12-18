@@ -97,6 +97,13 @@ export default {
             ],
             filename: "routes/examples/map/street_name.js"
         },
+        // Multer
+        routes_examples_publish_image_multer_example: {
+            import: [
+                `${publicRoutes}examples/publish_image/multer_example.js`,
+            ],
+            filename: "routes/examples/publish_image/multer_example.js"
+        },
         // User routes
         routes_user_property_set_image: {
             import: [

@@ -1,0 +1,17 @@
+extends ../index
+
+block styles
+    //- Styles
+
+block content
+    h1 Multer example
+    p Upload an image
+    
+    //- Body
+    form(action="/examples/publish_image/multer_example" method="post" enctype="multipart/form-data")
+        input(type="file" name="avatar") 
+        button(type="submit" class="rounded p-2 m-2 block bg-sky-500 hover:bg-sky-300") Submit image
+
+block scripts
+    //- Scripts
+    script(src="/js/routes/examples/publish_image/multer_example.js")
