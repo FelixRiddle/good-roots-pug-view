@@ -98,6 +98,12 @@ export default {
             filename: "routes/examples/map/street_name.js"
         },
         // Multer
+        routes_examples_publish_image_multer_multiple_images: {
+            import: [
+                `${publicRoutes}examples/publish_image/multer_multiple_images.js`,
+            ],
+            filename: "routes/examples/publish_image/multer_multiple_images.js"
+        },
         routes_examples_publish_image_multer_example: {
             import: [
                 `${publicRoutes}examples/publish_image/multer_example.js`,

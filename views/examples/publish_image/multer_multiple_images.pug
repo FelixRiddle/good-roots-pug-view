@@ -1,0 +1,31 @@
+extends ../index
+
+block styles
+    //- Styles
+
+block content
+    h1 Multer multiple images
+    p Upload many images
+    
+    //- Body
+    //- Note the multiple tag
+    //- Reference/s
+    //- https://medium.com/@miguelznunez/how-to-upload-and-display-multiple-images-with-javascript-93239e206034
+    form(
+        action="/examples/publish_image/multer_multiple_images"
+        method="post"
+        enctype="multipart/form-data"
+    )
+        input(
+            type="file" 
+            multiple="multiple"
+            name="images"
+            accept="image/jpeg, image/png, image/jpg"
+        )
+        //- Ouput is to show the images
+        output(for="images") 
+        button(type="submit" class="rounded p-2 m-2 block bg-sky-500 hover:bg-sky-300") Submit images
+
+block scripts
+    //- Scripts
+    script(src="/js/routes/examples/publish_image/multer_multiple_images.js")
