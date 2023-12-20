@@ -4,12 +4,12 @@ import { constants } from 'node:buffer';
 import express from 'express';
 import fs from "node:fs";
 import path from "path";
-import { URL } from "url";
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
 import routes from './routes/index.js';
 import getUser from './middleware/auth/getUser.js';
+import { createPublicUserFolder } from './utils/user/userFolder.js';
 
 /**
  * Server
@@ -27,16 +27,8 @@ export default class Server {
      * Create directories if they don't exist
      */
     createDirectories() {
-        console.log(`Cwd: ${process.cwd()}`,);
-        
-        // Uploads folder
-        // Path resolve is x-platform
-        const uploadsFolder = path.resolve(process.cwd(), 'public/uploads');
-        fs.access(uploadsFolder, constants.F_OK, (err) => {
-            if(err) {
-                fs.mkdirSync(uploadsFolder);
-            }
-        });
+        // Public user folder, so they upload thingies
+        createPublicUserFolder();
     }
     
     /**
