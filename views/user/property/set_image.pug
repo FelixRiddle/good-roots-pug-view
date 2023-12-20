@@ -23,7 +23,7 @@ block content
         //- Formulary
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
             form(
-                id="image"
+                id="publish_image"
                 class="dropzone mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
                 method="POST"
                 enctype="multipart/form-data"
@@ -34,6 +34,15 @@ block content
                     h3.text-lg.leading-6.font-medium.text-gray-900 Select images
                     p.text-gray-600 Select one or more images for the property
                 
+                input(
+                    type="file" 
+                    multiple="multiple"
+                    name="images"
+                    accept="image/jpeg, image/png, image/jpg"
+                )
+                //- Ouput is to show the images
+                output(for="images")
+        
                 //- Add image
                 input(
                     id="publish"

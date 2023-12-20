@@ -4,7 +4,7 @@ import express from "express";
 import adminRoutes from "./admin.js";
 import createPropertyRouter from "./create.js";
 import editRouter from "./edit.js";
-import setImageRouter from "./setImage.js";
+import setImageRouter from "./set_image.js";
 
 const propertyRoutes = express.Router();
 

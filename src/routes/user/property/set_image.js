@@ -1,10 +1,26 @@
 import express from "express";
+import multer from "multer";
 
 import Property from "../../../models/Property.js";
-import upload from "../../../middleware/updloadImage.js";
 import expand from "../../../controllers/expand.js";
 
 const setImageRouter = express.Router();
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        return cb(null, "./public/uploads/");
+    },
+    filename: (req, file, cb) => {
+        console.log("File information: ", file);
+        
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        return cb(null, uniqueSuffix + `-${file.originalname}`);
+    }
+});
+
+const upload = multer({
+    storage
+});
 
 // Set image
 // I just remembered, id doesn't work here
@@ -72,7 +88,7 @@ setImageRouter.post("/set_image/:id", (req, res, next) => {
         
         return next();
     },
-    upload.single("image"),
+    upload.array("images"),
     async (req, res) => {
         try {
             const { id } = req.params;
