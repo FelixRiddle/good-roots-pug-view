@@ -3,6 +3,7 @@ import multer from "multer";
 
 import Property from "../../../models/Property.js";
 import expand from "../../../controllers/expand.js";
+import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
 
 const setImageRouter = express.Router();
 
@@ -81,9 +82,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
     }
 });
 
-setImageRouter.post("/set_image/:id",
-// userFolderExists,
-upload.array("images"), async (req, res) => {
+setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images"), async (req, res) => {
     try {
         const { id } = req.params;
         console.log(`Inserting the image on the server with id(property): ${id}`);
@@ -92,22 +91,27 @@ upload.array("images"), async (req, res) => {
         const property = await Property.findByPk(id);
         
         if(!property) {
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Validate that the property is not published
         if(property.published) {
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Validate that the property belongs to the own who made the request
         if(req.user) {
-            if(req.user.id.to_string() !== property.ownerId.to_string()) {
-                return res.redirect("/user/property/admin");
+            const userId = req.user.id.to_string();
+            const propOwnerId = property.ownerId.to_string();
+            
+            if(userId !== propOwnerId) {
+                console.log(`User id doesn't match property id!`);
+                console.log(`${userId} != ${propOwnerId}`);
+                return res.redirect("user/property/admin");
             }
         } else {
             console.log(`Req user doesn't exists`);
-            return res.redirect("/user/property/admin");
+            return res.redirect("user/property/admin");
         }
         
         // Store image
@@ -119,10 +123,15 @@ upload.array("images"), async (req, res) => {
         // Store
         await property.save();
         
-        next();
+        return res.redirect("user/property/admin", {
+            messages: [{
+                message: "Images uploaded",
+                error: false,
+            }]
+        });
     } catch(err) {
         console.error(err);
-        return res.redirect("/user/property/admin");
+        return res.redirect("user/property/admin");
     }
 });
 
