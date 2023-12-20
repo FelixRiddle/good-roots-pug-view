@@ -4,18 +4,28 @@ import multer from "multer";
 import Property from "../../../models/Property.js";
 import expand from "../../../controllers/expand.js";
 import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
+import propertyFolder from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const setImageRouter = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
+        const { id } = req.params;
+        
+        // Obtain property path, and create if it doesn't not exist
+        const propertyPath = propertyFolder(req.user.email, id);
+        
+        // Store image in the property path
         return cb(null, "./public/uploads/");
     },
     filename: (req, file, cb) => {
         console.log("File information: ", file);
         
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        return cb(null, uniqueSuffix + `-${file.originalname}`);
+        // return cb(null, uniqueSuffix + `-${file.originalname}`);
+        
+        // The folder creation process is unique enough
+        return cb(null, file.originalname);
     }
 });
 
@@ -84,38 +94,24 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
 
 setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images"), async (req, res) => {
     try {
+        // --- This should be in a middleware ---
+        // The property and the user is already validated at the middleware
         const { id } = req.params;
         console.log(`Inserting the image on the server with id(property): ${id}`);
         
+        // It just is missing this part
         // Validate that the property exists
         const property = await Property.findByPk(id);
-        
-        if(!property) {
-            return res.redirect("user/property/admin");
-        }
+        // --------------------------------------
         
         // Validate that the property is not published
-        if(property.published) {
+        console.log(`Property published: ${property.published}`);
+        if(!property.published) {
             return res.redirect("user/property/admin");
         }
         
-        // Validate that the property belongs to the own who made the request
-        if(req.user) {
-            const userId = req.user.id.to_string();
-            const propOwnerId = property.ownerId.to_string();
-            
-            if(userId !== propOwnerId) {
-                console.log(`User id doesn't match property id!`);
-                console.log(`${userId} != ${propOwnerId}`);
-                return res.redirect("user/property/admin");
-            }
-        } else {
-            console.log(`Req user doesn't exists`);
-            return res.redirect("user/property/admin");
-        }
-        
-        // Store image
-        property.image = req.file.filename;
+        // Name of the first image file
+        property.image = req.files[0].filename;
         
         // Publish property
         property.published = 1;

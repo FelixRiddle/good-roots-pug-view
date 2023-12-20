@@ -1,15 +1,12 @@
 import cookieParser from 'cookie-parser';
 import cors from "cors";
-import { constants } from 'node:buffer';
 import express from 'express';
-import fs from "node:fs";
-import path from "path";
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
 import routes from './routes/index.js';
 import getUser from './middleware/auth/getUser.js';
-import { createPublicUserFolder } from './utils/user/userFolder.js';
+import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
 
 /**
  * Server
