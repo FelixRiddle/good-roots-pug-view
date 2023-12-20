@@ -1,6 +1,10 @@
 import cookieParser from 'cookie-parser';
 import cors from "cors";
+import { constants } from 'node:buffer';
 import express from 'express';
+import fs from "node:fs";
+import path from "path";
+import { URL } from "url";
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
@@ -15,6 +19,24 @@ export default class Server {
     constructor() {
         const app = express();
         this.app = app;
+        
+        this.createDirectories();
+    }
+    
+    /**
+     * Create directories if they don't exist
+     */
+    createDirectories() {
+        console.log(`Cwd: ${process.cwd()}`,);
+        
+        // Uploads folder
+        // Path resolve is x-platform
+        const uploadsFolder = path.resolve(process.cwd(), 'public/uploads');
+        fs.access(uploadsFolder, constants.F_OK, (err) => {
+            if(err) {
+                fs.mkdirSync(uploadsFolder);
+            }
+        });
     }
     
     /**
