@@ -13,16 +13,15 @@ const storage = multer.diskStorage({
         const { id } = req.params;
         
         // Obtain property path, and create if it doesn't not exist
+        // This is an absolute path
         const propertyPath = propertyFolder(req.user.email, id);
+        console.log("Property: ", propertyPath);
         
         // Store image in the property path
-        return cb(null, "./public/uploads/");
+        return cb(null, propertyPath);
     },
     filename: (req, file, cb) => {
         console.log("File information: ", file);
-        
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        // return cb(null, uniqueSuffix + `-${file.originalname}`);
         
         // The folder creation process is unique enough
         return cb(null, file.originalname);
@@ -56,7 +55,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         // Validate that the property is not published
         if(propertyController.published) {
             console.log(`This property has already been published`);
-            return res.redirect("user/property/admin");
+            // return res.redirect("user/property/admin");
         }
         
         // Validate that the property belongs to the own who made the request
