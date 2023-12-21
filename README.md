@@ -24,6 +24,8 @@ Create the file '.env' at the root of the project and add these variables
 # This server data
 SERVER_HOST=localhost
 SERVER_PORT=3000
+# Defaults to https(it's set inside the app if not given)
+SERVER_PROTOCOL=https
 
 # MySQL database
 # The database should never be visible from the outside(From internet)
