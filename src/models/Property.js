@@ -55,6 +55,8 @@ const Property = db.define("property", {
         allowNull: false,
         defaultValue: false,
     },
+}, {
+    tableName: "property",
 });
 
 export default Property;

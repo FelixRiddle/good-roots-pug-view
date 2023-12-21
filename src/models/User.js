@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import db from "../config/db.js";
 import Property from "./Property.js";
 
-const User = db.define("users", {
+const User = db.define("user", {
     id: {
         type: DataTypes.BIGINT,
         allowNull: false,
@@ -26,6 +26,7 @@ const User = db.define("users", {
     token: DataTypes.STRING,
     confirmedEmail: DataTypes.BOOLEAN,
 }, {
+    tableName: "user",
     hooks: {
         // Before creating the user on the database
         beforeCreate: async function(user) {

@@ -7,6 +7,8 @@ const Price = db.define("price", {
         type: DataTypes.STRING(128),
         allowNull: false,
     }
+}, {
+    tableName: "price",
 });
 
 Property.belongsTo(Price);

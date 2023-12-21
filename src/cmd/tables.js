@@ -1,3 +1,5 @@
+import { Sequelize } from "sequelize";
+
 import db from "../config/db.js";
 
 import Category from "../models/Category.js";
@@ -40,7 +42,7 @@ async function upAll() {
                 console.error(err);
             });
         
-        // Generate columns
+        // Create all tables
         await db.sync();
         
         // Insert data
@@ -50,7 +52,7 @@ async function upAll() {
             User.bulkCreate(users),
         ]);
         
-        console.log(`Data inserted correctly`);
+        console.log(`Tables seeded`);
     } catch(err) {
         console.log(err);
     }
@@ -59,8 +61,6 @@ async function upAll() {
 // Destroy the data of every table
 async function downAll() {
     try {
-        console.log(`Authenticating`);
-        
         // Authenticate
         await db.authenticate()
             .then((res) => {
@@ -70,28 +70,13 @@ async function downAll() {
                 console.error(err);
             });
         
-        console.log(`Synching`);
-        
         // Generate columns
         await db.sync();
         
-        console.log(`Destroying tables`);
+        // This method drops every table in sequelize
+        await db.drop();
         
-        // Delete data
-        // You can't put everything together
-        // First those that depend on others, go down
-        await Promise.all([
-            // The relation is property to price, so you first have to delete property
-            Property.destroy({ where: {}, truncate: true }),
-        ]);
-        // Now the ones that don't depend on anything
-        await Promise.all([
-            Category.destroy({ where: {}, truncate: true }),
-            User.destroy({ where: {}, truncate: true }),
-            Price.destroy({ where: {}, truncate: true }),
-        ]);
-        
-        console.log(`Data deleted correctly`);
+        console.log(`Tables down`);
     } catch(err) {
         console.log(`Error`);
         console.log(err);

@@ -7,6 +7,8 @@ const Category = db.define("category", {
         type: DataTypes.STRING(128),
         allowNull: false,
     }
+}, {
+    tableName: "category",
 });
 
 Property.belongsTo(Category);
