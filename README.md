@@ -4,8 +4,6 @@ Project made along the course of [Node.js - Bootcamp Desarrollo Web inc. MVC y R
 
 Done in english because the default language of programming is english.
 
-This is not a serious project, I won't keep developing it too much.
-
 # Notes
 
 - csurf package was deprecated

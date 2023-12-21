@@ -1,7 +1,7 @@
 {
   "name": "bienesraices_mvc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Real state app",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "server": "nodemon index.js",
     "css": "postcss public/css/tailwind.css -o public/css/app.css --watch",
     "js": "webpack --watch",
-    "dev": "concurrently \"npm run css\" \"npm run js\" \"DEBUG=express:view npm run server\"",
+    "dev": "concurrently \"npm run css\" \"npm run js\" \"DEBUG=express:view DEVELOPMENT=1 npm run server\"",
     "test": "jest"
   },
   "keywords": [],
