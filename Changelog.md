@@ -4,6 +4,15 @@
 [0.x.x] Is considered beta
 [x.x.x] Is ready for production
 
+Or even simplier
+[release.feature.patch]
+
+# Changelog
+
+[0.1.1] Fixes
+
+- Fix map issue
+
 [0.1.0] Authentication + Upload properties with images
 
 Features:

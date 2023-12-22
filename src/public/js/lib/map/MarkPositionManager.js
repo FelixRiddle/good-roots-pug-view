@@ -7,6 +7,7 @@ import axios from "axios";
  * Class to mark a single position in a map
  */
 export default class MarkPositionManager {
+    userPositionSet = false;
     
     /**
      * Position marker map class
@@ -49,6 +50,14 @@ export default class MarkPositionManager {
         this.map = map;
     }
     
+    // --- User position ---
+    /**
+     * Remove localizer
+     */
+    removeLocalizer() {
+        
+    }
+    
     /**
      * Set position to user position
      */
@@ -56,11 +65,18 @@ export default class MarkPositionManager {
         let thisObj = this;
         this.map.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
             .on('locationfound', function(e) {
-                thisObj.marker.setLatLng(e.latlng);
+                if(!this.userPositionSet) {
+                    thisObj.marker.setLatLng(e.latlng);
+                    
+                    // The user position is set
+                    this.userPositionSet = true;
+                }
             })
             .on('locationerror', function(e) {
-                console.error(e);
-                console.log(`Couldn't access user location`);
+                if(!this.userPositionSet) {
+                    console.error(e);
+                    console.log(`Couldn't access user location`);
+                }
             });
     }
     
