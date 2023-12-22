@@ -5,6 +5,7 @@ import Property from "../../../models/Property.js";
 import expand from "../../../controllers/expand.js";
 import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
 import propertyFolder from "../../../lib/user/userFolder/property/propertyFolder.js";
+import { serverUrl } from "../../../controllers/env/env.js";
 
 const setImageRouter = express.Router();
 
@@ -92,6 +93,21 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
 });
 
 setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images"), async (req, res) => {
+    // BUG: It should work but it says that it doesn't exists
+    // let url = serverUrl();
+    
+    let url = "";
+    if(!process.env.SERVER_PORT) {
+        // When the website is on production, it's unnecessary to give the port
+        url = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}`;
+    } else {
+        // Mostly for development it's necessary to have a specific port
+        // Nevertheless, it could also be production too.
+        url = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`;
+    }
+    
+    let serverUrl = `${url}/user/property/admin`;
+    
     try {
         // --- This should be in a middleware ---
         // The property and the user is already validated at the middleware
@@ -105,8 +121,9 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         
         // Validate that the property is not published
         console.log(`Property published: ${property.published}`);
-        if(!property.published) {
-            return res.redirect("user/property/admin");
+        if(property.published) {
+            console.log(`Published properties can't be used at this endpoint!`);
+            return res.redirect(serverUrl);
         }
         
         // Name of the first image file
@@ -117,16 +134,18 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         
         // Store
         await property.save();
+        console.log(`Property saved!`);
         
-        return res.redirect("user/property/admin", {
-            messages: [{
-                message: "Images uploaded",
-                error: false,
-            }]
-        });
+        return res.redirect(serverUrl);
+        // return res.redirect(serverUrl, {
+        //     messages: [{
+        //         message: "Images uploaded",
+        //         error: false,
+        //     }]
+        // });
     } catch(err) {
         console.error(err);
-        return res.redirect("user/property/admin");
+        return res.redirect(serverUrl);
     }
 });
 

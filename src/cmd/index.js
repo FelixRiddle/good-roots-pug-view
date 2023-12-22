@@ -48,7 +48,7 @@ parser.add_argument("--downAll", {
 parser.add_argument("--resetTables", {
     help: "Destroy and create the tables again with the default data",
     action: "store_true"
-})
+});
 
 // Parse arguments
 let args = parser.parse_args();
