@@ -3,7 +3,7 @@
 In the udemy course the guy makes a movable marker, but using esri, which now is subscription-walled.
 
 - [x] Remake the movable marker
-- [ ] [BUG] The marker uses a script to display user real location, I only need the location once.
+- [x] [BUG] The marker uses a script to display user real location, I only need the location once.
 
 Functionality
 

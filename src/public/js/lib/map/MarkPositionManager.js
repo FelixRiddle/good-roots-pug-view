@@ -52,31 +52,20 @@ export default class MarkPositionManager {
     
     // --- User position ---
     /**
-     * Remove localizer
-     */
-    removeLocalizer() {
-        
-    }
-    
-    /**
-     * Set position to user position
+     * Set position to user position once
      */
     setPositionToUserPosition() {
         let thisObj = this;
         this.map.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
             .on('locationfound', function(e) {
-                if(!this.userPositionSet) {
-                    thisObj.marker.setLatLng(e.latlng);
-                    
-                    // The user position is set
-                    this.userPositionSet = true;
-                }
+                thisObj.marker.setLatLng(e.latlng);
+                
+                // Set user position once
+                thisObj.map.stopLocate();
             })
             .on('locationerror', function(e) {
-                if(!this.userPositionSet) {
-                    console.error(e);
-                    console.log(`Couldn't access user location`);
-                }
+                console.error(e);
+                console.log(`Couldn't access user location`);
             });
     }
     

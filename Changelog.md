@@ -9,9 +9,9 @@ Or even simplier
 
 # Changelog
 
-[0.1.1] Fixes
-
-- Fix map issue
+[0.1.1] Map fixed
+- Fix map moving back to user position
+- Fix map moving marker back to user position
 
 [0.1.0] Authentication + Upload properties with images
 
