@@ -1,9 +1,6 @@
 import axios from "axios";
 
-console.log(`Admin script`);
-
 async function setImageSource() {
-    console.log(`Fetch data`);
     
     let data = await axios({
         method: 'get',
@@ -16,11 +13,26 @@ async function setImageSource() {
             return;
         });
     
-    console.log(`Data: `, data);
-    
     if(data) {
-        // Update images source
+        let properties = data.properties;
         
+        // Update images source
+        for(let property of properties) {
+            let propertyImages = property.imagesRelativeURI;
+            
+            // Check if there are images
+            if(propertyImages.length == 0) {
+                console.warn(`Property '${property.title}' has no images!`);
+                continue;
+            }
+            
+            // Get property image element
+            let propertyElement = document.getElementById(`${property.id}_image`);
+            if(propertyElement) {
+                // Set image source location
+                propertyElement.src = `${location.origin}/${propertyImages[0]}`
+            }
+        }
     }
 }
 
