@@ -4,7 +4,7 @@
 [0.x.x] Is considered beta
 [x.x.x] Is ready for production
 
-[0.0.1] Authentication + Upload properties with images
+[0.1.0] Authentication + Upload properties with images
 
 Features:
 - The user can register
