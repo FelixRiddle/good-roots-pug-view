@@ -1,14 +1,13 @@
 import express from "express";
 
-import Property from "../../../models/Property.js";
-import Category from "../../../models/Category.js";
-import Price from "../../../models/Price.js";
-import expand from "../../../controllers/expand.js";
-import { relativePropertyImages } from "../../../lib/user/userFolder/property/propertyFolder.js";
+import Property from "../../../../models/Property.js";
+import Category from "../../../../models/Category.js";
+import Price from "../../../../models/Price.js";
+import { relativePropertyImages } from "../../../../lib/user/userFolder/property/propertyFolder.js";
 
-const adminRoutes = express.Router();
+const getAllRoutes = express.Router();
 
-const admin = async(req, res) => {
+getAllRoutes.get(`/get_all`, async(req, res) => {
     const { id: userId, email } = req.user;
     console.log(`User ID: ${userId}`);
     
@@ -40,19 +39,12 @@ const admin = async(req, res) => {
         let propertyImages = relativePropertyImages(email, property.id);
         
         property.imagesRelativeURI = propertyImages;
+        // console.log(`Property: `, property);
     }
     
-    let expanded = expand(req);
-    return res.render("user/property/admin", {
-        page: "My Properties",
+    return res.send({
         properties,
-        ...expanded,
     });
-}
+});
 
-// All of this go to the same page
-adminRoutes.get("/myProperties", admin);
-adminRoutes.get("/admin", admin);
-adminRoutes.get("/index", admin);
-
-export default adminRoutes;
+export default getAllRoutes;

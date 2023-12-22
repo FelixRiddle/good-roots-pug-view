@@ -7,8 +7,6 @@ dropzone.on("addedFile", file => {
     console.log(`Second dropzone add image`);
     console.log(`File added: ${file.name}`);
 });
-console.log(`Dropzone object: `, dropzone);
-console.log(`Dropzone options object: `, dropzone.options);
 
 // Dropzone.options.image = {
 dropzone.options.image = {

@@ -1,14 +1,10 @@
 //- Display row
 div(
     class="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 md:space-y-0 gap-4"
+    id=property.id
 )
     //- Property image
-    div(class="sm:w-1/4 md:w-1/6 lg:w-1/6")
-        img(
-            src=`uploads/${property.image}`,
-            alt=`Image of the property ${property.title}`
-            class="w-full block"
-            )
+    include ./property-image
     
     //- Property information
     div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")

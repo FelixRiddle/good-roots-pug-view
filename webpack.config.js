@@ -54,6 +54,12 @@ export default {
             filename: "navbar/index.js"
         },
         // Properties
+        routes_user_property_admin: {
+            import: [
+                `${publicRoutes}user/property/admin.js`
+            ],
+            filename: `routes/user/property/admin.js`
+        },
         property1: {
             import: [
                 `${publicRoutes}user/property/edit.js`
