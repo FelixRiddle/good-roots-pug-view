@@ -60,6 +60,8 @@ export function createPublicUserFolder() {
  * 
  * Gets the relative user folder from public folder
  * 
+ * Note: Express doesn't add the 'public' part to the uri
+ * 
  * @param {string} userEmail User email
  */
 export function relativeUserFolder(userEmail) {

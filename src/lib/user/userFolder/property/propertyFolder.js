@@ -17,9 +17,6 @@ import userPropertyFolder, { relativeUserPropertyFolder } from "./index.js";
  * @returns {string} Given property folder
  */
 export default function propertyFolder(userEmail, id) {
-    console.log(`Email given: ${userEmail}`);
-    console.log(`Id: ${id}`);
-    
     const parentFolder = userPropertyFolder(userEmail);
     
     // Create user property folder
@@ -62,12 +59,13 @@ export function relativePropertyImages(userEmail, id) {
     
     let imagesURI = [];
     for(let image of images) {
-        console.log(`Image name: `, image.name);
-        console.log(`Image path: `, image.path);
         let encodedImageName = encodeURIComponent(image.name);
-        let imageURI = `${image.path}/${encodedImageName}`;
         
-        console.log(`Image uri: ${imageURI}`);
+        // Because express doesn't add the 'public' part to it, we have to remove it
+        let imagePath = image.path.substring(7, image.path.length);
+        
+        let imageURI = `${imagePath}/${encodedImageName}`;
+        
         imagesURI.push(imageURI);
     }
     

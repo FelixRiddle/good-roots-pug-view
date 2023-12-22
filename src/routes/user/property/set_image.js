@@ -16,14 +16,11 @@ const storage = multer.diskStorage({
         // Obtain property path, and create if it doesn't not exist
         // This is an absolute path
         const propertyPath = propertyFolder(req.user.email, id);
-        console.log("Property: ", propertyPath);
         
         // Store image in the property path
         return cb(null, propertyPath);
     },
     filename: (req, file, cb) => {
-        console.log("File information: ", file);
-        
         // The folder creation process is unique enough
         return cb(null, file.originalname);
     }
@@ -112,7 +109,6 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         // --- This should be in a middleware ---
         // The property and the user is already validated at the middleware
         const { id } = req.params;
-        console.log(`Inserting the image on the server with id(property): ${id}`);
         
         // It just is missing this part
         // Validate that the property exists
@@ -120,7 +116,6 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         // --------------------------------------
         
         // Validate that the property is not published
-        console.log(`Property published: ${property.published}`);
         if(property.published) {
             console.log(`Published properties can't be used at this endpoint!`);
             return res.redirect(serverUrl);
@@ -134,15 +129,14 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         
         // Store
         await property.save();
-        console.log(`Property saved!`);
         
-        return res.redirect(serverUrl);
         // return res.redirect(serverUrl, {
         //     messages: [{
         //         message: "Images uploaded",
         //         error: false,
         //     }]
         // });
+        return res.redirect(serverUrl);
     } catch(err) {
         console.error(err);
         return res.redirect(serverUrl);
