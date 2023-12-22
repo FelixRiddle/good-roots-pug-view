@@ -1,6 +1,6 @@
 {
   "name": "bienesraices_mvc",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Real state app",
   "main": "index.js",
   "type": "module",
