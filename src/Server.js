@@ -145,9 +145,6 @@ export default class Server {
         }
         
         this.usePugView();
-        
-        // Public assets folder
-        this.app.use(express.static("public"));
     }
     
     /**

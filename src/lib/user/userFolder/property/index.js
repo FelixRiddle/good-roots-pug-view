@@ -1,6 +1,7 @@
 import { constants } from "node:buffer";
 import path from "node:path";
 import fs from "node:fs";
+import { relativeUserFolder } from "../userFolder.js";
 
 /**
  * User property folder
@@ -35,4 +36,16 @@ export default function userPropertyFolder(userEmail) {
     }
     
     return userPropertyFolder;
+}
+
+/**
+ * Relative user property folder
+ * 
+ * Gets the relative user property folder path from public folder
+ * 
+ * @param {string} userEmail User email
+ * @returns {string}
+ */
+export function relativeUserPropertyFolder(userEmail) {
+    return `${relativeUserFolder(userEmail)}/property`;
 }

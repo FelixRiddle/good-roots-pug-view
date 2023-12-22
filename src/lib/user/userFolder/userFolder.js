@@ -54,3 +54,14 @@ export function createPublicUserFolder() {
         fs.mkdirSync(userFolderPath);
     }
 }
+
+/**
+ * Relative user folder
+ * 
+ * Gets the relative user folder from public folder
+ * 
+ * @param {string} userEmail User email
+ */
+export function relativeUserFolder(userEmail) {
+    return `public/user/${userEmail}`;
+}

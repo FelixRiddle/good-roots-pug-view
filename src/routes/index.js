@@ -13,6 +13,10 @@ routes.use("/auth", authRoutes);
 routes.use("/examples", examplesRouter);
 routes.use("/user", protectRoute, userRoutes);
 routes.use("/api", apiRouter);
+
+// Public assets folder
+routes.use(express.static("public"));
+
 routes.use(homeRouter);
 
 export default routes;

@@ -4,17 +4,18 @@ import Property from "../../../models/Property.js";
 import Category from "../../../models/Category.js";
 import Price from "../../../models/Price.js";
 import expand from "../../../controllers/expand.js";
+import { relativePropertyImages } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const adminRoutes = express.Router();
 
 const admin = async(req, res) => {
-    const { id } = req.user;
-    console.log(`User ID: ${id}`);
+    const { id: userId, email } = req.user;
+    console.log(`User ID: ${userId}`);
     
     // Fetch properties from the database that are owned by this user
     const propertiesRes = await Property.findAll({
         where: {
-            userId: id,
+            userId,
         },
         include: [
             {
@@ -32,6 +33,18 @@ const admin = async(req, res) => {
     // Thanks sensei for this incredible response
     // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
     const properties = propertiesRes.map(x => x.get({ plain: true }));
+    
+    // Get property images
+    console.log(`Listing all properties`);
+    for(let property of properties) {
+        console.log(`Property: `, property);
+        
+        // Get the property images relative to the public path
+        let propertyImages = relativePropertyImages(email, property.id);
+        
+        property.imagesRelativeUrl = propertyImages;
+        console.log(`Property images: `, property.imagesRelativeUrl);
+    }
     
     let expanded = expand(req);
     console.log(`Expanded: `, expanded);
