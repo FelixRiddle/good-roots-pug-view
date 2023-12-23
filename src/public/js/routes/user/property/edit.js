@@ -58,7 +58,7 @@ let positionChangeCallback = (newPosition) => {
  */
 function hookRequestOnButtonClick() {
     // Get submit button
-    let submitBtn = document.getElementById("createProperty");
+    let submitBtn = document.getElementById("submitButton");
     if(!submitBtn) {
         // An error has occurred
         console.log(`Couldn't find submit button!`);
@@ -137,11 +137,13 @@ function hookRequestOnButtonClick() {
             })
                 .catch((err) => console.error(err));
             
+            console.log(`Data sent`);
             const nextUrl = res.nextUrl;
             
             const url = `${siteUrl}${nextUrl}`;
+            console.log(`Redirecting to: ${url}`);
             
-            window.location.href = url;
+            // window.location.href = url;
         } catch(err) {
             console.log(`Error: `, err);
         }

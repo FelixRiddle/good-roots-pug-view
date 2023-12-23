@@ -15,7 +15,6 @@ block content
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
             form.space-y-8(
                 method="POST"
-                action="edit"
                 id="edit:form"
             )
                 //- Empty tag defaults to div
@@ -45,9 +44,9 @@ block content
                         //- Category
                         //- value=category ? property.category : ""
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="categoryId") Category 
-                            select#category.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="categoryId")
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="category") Category 
+                            select#categoryId.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
+                                name="category")
                                 option(value=property.categoryId) - Select one - 
                                 each category in categories
                                     option(
@@ -57,9 +56,9 @@ block content
                         
                         //- Price
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="priceId") Price 
-                            select#price.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
-                                name="priceId")
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="price") Price 
+                            select#priceId.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(
+                                name="price")
                                 option(value=property.priceId) - Select one - 
                                 each price in prices
                                     option(
@@ -144,7 +143,8 @@ block content
                     input(
                         class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer"
                         type="submit"
-                        value="Add image"
+                        id="submitButton"
+                        value="Set images"
                     )
 
 block scripts
@@ -159,5 +159,4 @@ block scripts
     <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     
     //- Load map
-    script(src="/js/map.js")
     script(src="/js/routes/user/property/edit.js")

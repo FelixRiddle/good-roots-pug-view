@@ -6,6 +6,7 @@ import Property from "../../../models/Property.js";
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
 import { serverUrl } from "../../../controllers/env/env.js";
+import validateProperty from "../../../public/js/validation/validateProperty.js";
 
 const editRouter = express.Router();
 
@@ -68,12 +69,11 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
     console.log(`Server url ${url}`);
     
     try {
-        // Validation
-        let result = validationResult(req);
-        
         const { id } = req.params;
         
-        if(!result.isEmpty()) {
+        // Validation
+        let result = validateProperty(req.body);
+        if(!result) {
             // Get price and category
             const [
                 categories,
@@ -88,14 +88,16 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 page: `Edit property`,
                 categories,
                 prices,
-                errors: result.array(),
+                messages: [{
+                    message: "Data couldn't be validated",
+                    error: true,
+                }],
                 property: req.body,
             });
         }
         
-        const property = await Property.findByPk(id);
-        
         // Check that property exists
+        const property = await Property.findByPk(id);
         if(!property) {
             return res.redirect(adminPanel);
         }
@@ -119,9 +121,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             categoryId,
         } = req.body;
         
-        // TODO: Perform data validation
-        
-        
         // Update property
         property.set({
             title,
@@ -137,8 +136,15 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         });
         
         await property.save();
+        console.log(`Data updated, going to set image`);
         
-        return res.redirect(adminPanel);
+        let nextLink = `${serverUrl()}/user/property/set_image/${property.id}`;
+        return res.redirect(nextLink, {
+            messages: [{
+                message: "Data updated, going to set the image",
+                error: false,
+            }]
+        });
     } catch(err) {
         console.log(err);
         
