@@ -4,8 +4,9 @@ In the udemy course the guy makes a movable marker, but using esri, which now is
 
 - [x] Remake the movable marker
 - [x] [BUG] The marker uses a script to display user real location, I only need the location once.
+- [ ] The marker can receive coordinates and be set to that location
 
-Functionality
+So that formularies that use this map can go back to their previous place, like the '/edit' page.
 
 - [ ] On page restart, the previous marker position is remembered.
 - [x] Click and drag

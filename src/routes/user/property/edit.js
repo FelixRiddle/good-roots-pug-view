@@ -144,12 +144,8 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         console.log(`Property updated, going to set image`);
         
         let nextLink = `${serverUrl()}/user/property/set_image/${property.id}`;
-        return res.redirect(nextLink, {
-            messages: [{
-                message: "Data updated, going to set the image",
-                error: false,
-            }]
-        });
+        console.log(`Next link: ${nextLink}`);
+        return res.redirect(nextLink);
     } catch(err) {
         console.log(err);
         

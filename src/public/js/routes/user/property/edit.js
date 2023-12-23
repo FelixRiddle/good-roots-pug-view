@@ -128,14 +128,12 @@ function hookRequestOnButtonClick() {
                 return res.data;
             })
                 .catch((err) => console.error(err));
-            
             console.log(`Data sent`);
-            const nextUrl = res.nextUrl;
             
-            const url = `${siteUrl}${nextUrl}`;
+            const url = `${siteUrl}/user/property/set_image/${property.id}`;
             console.log(`Redirecting to: ${url}`);
             
-            // window.location.href = url;
+            window.location.href = url;
         } catch(err) {
             console.log(`Error: `, err);
         }

@@ -5,7 +5,9 @@
 - [x] '/edit' frontend
     - [x] Formulary
     - [x] Data validation
+    - [x] Redirect to set image
 - [ ] '/set_image' frontend route
+
 
 # Backend
 

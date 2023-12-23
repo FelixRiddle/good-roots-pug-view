@@ -49,12 +49,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             console.log(`The requested property doesn't exists!`);
             return res.redirect("user/property/admin");
         }
-        
-        // Validate that the property is not published
-        if(propertyController.published) {
-            console.log(`This property has already been published`);
-            // return res.redirect("user/property/admin");
-        }
+        console.log(`Property exists`);
         
         // Validate that the property belongs to the own who made the request
         if(user) {
@@ -67,6 +62,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             console.log(`Req user doesn't exists`);
             return res.redirect("user/property/admin");
         }
+        console.log(`User owns property`)
         
         // Remove sequelize stuff and leave just the data
         let property = propertyController.get({ plain: true });
@@ -102,28 +98,26 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         const property = await Property.findByPk(id);
         // --------------------------------------
         
-        // Validate that the property is not published
-        if(property.published) {
-            console.log(`Published properties can't be used at this endpoint!`);
-            return res.redirect(url);
+        // If not published update it to be
+        if(!property.published) {
+            console.log(`The property is not published, updating it to be.`);
+            // Name of the first image file
+            property.image = req.files[0].filename;
+            
+            // Publish property
+            property.published = 1;
+            
+            // Store
+            await property.save();
         }
         
-        // Name of the first image file
-        property.image = req.files[0].filename;
-        
-        // Publish property
-        property.published = 1;
-        
-        // Store
-        await property.save();
-        
-        // return res.redirect(serverUrl, {
-        //     messages: [{
-        //         message: "Images uploaded",
-        //         error: false,
-        //     }]
-        // });
-        return res.redirect(url);
+        console.log(`Redirecting user back to admin page`);
+        return res.send({
+            messages: [{
+                message: "Property updated",
+                error: false,
+            }]
+        });
     } catch(err) {
         console.error(err);
         return res.redirect(url);
