@@ -5,6 +5,7 @@ import Category from "../../../models/Category.js";
 import Property from "../../../models/Property.js";
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
+import { serverUrl } from "../../../controllers/env/env.js";
 
 const editRouter = express.Router();
 
@@ -41,7 +42,7 @@ editRouter.get("/edit/:id", async (req, res) => {
         console.log(`Ok, rendering edit`);
         console.log(`Property: `, property);
         return res.render(
-            "user/property/edit", {
+            `user/property/edit`, {
             page: `Edit property: ${property.title}`,
             categories,
             prices,
@@ -62,6 +63,10 @@ editRouter.get("/edit/:id", async (req, res) => {
 // For post, we have to validate the property data again
 editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
     const adminPanel = "user/property/admin";
+    
+    let url = serverUrl();
+    console.log(`Server url ${url}`);
+    
     try {
         // Validation
         let result = validationResult(req);
@@ -79,7 +84,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             ]);
             
             return res.render(
-                `user/property/edit:${id}`, {
+                `user/property/edit/${id}`, {
                 page: `Edit property`,
                 categories,
                 prices,
@@ -113,6 +118,9 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             priceId,
             categoryId,
         } = req.body;
+        
+        // TODO: Perform data validation
+        
         
         // Update property
         property.set({

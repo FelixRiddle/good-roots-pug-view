@@ -90,20 +90,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
 });
 
 setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images"), async (req, res) => {
-    // BUG: It should work but it says that it doesn't exists
-    // let url = serverUrl();
-    
-    let url = "";
-    if(!process.env.SERVER_PORT) {
-        // When the website is on production, it's unnecessary to give the port
-        url = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}`;
-    } else {
-        // Mostly for development it's necessary to have a specific port
-        // Nevertheless, it could also be production too.
-        url = `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`;
-    }
-    
-    let serverUrl = `${url}/user/property/admin`;
+    let url = `${serverUrl()}/user/property/admin`;
     
     try {
         // --- This should be in a middleware ---
@@ -118,7 +105,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         // Validate that the property is not published
         if(property.published) {
             console.log(`Published properties can't be used at this endpoint!`);
-            return res.redirect(serverUrl);
+            return res.redirect(url);
         }
         
         // Name of the first image file
@@ -136,10 +123,10 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images
         //         error: false,
         //     }]
         // });
-        return res.redirect(serverUrl);
+        return res.redirect(url);
     } catch(err) {
         console.error(err);
-        return res.redirect(serverUrl);
+        return res.redirect(url);
     }
 });
 

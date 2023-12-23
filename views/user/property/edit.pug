@@ -121,7 +121,7 @@ block content
                         
                         //- Show the user the current street
                         div 
-                            p.street=property.street
+                            p#show_street.street=property ? property.street : ""
                         
                         //- Send information about the pin location to the backend
                         input(
@@ -148,11 +148,15 @@ block content
                     )
 
 block scripts
-    //- For the map
-    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
-    script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")
-    script(src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/2.7.0/bundle.min.js")
+    //- Leaflet
+    script(
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    )
+    
+    //- For locating the street
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
     
     //- Load map
     script(src="/js/map.js")

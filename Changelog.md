@@ -9,14 +9,18 @@ Or even simplier
 
 # Changelog
 
+[0.2.0] Edit property
+
+- The user can edit a property
+- Can edit images too 
+
 [0.1.1] Map fixed
+
 - Fix map moving back to user position
 - Fix map moving marker back to user position
 
 [0.1.0] Authentication + Upload properties with images
 
-Features:
 - The user can register
 - The user can login
 - The user can create a property
-- The user can edit a property
