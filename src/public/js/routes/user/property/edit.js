@@ -9,17 +9,6 @@ import rootLocation from "../../../global/location.js";
 const siteUrl = rootLocation();
 let markerPosition = new MarkPositionManager();
 
-// let description = document.getElementById("description");
-// if(description) {
-//     description.addEventListener("change", (e) => {
-//         let el = e.target;
-//         console.log(`New value: ${el.value}`);
-//         description.value = el.value;
-//     })
-// } else {
-//     console.log(`Couldn't find description element!`);
-// }
-
 /**
  * Position change callback
  * 
@@ -76,6 +65,9 @@ function hookRequestOnButtonClick() {
             
             // Every input element name
             let inputElementsNames = [
+                // Although we fetch an ID, we won't validate it
+                "id",
+                // Property data
                 "title",
                 "description",
                 "rooms",
@@ -130,7 +122,7 @@ function hookRequestOnButtonClick() {
                 }
             });
         
-            const res = await instance.post(`/user/property/edit`, {
+            const res = await instance.post(`/user/property/edit/${property.id}`, {
                 property,
             }).then((res) => {
                 return res.data;

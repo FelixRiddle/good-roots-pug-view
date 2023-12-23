@@ -72,8 +72,14 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         const { id } = req.params;
         
         // Validation
-        let result = validateProperty(req.body);
-        if(!result) {
+        let newProperty = req.body.property;
+        console.log(`Property data: `, newProperty);
+        
+        let result = validateProperty(newProperty);
+        if(result.length > 0) {
+            console.log(`Validation didn't pass`);
+            console.log(`Messages: `, result);
+            
             // Get price and category
             const [
                 categories,
@@ -88,24 +94,24 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 page: `Edit property`,
                 categories,
                 prices,
-                messages: [{
-                    message: "Data couldn't be validated",
-                    error: true,
-                }],
+                messages: result,
                 property: req.body,
             });
         }
+        console.log(`Property data validated`);
         
         // Check that property exists
         const property = await Property.findByPk(id);
         if(!property) {
             return res.redirect(adminPanel);
         }
+        console.log(`Property exists`);
         
         // Check that the property owner is the user that made the request
         if(property.userId.toString() !== req.user.id.toString()) {
             return res.redirect(adminPanel)
         }
+        console.log(`The user owns the property`);
         
         // Extract data
         const {
@@ -119,7 +125,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             longitude,
             priceId,
             categoryId,
-        } = req.body;
+        } = newProperty;
         
         // Update property
         property.set({
@@ -134,9 +140,8 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             priceId,
             categoryId,
         });
-        
         await property.save();
-        console.log(`Data updated, going to set image`);
+        console.log(`Property updated, going to set image`);
         
         let nextLink = `${serverUrl()}/user/property/set_image/${property.id}`;
         return res.redirect(nextLink, {

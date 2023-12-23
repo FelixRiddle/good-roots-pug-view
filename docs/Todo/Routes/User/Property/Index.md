@@ -7,4 +7,3 @@ It says the function is not defined, but it's clearly imported, so I'm not gonna
 My bad, I was redeclaring the name of the functino to a variable 💀💀💀
 
 - [ ] [VULNERABILITY] '/create' doesn't have data validation 🥶😱
-- [ ] [VULNERABILITY] '/edit' doesn't have data validation
