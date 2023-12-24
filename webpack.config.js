@@ -17,6 +17,12 @@ export default {
             ],
             filename: "routes/auth/register.js"
         },
+        config_default_property_images: {
+            import: [
+                `${jsPath}config/default/propertyImages.js`
+            ],
+            filename: "config/default/propertyImages.js"
+        },
         controller1: {
             import: [
                 `${jsPath}controller/statusMessages.js`
