@@ -6,6 +6,7 @@ import createPropertyRouter from "./create.js";
 import editRouter from "./edit.js";
 import setImageRouter from "./set_image.js";
 import operationRoutes from "./operation/index.js";
+import imagesRouter from "./images/index.js";
 
 const propertyRoutes = express.Router();
 
@@ -14,6 +15,9 @@ propertyRoutes.use(adminRoutes);
 propertyRoutes.use(createPropertyRouter);
 propertyRoutes.use(editRouter);
 propertyRoutes.use(setImageRouter);
+
+// Mini apps
+propertyRoutes.use("/images", imagesRouter);
 propertyRoutes.use("/operation", operationRoutes);
 
 export default propertyRoutes;

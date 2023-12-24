@@ -1,34 +1,12 @@
 import express from "express";
-import multer from "multer";
 
 import Property from "../../../models/Property.js";
 import expand from "../../../controllers/expand.js";
 import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
-import propertyFolder from "../../../lib/user/userFolder/property/propertyFolder.js";
 import { serverUrl } from "../../../controllers/env/env.js";
+import uploadProperty from "../../../lib/user/userFolder/property/uploadPropertyMiddleware.js";
 
 const setImageRouter = express.Router();
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const { id } = req.params;
-        
-        // Obtain property path, and create if it doesn't not exist
-        // This is an absolute path
-        const propertyPath = propertyFolder(req.user.email, id);
-        
-        // Store image in the property path
-        return cb(null, propertyPath);
-    },
-    filename: (req, file, cb) => {
-        // The folder creation process is unique enough
-        return cb(null, file.originalname);
-    }
-});
-
-const upload = multer({
-    storage
-});
 
 // Set image
 // I just remembered, id doesn't work here
@@ -85,7 +63,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
     }
 });
 
-setImageRouter.post("/set_image/:id", userFolderMiddleware, upload.array("images"), async (req, res) => {
+setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array("images"), async (req, res) => {
     let url = `${serverUrl()}/user/property/admin`;
     
     try {
