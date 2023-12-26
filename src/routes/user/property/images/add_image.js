@@ -1,11 +1,12 @@
 import express from "express";
 
 import uploadProperty from "../../../../lib/user/userFolder/property/uploadPropertyMiddleware.js";
+import userFolderMiddleware from "../../../../middleware/user/userFolderMiddleware.js";
 
 const addImageRouter = express.Router();
 
 // Preflight request, check if the given images exist
-addImageRouter.post("/add_image_preflight", (req, res) => {
+addImageRouter.post("/add_image_preflight/:id", userFolderMiddleware, (req, res) => {
     console.log(`Image preflight`);
     const { id } = req.params;
     console.log(`Request body: `, req.body);
@@ -49,7 +50,7 @@ addImageRouter.post("/add_image_preflight", (req, res) => {
 });
 
 // Add an image to the property
-addImageRouter.post("/add_image", uploadProperty.array("images"), (req, res) => {
+addImageRouter.post("/add_image/:id", userFolderMiddleware, uploadProperty.array("images"), (req, res) => {
     
 });
 

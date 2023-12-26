@@ -12,12 +12,6 @@ async function preflightRequest(images) {
         console.log("Can't send preflight request if there are no images!! 🤬🤬🤬🤬");
         return;
     }
-    console.log(`Sending preflight request`);
-    console.log("Images: ", images);
-    console.log(`Type: ${typeof(images)}`);
-    
-    // const imageNamesArray = images.map((image) => image.name);
-    // console.log(`Images name array: `, imageNamesArray);
     
     let imagesArray = [];
     for(let image of images) {
@@ -26,11 +20,12 @@ async function preflightRequest(images) {
             size: image.size,
         });
     }
-    console.log(`Image names: `, imagesArray);
     
     const endpoint = "/user/property/images/add_image_preflight";
-    const url = `${window.location.origin}${endpoint}`;
-    console.log(`Url: ${url}`);
+    // const url = `${window.location.origin}${endpoint}`;
+    
+    const paths = window.location.pathname.split("/");
+    const propertyId = paths[paths.length - 1];
     
     // Create axios instance
     const instance = axios.create({
@@ -40,7 +35,7 @@ async function preflightRequest(images) {
     });
     
     // Post data
-    let res = await instance.post("/user/property/images/add_image_preflight", {
+    let res = await instance.post(`${endpoint}/${propertyId}`, {
         images: imagesArray,
     }).then((res) => res)
         .catch((err) => {
