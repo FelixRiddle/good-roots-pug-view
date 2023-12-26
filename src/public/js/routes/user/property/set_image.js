@@ -1,48 +1,54 @@
-// import { Dropzone } from "dropzone";
+import axios from "axios";
 
-// // Dropzone
-// let dropzone = new Dropzone("#image");
-// dropzone.on("addedFile", file => {
-//     console.log(`File added: ${file.name}`);
-// });
+const inputId = "images";
 
-// // Dropzone.options.image = {
-// dropzone.options.image = {
-//     // First, insert previous values
-//     ...dropzone.options.image,
-//     // Now update the values we want to change
-//     dictDefaultMessage: "Upload your image...",
-//     acceptedFiles: ".png,.jpg,.jpeg",
-//     // In Megabytes
-//     maxFilesize: 5,
-//     maxFiles: 1,
-//     parallelUploads: 1,
-//     autoProcessQueue: false,
-//     addRemoveLinks: true,
-//     paramName: "image",
-//     init: () => {
-//         try {
-//             // Get dropzone
-//             const dropzone = this;
-//             const publishBtn = document.querySelector("#publish");
+/**
+ * Send preflight request to server about the images
+ * 
+ * @param {Array} images Array of image files
+ */
+async function preflightRequest(images) {
+    if(!images) {
+        console.log("Can't send preflight request if there are no images!! 🤬🤬🤬🤬");
+        return;
+    }
+    console.log(`Sending preflight request`);
+    console.log("Images: ", images);
+    console.log(`Type: ${typeof(images)}`);
+    
+    // Create axios instance
+    const instance = axios.create({
+        baseURL: window.location.origin,
+        timeout: 2000,
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    const imageNamesArray = images.map((image) => image.name);
+    console.log(`Images name array: `, imageNamesArray);
+    
+    // Post data
+    let res = await instance.post("/user/property/images/add_image_preflight");
+}
+
+/**
+ * On change send request to the server to check whether the file is ready to be
+ * uploaded or it collides with another image
+ */
+function bindOnChange() {
+    const imagesInput = document.getElementById(inputId);
+    if(imagesInput) {
+        imagesInput.addEventListener("change", async (e) => {
+            console.log("Images changed");
             
-//             // Check if it exists
-//             if(!dropzone) {
-//                 console.log(`Couldn't get dropzone.`);
-//             }
+            // Files
+            console.log("Selected files: ", imagesInput.files);
+            console.log("File: ", imagesInput.value);
             
-//             publishBtn.addEventListener("click", () => {
-//                 console.log(`First dropzone publish`);
-//                 dropzone.processQueue();
-//             });
-            
-//             dropzone.on("queuecomplete", () => {
-//                 if(dropzone.getActiveFiles().length === 0) {
-//                     window.location.href = "/user/property/admin"
-//                 }
-//             });
-//         } catch(err) {
-//             console.log(err);
-//         }
-//     },
-// }
+            await preflightRequest(imagesInput.files);
+        });
+    } else {
+        console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
+    }
+}
+
+bindOnChange();
