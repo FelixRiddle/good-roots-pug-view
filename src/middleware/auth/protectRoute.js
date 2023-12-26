@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../../models/User.js";
 import expand from "../../controllers/expand.js";
 import baseUrl from "../../config/baseUrl.js";
+import { serverUrl } from "../../controllers/env/env.js";
 
 const protectRoute = async (req, res, next) =>  {
     try {
@@ -11,7 +12,7 @@ const protectRoute = async (req, res, next) =>  {
         
         // If there's no token, send the user to the login page
         let expanded = expand(req);
-        let loginPage = `${baseUrl()}/auth/login`;
+        let loginPage = `${serverUrl()}/auth/login`;
         if(!token) {
             console.log(`No token found, redirecting to ${loginPage}`);
             return res.redirect(loginPage, {
@@ -54,7 +55,7 @@ const protectRoute = async (req, res, next) =>  {
         
         // TODO: Get and set the route where the user was
         let expanded = expand(req);
-        return res.render("home", {
+        return res.redirect(`${serverUrl()}/home`, {
             ...expanded,
             messages: [{
                 message: "Internal error, if the error persists, please report it.",

@@ -18,7 +18,15 @@ propertyRoutes.use(editRouter);
 propertyRoutes.use(setImageRouter);
 
 // Mini apps
-propertyRoutes.use("/images", userFolderMiddleware, imagesRouter);
+// Images
+propertyRoutes.get("/images", (req, res) => {
+    console.log("Images endpoint");
+    return res.send({
+        message: "Request ok"
+    });
+});
+propertyRoutes.use("/images", imagesRouter);
+
 propertyRoutes.use("/operation", operationRoutes);
 
 export default propertyRoutes;

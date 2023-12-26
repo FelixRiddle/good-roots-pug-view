@@ -16,6 +16,22 @@ async function preflightRequest(images) {
     console.log("Images: ", images);
     console.log(`Type: ${typeof(images)}`);
     
+    // const imageNamesArray = images.map((image) => image.name);
+    // console.log(`Images name array: `, imageNamesArray);
+    
+    let imagesArray = [];
+    for(let image of images) {
+        imagesArray.push({
+            name: image.name,
+            size: image.size,
+        });
+    }
+    console.log(`Image names: `, imagesArray);
+    
+    const endpoint = "/user/property/images/add_image_preflight";
+    const url = `${window.location.origin}${endpoint}`;
+    console.log(`Url: ${url}`);
+    
     // Create axios instance
     const instance = axios.create({
         baseURL: window.location.origin,
@@ -23,11 +39,17 @@ async function preflightRequest(images) {
         headers: {'Content-Type': 'application/json'}
     });
     
-    const imageNamesArray = images.map((image) => image.name);
-    console.log(`Images name array: `, imageNamesArray);
-    
     // Post data
-    let res = await instance.post("/user/property/images/add_image_preflight");
+    let res = await instance.post("/user/property/images/add_image_preflight", {
+        images: imagesArray,
+    }).then((res) => res)
+        .catch((err) => {
+            
+            console.log("Error: ", err);
+            return;
+        });
+    
+    console.log(`Response status: `, res.status);
 }
 
 /**
