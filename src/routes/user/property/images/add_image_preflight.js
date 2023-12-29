@@ -1,6 +1,4 @@
 import fs from "node:fs";
-import { constants } from "node:buffer";
-
 import express from "express";
 
 import userFolderMiddleware from "../../../../middleware/user/userFolderMiddleware.js";
@@ -52,13 +50,8 @@ addImagePreflightRouter.post("/add_image_preflight/:id", userFolderMiddleware, (
     
     // Only proceed with the images that don't collide.
     return res.send({
-        proceed: true,
         collisions,
         notCollided,
-        messages: [{
-            message: "No collisions",
-            error: false,
-        }]
     });
 });
 

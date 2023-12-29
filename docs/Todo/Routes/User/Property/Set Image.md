@@ -3,6 +3,7 @@
 # Frontend
 
 - [ ] Preview of previous, if it has
+- [ ] Fetch all images on the frontend
 - [x] Set images
     - [ ] Deletes previous images
     
