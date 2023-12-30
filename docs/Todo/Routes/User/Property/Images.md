@@ -1,4 +1,6 @@
-# Set image endpoint
+# Images API
+
+API To update/set property images
 
 # Frontend
 
@@ -26,6 +28,8 @@ I need finer control than this, we're going to do this
 
 - [ ] Configuration validation
 
+# Backend
+
 On upload an image pass the configuration tests
 
 - [ ] Endpoints should be at '/property/images'
@@ -39,6 +43,7 @@ Use an array for each.
         
     - [ ] '/images/get_image' to get image/s
     - [ ] '/images/delete_image' to delete an image or multiple images
+    - [ ] '/images/set_image' to set the images(replace previous and delete previous that are no more)
 
 - [ ] Frontend API to communicate with this tiny images app
     - [ ] Reads configuration and works fine

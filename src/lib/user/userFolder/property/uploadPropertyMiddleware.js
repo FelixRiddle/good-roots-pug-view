@@ -35,14 +35,15 @@ const uploadProperty = multer({
         const propertyPath = propertyFolder(req.user.id, id);
         // const imagePath = 
         try {
-            console.log(`The image exists`);
             fs.accessSync(propertyPath, constants.F_OK);
+            console.log(`The image exists`);
         } catch(err) {
             // The image doesn't exists
             console.log(`The image doesn't exists`);
         }
         
-        return cb(null, false);
+        // I can't believe this was set to false and was intervening with what I was doing
+        return cb(null, true);
     }
 });
 

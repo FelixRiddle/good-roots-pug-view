@@ -7,7 +7,7 @@ const addImageRouter = express.Router();
 
 // Add an image to the property
 addImageRouter.post("/add_image/:id", userFolderMiddleware, uploadProperty.array("images"), (req, res) => {
-    
+    // 
 });
 
 export default addImageRouter;

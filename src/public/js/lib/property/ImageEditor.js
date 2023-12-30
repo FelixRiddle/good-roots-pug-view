@@ -6,6 +6,13 @@ import axios from "axios";
  * API to communicate with the backend
  */
 export default class ImageEditor {
+    propertyImages = [];
+    previousImages = [];
+    
+    // Collisions
+    // Files that have collided with others in the backend will be set here
+    collisions = [];
+    
     /**
      * Create a new image editor
      * 
@@ -31,7 +38,50 @@ export default class ImageEditor {
         propertyImages.then((images) => {
             console.log(`Response: `, images);
             thisClass.propertyImages = images;
+            thisClass.previousImages = images;
         });
+    }
+    
+    // --- Events ---
+    /**
+     * On change send request to the server to check whether the file is ready to be
+     * uploaded or it collides with another image
+     */
+    bindOnChange() {
+        const imagesInput = document.getElementById(this.inputId);
+        if(imagesInput) {
+            // I had problems once for using 'this' keyword inside an event listener, so I rather
+            // not do that.
+            let thisObject = this;
+            imagesInput.addEventListener("change", async (e) => {
+                console.log("Images changed");
+                
+                // TODO: Check that these are not the previous images
+                
+                // Files
+                console.log("Selected files: ", imagesInput.files);
+                console.log("File: ", imagesInput.value);
+                
+                let res = await thisObject.preflightRequest(imagesInput.files);
+            });
+        } else {
+            console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
+        }
+    }
+    
+    // --- API Endpoints ---
+    /**
+     * When the page loads fetch all images
+     */
+    async fetchAll() {
+        let res = await this.instance.get(`/get_all/${this.propertyId}`)
+            .then((res) => {
+                return res;
+            }).catch((err) => {
+                console.log(`Error when fetching image names from the backend: `, err);
+            });
+        
+        return res.data.images;
     }
     
     /**
@@ -67,42 +117,25 @@ export default class ImageEditor {
         
         console.log(`Response status: `, res.status);
         console.log(`Response data: `, res.data);
-    }
-    
-    /**
-     * On change send request to the server to check whether the file is ready to be
-     * uploaded or it collides with another image
-     */
-    bindOnChange() {
-        const imagesInput = document.getElementById(this.inputId);
-        if(imagesInput) {
-            imagesInput.addEventListener("change", async (e) => {
-                console.log("Images changed");
-                
-                // TODO: Check that these are not the previous images
-                
-                // Files
-                console.log("Selected files: ", imagesInput.files);
-                console.log("File: ", imagesInput.value);
-                
-                await preflightRequest(imagesInput.files);
-            });
-        } else {
-            console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
-        }
-    }
-    
-    /**
-     * When the page loads fetch all images
-     */
-    async fetchAll() {
-        let res = await this.instance.get(`/get_all/${this.propertyId}`)
-            .then((res) => {
-                return res;
-            }).catch((err) => {
-                console.log(`Error when fetching image names from the backend: `, err);
-            });
         
-        return res.data.images;
+        // Update collisions
+        this.collisions = res.data.collisions;
+        
+        return res.data;
+    }
+    
+    /**
+     * Set images endpoint
+     */
+    async setImages() {
+        const endpoint = `/set_image/${this.propertyId}`;
+        
+        // Post data
+        let res = await this.instance.post(endpoint).then((res) => res)
+            .catch((err) => {
+                
+                console.log("Error: ", err);
+                return;
+            });
     }
 }

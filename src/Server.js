@@ -88,7 +88,6 @@ export default class Server {
             let fontAndFrame = "font-src 'self'; frame-src 'self';";
             
             let cspPolicy = `${fontAndFrame} ${defaultSrc} ${scriptSrc} ${styleSrc} ${imgSrc}`;
-            console.log(`Csp policy: ${cspPolicy}`);
             
             return cspPolicy;
         })();
