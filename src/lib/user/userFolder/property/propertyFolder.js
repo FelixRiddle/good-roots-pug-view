@@ -12,12 +12,12 @@ import userPropertyFolder, { relativeUserPropertyFolder } from "./index.js";
 /**
  * Get user property folder
  * 
- * @param {string} userEmail User email
+ * @param {string} userId User id
  * @param {int} id Property ID
  * @returns {string} Given property folder
  */
-export default function propertyFolder(userEmail, id) {
-    const parentFolder = userPropertyFolder(userEmail);
+export default function propertyFolder(userId, id) {
+    const parentFolder = userPropertyFolder(userId);
     
     // Create user property folder
     const propFolder = path.resolve(parentFolder, `${id}`);
@@ -33,14 +33,14 @@ export default function propertyFolder(userEmail, id) {
 }
 
 /**
- * Takes a user email and an id, and get the relative property folder from public folder
+ * Uses user id and property's to get the relative property folder from public folder
  * 
- * @param {string} userEmail 
+ * @param {string} userId 
  * @param {number} id 
  * @returns {string} Property folder relative path
  */
-export function relativePropertyFolder(userEmail, id) {
-    return `${relativeUserPropertyFolder(userEmail)}/${id}`;
+export function relativePropertyFolder(userId, id) {
+    return `${relativeUserPropertyFolder(userId)}/${id}`;
 }
 
 /**
@@ -50,12 +50,12 @@ export function relativePropertyFolder(userEmail, id) {
  * 
  * Maybe it's a little complex to explain the things should this be a class?
  * 
- * @param {string} userEmail 
- * @param {number} id 
+ * @param {string} userId 
+ * @param {number} id The property id
  * @returns {array} Array of property images relative path from public directory
  */
-export function relativePropertyImages(userEmail, id) {
-    let images = fs.readdirSync(relativePropertyFolder(userEmail, id), { withFileTypes: true });
+export function relativePropertyImages(userId, id) {
+    let images = fs.readdirSync(relativePropertyFolder(userId, id), { withFileTypes: true });
     
     let imagesURI = [];
     for(let image of images) {

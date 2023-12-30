@@ -8,11 +8,11 @@ import { relativeUserFolder } from "../userFolder.js";
  * 
  * Container folder for property folders
  * 
- * @param {string} userEmail User email
+ * @param {string} userId User id
  * @returns {string} Path to the folder
  */
-export default function userPropertyFolder(userEmail) {
-    const userFolderPath = path.resolve(process.cwd(), `public/user/${userEmail}`);
+export default function userPropertyFolder(userId) {
+    const userFolderPath = path.resolve(process.cwd(), `public/user/${userId}`);
     console.log(`User folder path: ${userFolderPath}`);
     
     // Create user folder
@@ -43,9 +43,9 @@ export default function userPropertyFolder(userEmail) {
  * 
  * Gets the relative user property folder path from public folder
  * 
- * @param {string} userEmail User email
+ * @param {string} userId User id
  * @returns {string}
  */
-export function relativeUserPropertyFolder(userEmail) {
-    return `${relativeUserFolder(userEmail)}/property`;
+export function relativeUserPropertyFolder(userId) {
+    return `${relativeUserFolder(userId)}/property`;
 }

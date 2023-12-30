@@ -13,7 +13,7 @@ addImagePreflightRouter.post("/add_image_preflight/:id", userFolderMiddleware, (
     const images = req.body.images;
     
     // Check if the image exists
-    const propertyPath = propertyFolder(req.user.email, id);
+    const propertyPath = propertyFolder(req.user.id, id);
     
     // Get images in the property folder
     const serverImages = fs.readdirSync(propertyPath);

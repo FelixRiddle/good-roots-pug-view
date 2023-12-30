@@ -1,7 +1,6 @@
 import { constants } from "node:buffer";
 import path from "node:path";
 import fs from "node:fs";
-import User from "../../../models/User.js";
 
 /**
  * User folder
@@ -9,11 +8,11 @@ import User from "../../../models/User.js";
  * Creates it if it doesn't exists.
  * TODO: The user folder should be created on registry but it's too much of a hassle rn
  * 
- * @param {string} userEmail User email
+ * @param {string} userId User id
  * @returns 
  */
-export default function userFolder(userEmail) {
-    const userFolderPath = path.resolve(process.cwd(), `public/user/${userEmail}`);
+export default function userFolder(userId) {
+    const userFolderPath = path.resolve(process.cwd(), `public/user/${userId}`);
     console.log(`User folder path: ${userFolderPath}`);
     
     // Create user folder
@@ -62,8 +61,8 @@ export function createPublicUserFolder() {
  * 
  * Note: Express doesn't add the 'public' part to the uri
  * 
- * @param {string} userEmail User email
+ * @param {string} userId User id
  */
-export function relativeUserFolder(userEmail) {
-    return `public/user/${userEmail}`;
+export function relativeUserFolder(userId) {
+    return `public/user/${userId}`;
 }

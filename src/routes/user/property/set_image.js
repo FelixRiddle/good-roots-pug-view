@@ -79,6 +79,18 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
         // If not published update it to be
         if(!property.published) {
             console.log(`The property is not published, updating it to be.`);
+            
+            console.log(`Files: `, req.files);
+            if(req.files.length === 0) {
+                console.log(`No images given, bounce back.`);
+                return res.send({
+                    messages: [{
+                        message: "No images given for the property",
+                        error: true,
+                    }]
+                });
+            }
+            
             // Name of the first image file
             property.image = req.files[0].filename;
             
@@ -90,12 +102,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
         }
         
         console.log(`Redirecting user back to admin page`);
-        return res.send({
-            messages: [{
-                message: "Property updated",
-                error: false,
-            }]
-        });
+        return res.redirect("user/property/admin");
     } catch(err) {
         console.error(err);
         return res.redirect(url);

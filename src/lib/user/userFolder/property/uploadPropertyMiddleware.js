@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         
         // Obtain property path, and create if it doesn't not exist
         // This is an absolute path
-        const propertyPath = propertyFolder(req.user.email, id);
+        const propertyPath = propertyFolder(req.user.id, id);
         
         // Store image in the property path
         return cb(null, propertyPath);
@@ -32,7 +32,7 @@ const uploadProperty = multer({
         console.log(`File: `, file);
         
         // Check if the image exists
-        const propertyPath = propertyFolder(req.user.email, id);
+        const propertyPath = propertyFolder(req.user.id, id);
         // const imagePath = 
         try {
             console.log(`The image exists`);

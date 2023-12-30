@@ -8,7 +8,7 @@ import { relativePropertyImages } from "../../../../lib/user/userFolder/property
 const getAllRoutes = express.Router();
 
 getAllRoutes.get(`/get_all`, async(req, res) => {
-    const { id: userId, email } = req.user;
+    const { id: userId } = req.user;
     console.log(`User ID: ${userId}`);
     
     // Fetch properties from the database that are owned by this user
@@ -36,7 +36,7 @@ getAllRoutes.get(`/get_all`, async(req, res) => {
     // Get property images
     for(let property of properties) {
         // Get the property images relative to the public path
-        let propertyImages = relativePropertyImages(email, property.id);
+        let propertyImages = relativePropertyImages(userId, property.id);
         
         property.imagesRelativeURI = propertyImages;
         // console.log(`Property: `, property);

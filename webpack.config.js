@@ -52,6 +52,12 @@ export default {
             ],
             filename: `js/lib/visibility.js`
         },
+        lib_property: {
+            import: [
+                `${jsPath}lib/property/ImageEditor.js`
+            ],
+            filename: `js/lib/property.js`
+        },
         map: `${jsPath}map.js`,
         navbar: {
             import: [

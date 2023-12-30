@@ -55,10 +55,10 @@ export default async function userFolderMiddleware(req, res, next) {
         }
         
         // Create folder if not exists
-        userFolder(user.email);
+        userFolder(user.id);
         
         // Create and get property folder
-        propertyFolder(user.email, id);
+        propertyFolder(user.id, id);
         
         return next();
     } catch(err) {
