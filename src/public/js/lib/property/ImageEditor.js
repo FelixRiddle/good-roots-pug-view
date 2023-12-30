@@ -34,15 +34,16 @@ export default class ImageEditor {
         const propertyId = paths[paths.length - 1];
         this.propertyId = propertyId;
         
-        // Fetch property images, if they exist
-        let propertyImages = Promise.resolve(this.fetchAll());
-        let thisClass = this;
-        propertyImages.then((images) => {
-            console.log(`Response: `, images);
-            thisClass.propertyImages = images;
-            thisClass.previousImages = images;
-        });
-        
+        this.updatePropertyImages();
+        this.startAddImageViews();
+        this.updateImageViews();
+    }
+    
+    // Start operations
+    /**
+     * Add image views
+     */
+    startAddImageViews() {
         // Get every image view
         for(let i = 0; i < 10; i++) {
             let imgView = document.getElementById(`image_${i}`);
@@ -52,6 +53,46 @@ export default class ImageEditor {
                 console.log(`Image view ${i} couldn't be found!`);
             }
         }
+    }
+    
+    // --- Operations ---
+    /**
+     * Update image views
+     * 
+     * Updates whether an img element is shown or not, and its src attribute.
+     */
+    updateImageViews() {
+        let propLength = this.propertyImages.length;
+        let index = 0;
+        
+        for(let imgView of this.imagesView) {
+            // Update location and visibility
+            if(propLength > 0 && index < propLength) {
+                let srcLocation = `${location.origin}/${this.propertyImages[index]}`;
+                imgView.src = srcLocation;
+                imgView.hidden = false;
+                
+                index++;
+            } else {
+                imgView.hidden = true;
+            }
+        }
+    }
+    
+    /**
+     * Update property images
+     */
+    updatePropertyImages() {
+        // Fetch property images, if they exist
+        let propertyImages = Promise.resolve(this.fetchAll());
+        let thisClass = this;
+        propertyImages.then((images) => {
+            // console.log(`Response: `, images);
+            thisClass.propertyImages = images;
+            thisClass.previousImages = images;
+            
+            this.updateImageViews();
+        });
     }
     
     // --- Events ---
