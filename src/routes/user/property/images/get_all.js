@@ -22,7 +22,7 @@ getAllRouter.get("/get_all/:id", userFolderMiddleware, (req, res) => {
     console.log(`\nPublic property images: `, relPropImgs);
     
     return res.send({
-        images: serverImages,
+        images: relPropImgs,
     });
 });
 

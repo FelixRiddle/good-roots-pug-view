@@ -1,12 +1,5 @@
 //- Formulary
 div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 md:px-10")
-    //- form(
-    //-     id="publish_image"
-    //-     class="mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
-    //-     method="POST"
-    //-     enctype="multipart/form-data"
-    //-     action=`/user/property/set_image/${property.id}`
-    //- )
     form(
         id="publish_image"
         class="mt-4 border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center"
@@ -26,8 +19,11 @@ div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 m
             name="images"
             accept="image/jpeg, image/png, image/jpg"
         )
-        //- Ouput is to show the images
-        output(for="images")
+        
+        h3.text-lg.leading-6.font-medium.text-gray-900 Images
+        div#imagesView
+            - for (var x = 0; x < 10; x++)
+                img(id=`image_${x}` src="" hidden)
         
         //- Add image
         input(
@@ -36,6 +32,7 @@ div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 m
             type="submit"
             value="Publish property"
         )
+        
 
 block scripts
     script(src="/js/routes/user/property/set_image.js")

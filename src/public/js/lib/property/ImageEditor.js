@@ -6,6 +6,8 @@ import axios from "axios";
  * API to communicate with the backend
  */
 export default class ImageEditor {
+    imagesView = [];
+    
     propertyImages = [];
     previousImages = [];
     
@@ -40,6 +42,16 @@ export default class ImageEditor {
             thisClass.propertyImages = images;
             thisClass.previousImages = images;
         });
+        
+        // Get every image view
+        for(let i = 0; i < 10; i++) {
+            let imgView = document.getElementById(`image_${i}`);
+            if(imgView) {
+                this.imagesView.push(imgView);
+            } else {
+                console.log(`Image view ${i} couldn't be found!`);
+            }
+        }
     }
     
     // --- Events ---
