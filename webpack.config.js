@@ -1,5 +1,6 @@
 import path from "path";
 
+let publicFolder = "./src/public";
 let jsPath = "./src/public/js/";
 let publicRoutes = "./src/public/js/routes/";
 
@@ -11,31 +12,42 @@ let publicRoutes = "./src/public/js/routes/";
 export default {
     mode: "development",
     entry: {
+        // css_components_property_image_editor: {
+        //     import: [
+        //         `${publicFolder}/css/components/property/ImageEditor.css`
+        //     ],
+        //     filename: "css/components/property/ImageEditor.css"
+        // },
         auth: {
             import: [
                 `${publicRoutes}auth/register.js`
             ],
-            filename: "routes/auth/register.js"
+            filename: "js/routes/auth/register.js"
         },
         config_default_property_images: {
             import: [
                 `${jsPath}config/default/propertyImages.js`
             ],
-            filename: "config/default/propertyImages.js"
+            filename: "js/config/default/propertyImages.js"
         },
         controller1: {
             import: [
                 `${jsPath}controller/statusMessages.js`
             ],
-            filename: "controller/statusMessages.js"
+            filename: "js/controller/statusMessages.js"
         },
         formularies: {
             import: [
                 `${jsPath}formularies/index.js`
             ],
-            filename: "formularies/index.js"
+            filename: "js/formularies/index.js"
         },
-        insertImage: `${jsPath}insertImage.js`,
+        insertImage: {
+            import: [
+                `${jsPath}insertImage.js`,
+            ],
+            filename: "js/insertImage.js"
+        },
         global1: {
             import: [
                 `${jsPath}global/location.js`
@@ -58,92 +70,95 @@ export default {
             ],
             filename: `js/lib/property.js`
         },
-        map: `${jsPath}map.js`,
+        map: {
+            import: [`${jsPath}map.js`,],
+            filename: "js/map.js"
+        },
         navbar: {
             import: [
                 `${jsPath}navbar/index.js`
             ],
-            filename: "navbar/index.js"
+            filename: "js/navbar/index.js"
         },
         // Properties
         routes_user_property_admin: {
             import: [
                 `${publicRoutes}user/property/admin.js`
             ],
-            filename: `routes/user/property/admin.js`
+            filename: `js/routes/user/property/admin.js`
         },
         property1: {
             import: [
                 `${publicRoutes}user/property/edit.js`
             ],
-            filename: `routes/user/property/edit.js`
+            filename: `js/routes/user/property/edit.js`
         },
         property2: {
             import: [
                 `${publicRoutes}user/property/create.js`,
             ],
-            filename: `routes/user/property/create.js`
+            filename: `js/routes/user/property/create.js`
         },
         validation: {
             import: [
                 `${jsPath}validation/validateProperty.js`
             ],
-            filename: `validation/validation.js`
+            filename: `js/validation/validation.js`
         },
         // Routes examples
         routes_examples_map_draggable_marker: {
             import: [
                 `${publicRoutes}examples/map/draggable_marker.js`
             ],
-            filename: "routes/examples/map/draggable_marker.js"
+            filename: "js/routes/examples/map/draggable_marker.js"
         },
         routes_examples_map_live_user: {
             import: [
                 `${publicRoutes}examples/map/live_user.js`
             ],
-            filename: "routes/examples/map/live_user.js"
+            filename: "js/routes/examples/map/live_user.js"
         },
         routes_examples_map_quick_start: {
             import: [
                 `${publicRoutes}examples/map/quick_start.js`
             ],
-            filename: "routes/examples/map/quick_start.js"
+            filename: "js/routes/examples/map/quick_start.js"
         },
         routes_examples_map_street_name: {
             import: [
                 `${publicRoutes}examples/map/street_name.js`
             ],
-            filename: "routes/examples/map/street_name.js"
+            filename: "js/routes/examples/map/street_name.js"
         },
         // Multer
         routes_examples_publish_image_dropzone: {
             import: [
                 `${publicRoutes}examples/publish_image/dropzone.js`,
             ],
-            filename: "routes/examples/publish_image/dropzone.js"
+            filename: "js/routes/examples/publish_image/dropzone.js"
         },
         routes_examples_publish_image_multer_multiple_images: {
             import: [
                 `${publicRoutes}examples/publish_image/multer_multiple_images.js`,
             ],
-            filename: "routes/examples/publish_image/multer_multiple_images.js"
+            filename: "js/routes/examples/publish_image/multer_multiple_images.js"
         },
         routes_examples_publish_image_multer_example: {
             import: [
                 `${publicRoutes}examples/publish_image/multer_example.js`,
             ],
-            filename: "routes/examples/publish_image/multer_example.js"
+            filename: "js/routes/examples/publish_image/multer_example.js"
         },
         // User routes
         routes_user_property_set_image: {
             import: [
                 `${publicRoutes}user/property/set_image.js`
             ],
-            filename: "routes/user/property/set_image.js"
+            filename: "js/routes/user/property/set_image.js"
         }
     },
     output: {
         // filename: "[name].js",
-        path: path.resolve("public/js"),
+        path: path.resolve("public"),
     },
 };
