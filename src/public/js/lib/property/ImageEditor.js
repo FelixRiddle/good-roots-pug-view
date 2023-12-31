@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const REMOVE_ICON = `${location.origin}/icons/cross/Cross-50px.png`;
+
 /**
  * Image editor
  * 
@@ -52,6 +54,60 @@ export default class ImageEditor {
             } else {
                 console.log(`Image view ${i} couldn't be found!`);
             }
+            
+            // Do the same for removing icon
+            let removeView = document.getElementById(`image_${i}_remove_icon`);
+            if(removeView) {
+                removeView.src = REMOVE_ICON;
+            } else {
+                console.log(`Image view ${i} its remove view icon element couldn't be found.`);
+            }
+        }
+    }
+    
+    // --- Remove icon ---
+    /**
+     * Toggle show remove action icon by a given index
+     * 
+     * @param {number} index The element index
+     */
+    toggleShowRemoveAction(index) {
+        // Do the same for removing icon
+        let removeView = document.getElementById(`image_${index}_remove_icon`);
+        if(removeView) {
+            removeView.hidden = !removeView.hidden;
+        } else {
+            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
+        }
+    }
+    
+    /**
+     * Show remove action icon at a given index
+     * 
+     * @param {number} index The element index
+     */
+    showRemoveAction(index) {
+        // Do the same for removing icon
+        let removeView = document.getElementById(`image_${index}_remove_icon`);
+        if(removeView) {
+            removeView.hidden = false;
+        } else {
+            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
+        }
+    }
+    
+    /**
+     * Show remove action icon at a given index
+     * 
+     * @param {number} index The element index
+     */
+    hideRemoveAction(index) {
+        // Do the same for removing icon
+        let removeView = document.getElementById(`image_${index}_remove_icon`);
+        if(removeView) {
+            removeView.hidden = true;
+        } else {
+            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
         }
     }
     
@@ -72,9 +128,13 @@ export default class ImageEditor {
                 imgView.src = srcLocation;
                 imgView.hidden = false;
                 
+                this.showRemoveAction(index);
+                
                 index++;
             } else {
                 imgView.hidden = true;
+                
+                this.hideRemoveAction(index);
             }
         }
     }

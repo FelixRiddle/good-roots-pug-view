@@ -23,7 +23,11 @@ div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 m
         h3.text-lg.leading-6.font-medium.text-gray-900 Images
         div#imagesView
             - for (var x = 0; x < 10; x++)
-                img(id=`image_${x}` src="" hidden)
+                div(class="rounded")
+                    img(id=`image_${x}` src="" hidden)
+                    
+                    //- Remove icon(a cross)
+                    img(id=`image_${x}_remove_icon` src="" hidden)
         
         //- Add image
         input(
@@ -32,7 +36,6 @@ div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 m
             type="submit"
             value="Publish property"
         )
-        
 
 block scripts
     script(src="/js/routes/user/property/set_image.js")
