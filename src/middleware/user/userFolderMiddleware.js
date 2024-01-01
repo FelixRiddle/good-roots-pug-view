@@ -8,6 +8,8 @@ const DEBUG = false;
 /**
  * Checks if the user folder exists and creates it if it doesn't
  * 
+ * It also creates the property folder
+ * 
  * @param {object} req 
  * @param {object} res 
  * @param {function} next 
@@ -15,6 +17,7 @@ const DEBUG = false;
  */
 export default async function userFolderMiddleware(req, res, next) {
     try {
+        console.log(`Request files: `, req.files);
         if(DEBUG) {
             console.log(`Base url: `, req.baseUrl);
             console.log(`Url: `, req.url);

@@ -8,6 +8,7 @@ const REMOVE_ICON = `${location.origin}/icons/cross/Cross-50px.png`;
  * API to communicate with the backend
  */
 export default class ImageEditor {
+    previousImagesInputLength = 0;
     imagesView = [];
     
     propertyImages = [];
@@ -170,12 +171,30 @@ export default class ImageEditor {
                 console.log("Images changed");
                 
                 // TODO: Check that these are not the previous images
+                // Check whether something was added or removed
+                if(imagesInput.files.length >= this.previousImagesInputLength) {
+                    // Addition
+                    
+                    // Totally unnecessary, don't know why I did, but I leave it there just in case
+                    // let res = await thisObject.preflightRequest(imagesInput.files);
+                    
+                    // Get form data from it
+                    var formData = new FormData(document.getElementById("publish_image"));
+                    
+                    // Send images to server
+                    await thisObject.instance.postForm(
+                        `/set_image/${this.propertyId}`,
+                        formData
+                    );
+                } else {
+                    // Removal
+                }
                 
-                // Files
-                console.log("Selected files: ", imagesInput.files);
-                console.log("File: ", imagesInput.value);
+                // Update images view
+                this.updatePropertyImages();
                 
-                let res = await thisObject.preflightRequest(imagesInput.files);
+                // Update previous images input length
+                this.previousImagesInputLength = imagesInput.files.length;
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);

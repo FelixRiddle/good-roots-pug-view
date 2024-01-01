@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/User.js";
 import expand from "../../controllers/expand.js";
-import baseUrl from "../../config/baseUrl.js";
 import { serverUrl } from "../../controllers/env/env.js";
 
 const protectRoute = async (req, res, next) =>  {
@@ -15,14 +14,17 @@ const protectRoute = async (req, res, next) =>  {
         let loginPage = `${serverUrl()}/auth/login`;
         if(!token) {
             console.log(`No token found, redirecting to ${loginPage}`);
-            return res.redirect(loginPage, {
-                ...expanded,
-                messages: [{
-                    message: "You're not logged in.",
-                    shouldNotify: true,
-                    error: true,
-                }]
-            });
+            
+            // You can't do this
+            // return res.redirect(loginPage, {
+            //     ...expanded,
+            //     messages: [{
+            //         message: "You're not logged in.",
+            //         shouldNotify: true,
+            //         error: true,
+            //     }]
+            // });
+            return res.redirect(loginPage);
         }
         
         // Validate token

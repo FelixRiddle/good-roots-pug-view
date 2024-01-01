@@ -9,8 +9,20 @@ const setImageRouter = express.Router();
 
 setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array("images"), async (req, res) => {
     let url = `${serverUrl()}/user/property/admin`;
+    console.log(`Set image endpoint`);
     
     try {
+        // Check if there were even files given
+        if(!req.files) {
+            console.log(`Not even files were given!`);
+            return res.send({
+                messages: [{
+                    message: "No images given for the property(1)",
+                    error: true,
+                }]
+            });
+        }
+        
         // --- This should be in a middleware ---
         // The property and the user is already validated at the middleware
         const { id } = req.params;
@@ -28,7 +40,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
                 console.log(`No images given, bounce back.`);
                 return res.send({
                     messages: [{
-                        message: "No images given for the property",
+                        message: "No images given for the property(2)",
                         error: true,
                     }]
                 });
@@ -45,7 +57,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
         }
         
         console.log(`Redirecting user back to admin page`);
-        // return res.redirect("user/property/admin");
+        // return res.redirect(url);
     } catch(err) {
         console.log(`Error: `);
         console.error(err);
