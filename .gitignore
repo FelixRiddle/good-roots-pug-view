@@ -4,6 +4,7 @@ public/js
 public/img/test
 public/uploads
 public/user
+public/main.js
 
 # Package lock backup
 package-lock.json.backup

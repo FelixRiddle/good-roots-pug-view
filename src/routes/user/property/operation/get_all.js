@@ -8,43 +8,57 @@ import { relativePropertyImages } from "../../../../lib/user/userFolder/property
 const getAllRoutes = express.Router();
 
 getAllRoutes.get(`/get_all`, async(req, res) => {
-    const { id: userId } = req.user;
-    console.log(`User ID: ${userId}`);
-    
-    // Fetch properties from the database that are owned by this user
-    const propertiesRes = await Property.findAll({
-        where: {
-            userId,
-        },
-        include: [
-            {
-                raw: true,
-                model: Category,
-                as: 'category'
-            }, {
-                raw: true,
-                model: Price,
-                as: "price"
-            }
-        ]
-    });
-    
-    // Thanks sensei for this incredible response
-    // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
-    const properties = propertiesRes.map(x => x.get({ plain: true }));
-    
-    // Get property images
-    for(let property of properties) {
-        // Get the property images relative to the public path
-        let propertyImages = relativePropertyImages(userId, property.id);
+    try {
+        const { id: userId } = req.user;
+        console.log(`User ID: ${userId}`);
         
-        property.imagesRelativeURI = propertyImages;
-        // console.log(`Property: `, property);
+        // Fetch properties from the database that are owned by this user
+        const propertiesRes = await Property.findAll({
+            where: {
+                userId,
+            },
+            include: [
+                {
+                    raw: true,
+                    model: Category,
+                    as: 'category'
+                }, {
+                    raw: true,
+                    model: Price,
+                    as: "price"
+                }
+            ]
+        });
+        
+        // Thanks sensei for this incredible response
+        // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
+        const properties = propertiesRes.map(x => x.get({ plain: true }));
+        
+        // Add property images
+        // TODO:
+        // IF there are no properties this crashes
+        try {
+            // Get property images
+            for(let property of properties) {
+                // Get the property images relative to the public path
+                let propertyImages = relativePropertyImages(userId, property.id);
+                
+                property.imagesRelativeURI = propertyImages;
+                // console.log(`Property: `, property);
+            }
+        } catch(err) {
+            // No properties(or no property images)
+        }
+        
+        return res.send({
+            properties,
+        });
+    } catch(err) {
+        console.error(err);
+        return res.send({
+            properties: []
+        });
     }
-    
-    return res.send({
-        properties,
-    });
 });
 
 export default getAllRoutes;

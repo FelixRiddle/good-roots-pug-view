@@ -1,4 +1,9 @@
 import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 let publicFolder = "./src/public";
 let jsPath = "./src/public/js/";
@@ -10,14 +15,9 @@ let publicRoutes = "./src/public/js/routes/";
  * I really have to learn webpack haha
  */
 export default {
+    devtool: "source-map",
     mode: "development",
     entry: {
-        // css_components_property_image_editor: {
-        //     import: [
-        //         `${publicFolder}/css/components/property/ImageEditor.css`
-        //     ],
-        //     filename: "css/components/property/ImageEditor.css"
-        // },
         auth: {
             import: [
                 `${publicRoutes}auth/register.js`
@@ -29,6 +29,13 @@ export default {
                 `${jsPath}config/default/propertyImages.js`
             ],
             filename: "js/config/default/propertyImages.js"
+        },
+        // It's converted to js????
+        css_components_property_image_editor: {
+            import: [
+                `${publicFolder}/css/components/property/ImageEditor.scss`
+            ],
+            filename: "css/components/property/ImageEditor.js"
         },
         controller1: {
             import: [
@@ -157,8 +164,41 @@ export default {
             filename: "js/routes/user/property/set_image.js"
         }
     },
+    module: {
+        rules: [{
+            // Load css files
+            test: /\.css$/,
+            use: "css-loader"
+        }, {
+            test: /\.scss$/,
+            use: [
+                "style-loader",
+                "css-loader",
+                "sass-loader"
+            ]
+        }, {
+            test: /\.js$/,
+            include: [
+                path.resolve(__dirname, "src/public")
+            ],
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: [
+                        "@babel/preset-env"
+                    ]
+                }
+            }
+        }, {
+            test: /\.(png|jpg|jpeg|gif)$/i,
+            type: 'asset/resource'
+        }]
+    },
     output: {
         // filename: "[name].js",
         path: path.resolve("public"),
+        // Deletes property images 😭😭
+        // clean: true,
+        assetModuleFilename: '[name][ext]'
     },
 };

@@ -8,22 +8,31 @@ const getAllRouter = express.Router();
 
 // Add an image to the property
 getAllRouter.get("/get_all/:id", userFolderMiddleware, (req, res) => {
-    const { id } = req.params;
-    
-    // Check if the image exists
-    const propertyPath = propertyFolder(req.user.id, id);
-    
-    // Get images in the property folder
-    const serverImages = fs.readdirSync(propertyPath);
-    
-    let relPropImgs = relativePropertyImages(req.user.id, id);
-    
-    console.log(`Server images: `, serverImages);
-    console.log(`\nPublic property images: `, relPropImgs);
-    
-    return res.send({
-        images: relPropImgs,
-    });
+    try {
+        const { id } = req.params;
+        
+        // Check if the image exists
+        const propertyPath = propertyFolder(req.user.id, id);
+        
+        // Get images in the property folder
+        const serverImages = fs.readdirSync(propertyPath);
+        
+        let relPropImgs = relativePropertyImages(req.user.id, id);
+        
+        console.log(`Server images: `, serverImages);
+        console.log(`\nPublic property images: `, relPropImgs);
+        
+        return res.send({
+            images: relPropImgs,
+        });
+    } catch(err) {
+        console.error(err);
+        
+        // Send nothing back
+        return res.send({
+            images: []
+        })
+    }
 });
 
 export default getAllRouter;

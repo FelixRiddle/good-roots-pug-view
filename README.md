@@ -81,3 +81,9 @@ Currently the CSP policy is almost useless as it allows everything, it must be s
 Some helpful links
 
 - [Webpack Production](https://webpack.js.org/guides/production/)
+
+# References
+
+Some references from where I got important information to build this app
+
+- [Webpack 5 Crash Course | Frontend Development Setup](https://www.youtube.com/watch?v=IZGNcSuwBZs)
