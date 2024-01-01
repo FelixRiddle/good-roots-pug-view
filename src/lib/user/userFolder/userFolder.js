@@ -13,7 +13,6 @@ import fs from "node:fs";
  */
 export default function userFolder(userId) {
     const userFolderPath = path.resolve(process.cwd(), `public/user/${userId}`);
-    console.log(`User folder path: ${userFolderPath}`);
     
     // Create user folder
     try {
@@ -26,7 +25,6 @@ export default function userFolder(userId) {
     
     // Create user property folder
     const userPropertyFolder = path.resolve(userFolderPath, `property`);
-    console.log(`User properties folder: ${userPropertyFolder}`);
     try {
         fs.accessSync(userPropertyFolder, constants.F_OK);
     } catch(err) {

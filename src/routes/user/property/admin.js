@@ -44,10 +44,10 @@ const admin = async(req, res) => {
                 property.imagesRelativeURI = propertyImages;
             }
         } catch(err) {
-            console.log(`Error:`)
-            console.error(err);
-            console.log(`The property folder for the user may not exist!`);
-            console.log(`This just means that the user doesn't have any properties`)
+            // console.log(`Error:`)
+            // console.error(err);
+            // console.log(`The property folder for the user may not exist!`);
+            // console.log(`This just means that the user doesn't have any properties`);
         }
         
         let expanded = expand(req);
