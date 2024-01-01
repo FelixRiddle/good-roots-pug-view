@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const REMOVE_ICON = `${location.origin}/icons/cross/Cross-50px.png`;
+const REMOVE_ICON = `${location.origin}/image/icons/cross/50px.png`;
 
 /**
  * Image editor
