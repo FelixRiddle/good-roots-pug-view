@@ -1,7 +1,3 @@
-import { constants } from "node:buffer";
-import path from "node:path";
-import fs from "node:fs";
-
 import multer from "multer";
 
 import propertyFolder from "./propertyFolder.js";
@@ -9,7 +5,6 @@ import propertyFolder from "./propertyFolder.js";
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { id } = req.params;
-        console.log(`File: `, file);
         
         // Obtain property path, and create if it doesn't not exist
         // This is an absolute path
@@ -27,20 +22,17 @@ const storage = multer.diskStorage({
 const uploadProperty = multer({
     storage,
     fileFilter: (req, file, cb) => {
-        console.log(`File filter`);
-        const { id } = req.params;
-        console.log(`File: `, file);
+        // const { id } = req.params;
         
-        // Check if the image exists
-        const propertyPath = propertyFolder(req.user.id, id);
-        // const imagePath = 
-        try {
-            fs.accessSync(propertyPath, constants.F_OK);
-            console.log(`The image exists`);
-        } catch(err) {
-            // The image doesn't exists
-            console.log(`The image doesn't exists`);
-        }
+        // Unnecessary, just replace previous files with the default configuration
+        
+        // // Check if the image exists
+        // const propertyPath = propertyFolder(req.user.id, id);
+        // try {
+        //     fs.accessSync(propertyPath, constants.F_OK);
+        // } catch(err) {
+        //     // The image doesn't exists
+        // }
         
         // I can't believe this was set to false and was intervening with what I was doing
         return cb(null, true);

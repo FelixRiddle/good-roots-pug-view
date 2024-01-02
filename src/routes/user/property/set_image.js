@@ -2,9 +2,6 @@ import express from "express";
 
 import Property from "../../../models/Property.js";
 import expand from "../../../controllers/expand.js";
-import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
-import { serverUrl } from "../../../controllers/env/env.js";
-import uploadProperty from "../../../lib/user/userFolder/property/uploadPropertyMiddleware.js";
 
 const setImageRouter = express.Router();
 
@@ -60,52 +57,6 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         console.log(`Error: `, err);
         console.log(`Couldn't render /set_image`);
         return res.redirect("user/property/admin");
-    }
-});
-
-setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array("images"), async (req, res) => {
-    let url = `${serverUrl()}/user/property/admin`;
-    
-    try {
-        // --- This should be in a middleware ---
-        // The property and the user is already validated at the middleware
-        const { id } = req.params;
-        
-        // It just is missing this part
-        // Validate that the property exists
-        const property = await Property.findByPk(id);
-        // --------------------------------------
-        
-        // If not published update it to be
-        if(!property.published) {
-            console.log(`The property is not published, updating it to be.`);
-            
-            console.log(`Files: `, req.files);
-            if(req.files.length === 0) {
-                console.log(`No images given, bounce back.`);
-                return res.send({
-                    messages: [{
-                        message: "No images given for the property",
-                        error: true,
-                    }]
-                });
-            }
-            
-            // Name of the first image file
-            property.image = req.files[0].filename;
-            
-            // Publish property
-            property.published = 1;
-            
-            // Store
-            await property.save();
-        }
-        
-        console.log(`Redirecting user back to admin page`);
-        return res.redirect("user/property/admin");
-    } catch(err) {
-        console.error(err);
-        return res.redirect(url);
     }
 });
 

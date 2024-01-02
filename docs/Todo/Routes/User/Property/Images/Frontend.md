@@ -6,9 +6,9 @@
     - [x] Send images to server
     - [x] Update images on the frontend
 - [x] Set images
-    - [ ] Deletes previous images
-    
-    To not duplicate them
+- [x] Remove images on icon click
+
+# Configuration
 
 I need finer control than this, we're going to do this
 
@@ -26,3 +26,4 @@ I need finer control than this, we're going to do this
         <!-- 100kb is already a dubious image, keep a watch on bro 🤔🤨😤 -->
 
 - [ ] Configuration validation
+- [ ] Configuration testing

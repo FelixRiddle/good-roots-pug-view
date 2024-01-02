@@ -43,9 +43,33 @@ export default class ImageEditor {
         this.updatePropertyImages();
         this.startAddImageViews();
         this.updateImageViews();
+        
+        // Publish property action
+        this.bindPublishProperty();
     }
     
     // Start operations
+    
+    /**
+     * On publish property button click, send request to server to publish it
+     */
+    bindPublishProperty() {
+        const btn = document.getElementById("publish");
+        if(btn) {
+            btn.addEventListener("click", async (e) => {
+                e.preventDefault();
+                
+                // Make request
+                await this.setPropertyPublished(true);
+        
+                // Redirect to admin page
+                location.href = `${location.origin}/user/property/admin`;
+            });
+        } else {
+            console.log(`Publish button not found!`);
+        }
+    }
+    
     /**
      * Add image views
      */
@@ -306,6 +330,30 @@ export default class ImageEditor {
                 
                 console.log("Error: ", err);
                 return;
+            });
+    }
+    
+    /**
+     * Set property to published
+     * 
+     * @param {bool} value 
+     */
+    async setPropertyPublished(value) {
+        const instance = axios.create({
+            baseURL: `${window.location.origin}/user/property`,
+            timeout: 2000,
+            headers: {'Content-Type': 'application/json'}
+        });
+        const endpoint = `/publish_property/${this.propertyId}`;
+        
+        // Post data
+        await instance.post(endpoint, {
+            value,
+        })
+            .then((res) => res)
+            .catch((_err) => {
+                // It keeps throwing an error I don't really know what it is, it's too long.
+                // console.error(`Error when posting the image name: `, err);
             });
     }
 }

@@ -7,7 +7,7 @@ import editRouter from "./edit.js";
 import setImageRouter from "./set_image.js";
 import operationRoutes from "./operation/index.js";
 import imagesRouter from "./images/index.js";
-import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
+import publishPropertyRouter from "./publish_property.js";
 
 const propertyRoutes = express.Router();
 
@@ -15,6 +15,7 @@ const propertyRoutes = express.Router();
 propertyRoutes.use(adminRoutes);
 propertyRoutes.use(createPropertyRouter);
 propertyRoutes.use(editRouter);
+propertyRoutes.use(publishPropertyRouter);
 propertyRoutes.use(setImageRouter);
 
 // Mini apps
