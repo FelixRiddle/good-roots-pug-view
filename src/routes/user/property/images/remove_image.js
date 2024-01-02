@@ -10,31 +10,39 @@ const removeImageRouter = express.Router();
 removeImageRouter.post("/remove_image/:id", userFolderMiddleware, async (req, res) => {
     let url = `${serverUrl()}/user/property/admin`;
     try {
-        console.log(`Remove image`);
         const { id } = req.params;
         
         const imagePublicPath = req.body.imageName;
-        console.log(`Image name: ${imagePublicPath}`);
         
         // The image name comes with its paths and everything
         // Even for security we want to cut it and just get the name
         const imageParts = imagePublicPath.split("/");
-        const imageName = imageParts[imageParts.length - 1];
-        console.log(`Image name: `, imageName);
+        const encodedImageName = imageParts[imageParts.length - 1];
         
         // We have to try to decode it first
+        let imageName = "";
+        try {
+            imageName = decodeURI(encodedImageName);
+        } catch(err) {
+            console.log(`Couldn't decode the image name!!111!! 😡😡😨😰`);
+            console.error(err);
+            
+            return res.send({
+                messages: [{
+                    message: "Couldn't decode the image name",
+                    error: true,
+                }]
+            });
+        }
         
         // Check if it exists
         try {
             // Get image path
             const propFolder = relativePropertyFolder(req.user.id, id);
             const imagePath = `${propFolder}/${imageName}`;
-            console.log(`Image path: ${imagePath}`);
             
             // Check if file exists
             fs.accessSync(imagePath, constants.R_OK);
-            
-            console.log(`Image exists`);
             
             // OK file exists
             fs.rmSync(imagePath);

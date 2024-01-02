@@ -17,7 +17,6 @@ const DEBUG = false;
  */
 export default async function userFolderMiddleware(req, res, next) {
     try {
-        console.log(`Request files: `, req.files);
         if(DEBUG) {
             console.log(`Base url: `, req.baseUrl);
             console.log(`Url: `, req.url);
@@ -34,7 +33,6 @@ export default async function userFolderMiddleware(req, res, next) {
         
         // Create user folder
         userFolder(user.id);
-        console.log(`User folder created or verified that it exists`);
         
         // Now property folder if it exists
         const { id } = req.params;
