@@ -2,9 +2,9 @@
 
 - [x] Preview of previous images, if it has
 - [x] Fetch all images on the frontend
-- [ ] On change
-    - [ ] Send images to server
-    - [ ] Update images on the frontend
+- [x] On change
+    - [x] Send images to server
+    - [x] Update images on the frontend
 - [x] Set images
     - [ ] Deletes previous images
     

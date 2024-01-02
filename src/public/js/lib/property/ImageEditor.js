@@ -63,6 +63,18 @@ export default class ImageEditor {
             let removeView = document.getElementById(`image_${i}_remove_icon`);
             if(removeView) {
                 removeView.src = REMOVE_ICON;
+                const thisObj = this;
+                
+                removeView.addEventListener("click", async (e) => {
+                    console.log(`Delete click detected for ${i}`);
+                    console.log(`Object: `, thisObj);
+                    
+                    // Remove image
+                    await thisObj.removeImage(i);
+                    
+                    // Update images
+                    thisObj.updatePropertyImages();
+                });
             } else {
                 console.log(`Image view ${i} its remove view icon element couldn't be found.`);
             }
@@ -257,6 +269,29 @@ export default class ImageEditor {
         this.collisions = res.data.collisions;
         
         return res.data;
+    }
+    
+    /**
+     * Remove an image at a given index
+     * 
+     * The local index of images
+     * 
+     * @param {number} index Image index
+     */
+    async removeImage(index) {
+        let imageName = this.propertyImages[index];
+        const endpoint = `/remove_image/${this.propertyId}`;
+        
+        // Post data
+        let res = await this.instance.post(endpoint, {
+            imageName,
+        })
+            .then((res) => res)
+            .catch((err) => {
+                console.error(`Error when posting the image name: `, err);
+            });
+        
+        console.log(`Response: `, res.data);
     }
     
     /**

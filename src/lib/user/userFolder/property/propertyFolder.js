@@ -36,7 +36,7 @@ export default function propertyFolder(userId, id) {
  * Uses user id and property's to get the relative property folder from public folder
  * 
  * @param {string} userId 
- * @param {number} id 
+ * @param {number} id Property id
  * @returns {string} Property folder relative path
  */
 export function relativePropertyFolder(userId, id) {
