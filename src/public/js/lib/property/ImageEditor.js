@@ -3,7 +3,7 @@ import axios from "axios";
 // Styling
 import "../../../css/components/property/ImageEditor.scss";
 
-const REMOVE_ICON = `${location.origin}/image/icons/cross/50px.png`;
+const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 
 /**
  * Image editor

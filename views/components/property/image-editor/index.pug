@@ -24,11 +24,12 @@ div(class="bg-white shadow py-8 px-4 rounded mx-auto max-width max-w-2xl my-10 m
         div#imagesView
             - for (var x = 0; x < 10; x++)
                 div(class="rounded")
-                    img(class="image" id=`image_${x}` src="" hidden)
-                    
                     //- Remove icon(a cross)
                     img(id=`image_${x}_remove_icon` src="" hidden
-                        class=`remove_icon absolute shadow shadow-white hover:cursor-pointer`)
+                        class=`remove_icon absolute hover:cursor-pointer`
+                        )
+                    
+                    img(class="image" id=`image_${x}` src="" hidden)
         
         //- Add image
         input(
