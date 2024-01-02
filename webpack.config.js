@@ -171,7 +171,7 @@ export default {
             test: /\.css$/,
             use: "css-loader"
         }, {
-            test: /\.scss$/,
+            test: /\.s[ac]ss$/i,
             use: [
                 "style-loader",
                 "css-loader",
