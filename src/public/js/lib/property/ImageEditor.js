@@ -2,6 +2,7 @@
 import "../../../css/components/property/ImageEditor.scss";
 import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
 import ImagesAPI from "./ImagesAPI.js";
+import PropertyImages from "./PropertyImages.js";
 
 const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 
@@ -13,8 +14,6 @@ const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 export default class ImageEditor {
     previousImagesInputLength = 0;
     imagesView = [];
-    
-    propertyImages = [];
     
     // Store previous quantity of images, this is to check
     // which are the images that exceed the limit of 10 images, and remove them.
@@ -40,9 +39,18 @@ export default class ImageEditor {
         // Images API
         this.api = new ImagesAPI(propertyId);
         
-        this.updatePropertyImages();
         this.startAddImageViews();
-        this.updateImageViews();
+        
+        // Property images
+        this.propertyImages = new PropertyImages(this.api);
+        const thisObj = this;
+        this.propertyImages.setUpdatePropertyCallback(() => {
+            console.log(`Images updated!`);
+            thisObj.updateImageViews();
+        });
+        
+        // Trigger update
+        this.propertyImages.updatePropertyImages();
         
         // Publish property action
         this.bindPublishProperty();
@@ -98,7 +106,7 @@ export default class ImageEditor {
                     await thisObj.api.removeImage(i);
                     
                     // Update images
-                    thisObj.updatePropertyImages();
+                    thisObj.propertyImages.updatePropertyImages();
                 });
             } else {
                 console.log(`Image view ${i} its remove view icon element couldn't be found.`);
@@ -178,23 +186,6 @@ export default class ImageEditor {
                 this.hideRemoveAction(index);
             }
         }
-    }
-    
-    /**
-     * Update property images
-     */
-    updatePropertyImages() {
-        // Fetch property images, if they exist
-        let propertyImages = Promise.resolve(this.api.fetchAll());
-        let thisClass = this;
-        propertyImages.then((images) => {
-            // console.log(`Response: `, images);
-            // thisClass.propertyImages = images;
-            // thisClass.previousImages = images;
-            thisClass.api.propertyImages = images;
-            
-            thisClass.updateImageViews();
-        });
     }
     
     // --- Events ---
