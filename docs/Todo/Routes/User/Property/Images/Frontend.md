@@ -5,8 +5,8 @@
 - [x] On change
     - [x] Send images to server
     - [x] Update images on the frontend
-    <!-- Doesn't work now -->
 - [x] Set images
+    - [ ] Dropzone to add images
 - [x] Remove images on icon click
 
 # Configuration

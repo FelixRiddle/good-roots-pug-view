@@ -3,6 +3,7 @@ import "../../../css/components/property/ImageEditor.scss";
 import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
 import ImagesAPI from "./ImagesAPI.js";
 import PropertyImages from "./PropertyImages.js";
+import RemoveIcon from "./RemoveIcon.js";
 
 const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 
@@ -18,6 +19,9 @@ export default class ImageEditor {
     // Store previous quantity of images, this is to check
     // which are the images that exceed the limit of 10 images, and remove them.
     previousImages = [];
+    
+    // Class abstraction for remove icons
+    removeImageIcons = [];
     
     // Collisions
     // Files that have collided with others in the backend will be set here
@@ -45,8 +49,8 @@ export default class ImageEditor {
         this.propertyImages = new PropertyImages(this.api);
         const thisObj = this;
         this.propertyImages.setUpdatePropertyCallback(() => {
-            console.log(`Images updated!`);
             thisObj.updateImageViews();
+            console.log(`Images updated!`);
         });
         
         // Trigger update
@@ -89,74 +93,25 @@ export default class ImageEditor {
             if(imgView) {
                 this.imagesView.push(imgView);
             } else {
-                console.log(`Image view ${i} couldn't be found!`);
+                // console.log(`Image view ${i} couldn't be found!`);
             }
             
-            // Do the same for removing icon
-            let removeView = document.getElementById(`image_${i}_remove_icon`);
-            if(removeView) {
-                removeView.src = REMOVE_ICON;
-                const thisObj = this;
+            // Remove icon class abstraction
+            let removeIconElementID = `image_${i}_remove_icon`;
+            let removeIcon = new RemoveIcon(removeIconElementID);
+            
+            // Click cb
+            const THIS = this;
+            removeIcon.setClickCallback(async (e) => {
+                // Remove image
+                await THIS.api.removeImage(i);
                 
-                removeView.addEventListener("click", async (e) => {
-                    // console.log(`Delete click detected for ${i}`);
-                    // console.log(`Object: `, thisObj);
-                    
-                    // Remove image
-                    await thisObj.api.removeImage(i);
-                    
-                    // Update images
-                    thisObj.propertyImages.updatePropertyImages();
-                });
-            } else {
-                console.log(`Image view ${i} its remove view icon element couldn't be found.`);
-            }
-        }
-    }
-    
-    // --- Remove icon ---
-    /**
-     * Toggle show remove action icon by a given index
-     * 
-     * @param {number} index The element index
-     */
-    toggleShowRemoveAction(index) {
-        // Do the same for removing icon
-        let removeView = document.getElementById(`image_${index}_remove_icon`);
-        if(removeView) {
-            removeView.hidden = !removeView.hidden;
-        } else {
-            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
-        }
-    }
-    
-    /**
-     * Show remove action icon at a given index
-     * 
-     * @param {number} index The element index
-     */
-    showRemoveAction(index) {
-        // Do the same for removing icon
-        let removeView = document.getElementById(`image_${index}_remove_icon`);
-        if(removeView) {
-            removeView.hidden = false;
-        } else {
-            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
-        }
-    }
-    
-    /**
-     * Show remove action icon at a given index
-     * 
-     * @param {number} index The element index
-     */
-    hideRemoveAction(index) {
-        // Do the same for removing icon
-        let removeView = document.getElementById(`image_${index}_remove_icon`);
-        if(removeView) {
-            removeView.hidden = true;
-        } else {
-            console.log(`Image view ${i} its remove view icon element couldn't be found.`);
+                // Update images
+                THIS.propertyImages.updatePropertyImages();
+            });
+            
+            // Push to the list
+            this.removeImageIcons.push(removeIcon);
         }
     }
     
@@ -177,13 +132,17 @@ export default class ImageEditor {
                 imgView.src = srcLocation;
                 imgView.hidden = false;
                 
-                this.showRemoveAction(index);
+                // Show remove action icon
+                this.removeImageIcons[index].show();
+                // this.showRemoveAction(index);
                 
                 index++;
             } else {
                 imgView.hidden = true;
                 
-                this.hideRemoveAction(index);
+                // Show remove action icon
+                this.removeImageIcons[index].hide();
+                // this.hideRemoveAction(index);
             }
         }
     }
