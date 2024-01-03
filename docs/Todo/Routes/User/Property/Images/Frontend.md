@@ -8,6 +8,7 @@
 - [x] Set images
     - [ ] Dropzone to add images
 - [x] Remove images on icon click
+- [x] Publish property is disabled when there are no images
 
 ## On configuration maximum
 

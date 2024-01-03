@@ -54,6 +54,10 @@ export default class ImageEditor {
         this.propertyImages.setUpdatePropertyCallback(() => {
             thisObj.updateImageViews();
             console.log(`Images updated!`);
+            
+            // Update disabled
+            const btn = document.getElementById("publish");
+            btn.disabled = !this.propertyImages.exists();
         });
         
         // Trigger update
@@ -67,6 +71,8 @@ export default class ImageEditor {
     
     /**
      * On publish property button click, send request to server to publish it
+     * 
+     * Hmmm, this looks..., ABSTRACTABLE 😤😤
      */
     bindPublishProperty() {
         const btn = document.getElementById("publish");
@@ -81,6 +87,9 @@ export default class ImageEditor {
                 // Redirect to admin page
                 location.href = `${location.origin}/user/property/admin`;
             });
+            
+            // Disabled is the opposite of whether there's an image or not
+            btn.disabled = !this.propertyImages.exists();
         } else {
             console.log(`Publish button not found!`);
         }

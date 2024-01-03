@@ -6,9 +6,9 @@ I will just mark it has completed when it's done in the backend(which is the onl
 - [ ] Create a js configuration file, export it to the frontend and also use it in the backend
     - [ ] Images
         - [x] Maximum 10
-        - [ ] Minimum 1
-            - [ ] Properties with no images can't be published.
-            <!-- This is a quality control -->
+        
+        - [x] Properties with no images can't be published.
+        <!-- This is a quality control -->
     - [ ] Size
         - [ ] Maximum 5mb
         - [ ] Minimum 100kb 🥶

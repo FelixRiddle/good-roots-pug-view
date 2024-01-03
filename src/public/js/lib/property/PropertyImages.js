@@ -17,6 +17,13 @@ export default class PropertyImages {
     
     // --- Operations ---
     /**
+     * Are there more than one property
+     */
+    exists() {
+       return this.propertyImages.length > 0;
+    }
+    
+    /**
      * Get array of names only
      */
     names() {
