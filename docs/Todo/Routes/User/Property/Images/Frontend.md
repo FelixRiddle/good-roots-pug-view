@@ -5,6 +5,7 @@
 - [x] On change
     - [x] Send images to server
     - [x] Update images on the frontend
+    <!-- Doesn't work now -->
 - [x] Set images
 - [x] Remove images on icon click
 

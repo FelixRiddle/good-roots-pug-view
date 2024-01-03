@@ -251,15 +251,15 @@ export default class ImageEditor {
                 }
                 
                 // Update images view
-                this.updatePropertyImages();
+                thisObject.propertyImages.updatePropertyImages();
                 
                 // Update previous images input length
-                this.previousImagesInputLength = imagesInput.files.length;
+                thisObject.previousImagesInputLength = imagesInput.files.length;
                 console.log(`Files: `, imagesInput.files);
                 
                 // Store current images as previous images
-                this.previousImages = thisObject.getImagesNameArray();
-                console.log(`Previous images: `, this.previousImages);
+                thisObject.previousImages = thisObject.getImagesNameArray();
+                console.log(`Previous images: `, thisObject.previousImages);
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);

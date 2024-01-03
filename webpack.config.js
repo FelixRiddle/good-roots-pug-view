@@ -25,11 +25,11 @@ export default {
             ],
             filename: "js/routes/auth/register.js"
         },
-        config_default_property_images: {
+        config_default_property_images_config: {
             import: [
-                `${jsPath}config/default/propertyImages.js`
+                `${jsPath}config/propertyImagesConfig.js`
             ],
-            filename: "js/config/default/propertyImages.js"
+            filename: "js/config/propertyImagesConfig.js"
         },
         // It's converted to js????
         css_components_property_image_editor: {
