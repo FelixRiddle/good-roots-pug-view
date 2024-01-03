@@ -16,6 +16,21 @@ export default class PropertyImages {
     }
     
     /**
+     * Get array of names only
+     */
+    names() {
+        return this.propertyImages.map((img) => {
+            const parts = img.split("/");
+            
+            // Remember it's encoded
+            const encodedName = parts[parts.length - 1];
+            
+            // Decode it
+            return decodeURI(encodedName);
+        });
+    }
+    
+    /**
      * Get element at
      * 
      * @param {number} index Property image index

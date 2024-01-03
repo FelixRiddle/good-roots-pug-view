@@ -49,6 +49,7 @@ export default class ImageEditor {
         // Set it back to the api, wondering if this is ok?
         this.api.setPropertyImagesObject(this.propertyImages);
         
+        // Set update callback
         const thisObj = this;
         this.propertyImages.setUpdatePropertyCallback(() => {
             thisObj.updateImageViews();
@@ -181,6 +182,9 @@ export default class ImageEditor {
                 console.log("Images changed");
                 
                 console.log(`Property images: `, thisObject.propertyImages.propertyImages);
+        
+                // Test
+                console.log(`Image names: `, this.propertyImages.names());
                 
                 // If the size is greater remove the images
                 if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
