@@ -1,7 +1,7 @@
-import axios from "axios";
-
 // Styling
 import "../../../css/components/property/ImageEditor.scss";
+import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
+import ImagesAPI from "./ImagesAPI.js";
 
 const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 
@@ -15,6 +15,9 @@ export default class ImageEditor {
     imagesView = [];
     
     propertyImages = [];
+    
+    // Store previous quantity of images, this is to check
+    // which are the images that exceed the limit of 10 images, and remove them.
     previousImages = [];
     
     // Collisions
@@ -27,18 +30,15 @@ export default class ImageEditor {
      * @param {string} inputId Input ID
      */
     constructor(inputId) {
-        // Create axios instance
-        this.instance = axios.create({
-            baseURL: `${window.location.origin}/user/property/images`,
-            timeout: 2000,
-            headers: {'Content-Type': 'application/json'}
-        });
         this.inputId = inputId;
         
         // Get property id
         const paths = window.location.pathname.split("/");
         const propertyId = paths[paths.length - 1];
         this.propertyId = propertyId;
+        
+        // Images API
+        this.api = new ImagesAPI(propertyId);
         
         this.updatePropertyImages();
         this.startAddImageViews();
@@ -56,12 +56,13 @@ export default class ImageEditor {
     bindPublishProperty() {
         const btn = document.getElementById("publish");
         if(btn) {
+            const thisObj = this;
             btn.addEventListener("click", async (e) => {
                 e.preventDefault();
                 
                 // Make request
-                await this.setPropertyPublished(true);
-        
+                await thisObj.api.setPropertyPublished(true);
+                
                 // Redirect to admin page
                 location.href = `${location.origin}/user/property/admin`;
             });
@@ -90,11 +91,11 @@ export default class ImageEditor {
                 const thisObj = this;
                 
                 removeView.addEventListener("click", async (e) => {
-                    console.log(`Delete click detected for ${i}`);
-                    console.log(`Object: `, thisObj);
+                    // console.log(`Delete click detected for ${i}`);
+                    // console.log(`Object: `, thisObj);
                     
                     // Remove image
-                    await thisObj.removeImage(i);
+                    await thisObj.api.removeImage(i);
                     
                     // Update images
                     thisObj.updatePropertyImages();
@@ -158,13 +159,13 @@ export default class ImageEditor {
      * Updates whether an img element is shown or not, and its src attribute.
      */
     updateImageViews() {
-        let propLength = this.propertyImages.length;
+        let propLength = this.api.propertyImages.length;
         let index = 0;
         
         for(let imgView of this.imagesView) {
             // Update location and visibility
             if(propLength > 0 && index < propLength) {
-                let srcLocation = `${location.origin}/${this.propertyImages[index]}`;
+                let srcLocation = `${location.origin}/${this.api.propertyImages[index]}`;
                 imgView.src = srcLocation;
                 imgView.hidden = false;
                 
@@ -184,18 +185,36 @@ export default class ImageEditor {
      */
     updatePropertyImages() {
         // Fetch property images, if they exist
-        let propertyImages = Promise.resolve(this.fetchAll());
+        let propertyImages = Promise.resolve(this.api.fetchAll());
         let thisClass = this;
         propertyImages.then((images) => {
             // console.log(`Response: `, images);
-            thisClass.propertyImages = images;
-            thisClass.previousImages = images;
+            // thisClass.propertyImages = images;
+            // thisClass.previousImages = images;
+            thisClass.api.propertyImages = images;
             
-            this.updateImageViews();
+            thisClass.updateImageViews();
         });
     }
     
     // --- Events ---
+    /**
+     * Get images name
+     * 
+     * @returns {Array}
+     */
+    getImagesNameArray() {
+        const imagesInput = document.getElementById(this.inputId);
+        
+        let imagesName = [];
+        for(let image of imagesInput.files) {
+            console.log("Pushing: ", image.name);
+            imagesName.push(image.name);
+        }
+        
+        return imagesName;
+    }
+    
     /**
      * On change send request to the server to check whether the file is ready to be
      * uploaded or it collides with another image
@@ -209,6 +228,17 @@ export default class ImageEditor {
             imagesInput.addEventListener("change", async (e) => {
                 console.log("Images changed");
                 
+                console.log(`Property images: `, thisObject.api.propertyImages);
+                
+                // If the size is greater remove the images
+                if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
+                    
+                    // Get current images...
+                    let currentImages = thisObject.getImagesNameArray();
+                    
+                    return;
+                }
+                
                 // TODO: Check that these are not the previous images
                 // Check whether something was added or removed
                 if(imagesInput.files.length >= this.previousImagesInputLength) {
@@ -221,7 +251,7 @@ export default class ImageEditor {
                     var formData = new FormData(document.getElementById("publish_image"));
                     
                     // Send images to server
-                    await thisObject.instance.postForm(
+                    await thisObject.api.instance.postForm(
                         `/set_image/${this.propertyId}`,
                         formData
                     );
@@ -234,126 +264,14 @@ export default class ImageEditor {
                 
                 // Update previous images input length
                 this.previousImagesInputLength = imagesInput.files.length;
+                console.log(`Files: `, imagesInput.files);
+                
+                // Store current images as previous images
+                this.previousImages = thisObject.getImagesNameArray();
+                console.log(`Previous images: `, this.previousImages);
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
         }
-    }
-    
-    // --- API Endpoints ---
-    /**
-     * When the page loads fetch all images
-     */
-    async fetchAll() {
-        let res = await this.instance.get(`/get_all/${this.propertyId}`)
-            .then((res) => {
-                return res;
-            }).catch((err) => {
-                console.log(`Error when fetching image names from the backend: `, err);
-            });
-        
-        return res.data.images;
-    }
-    
-    /**
-     * Send preflight request to server about the images
-     * 
-     * @param {Array} images Array of image files
-     */
-    async preflightRequest(images) {
-        if(!images) {
-            console.log("Can't send preflight request if there are no images!! 🤬🤬🤬🤬");
-            return;
-        }
-        
-        let imagesArray = [];
-        for(let image of images) {
-            imagesArray.push({
-                name: image.name,
-                size: image.size,
-            });
-        }
-        
-        const endpoint = `/add_image_preflight/${this.propertyId}`;
-        
-        // Post data
-        let res = await this.instance.post(endpoint, {
-            images: imagesArray,
-        }).then((res) => res)
-            .catch((err) => {
-                
-                console.log("Error: ", err);
-                return;
-            });
-        
-        console.log(`Response status: `, res.status);
-        console.log(`Response data: `, res.data);
-        
-        // Update collisions
-        this.collisions = res.data.collisions;
-        
-        return res.data;
-    }
-    
-    /**
-     * Remove an image at a given index
-     * 
-     * The local index of images
-     * 
-     * @param {number} index Image index
-     */
-    async removeImage(index) {
-        let imageName = this.propertyImages[index];
-        const endpoint = `/remove_image/${this.propertyId}`;
-        
-        // Post data
-        let res = await this.instance.post(endpoint, {
-            imageName,
-        })
-            .then((res) => res)
-            .catch((err) => {
-                console.error(`Error when posting the image name: `, err);
-            });
-        
-        console.log(`Response: `, res.data);
-    }
-    
-    /**
-     * Set images endpoint
-     */
-    async setImages() {
-        const endpoint = `/set_image/${this.propertyId}`;
-        
-        // Post data
-        let res = await this.instance.post(endpoint).then((res) => res)
-            .catch((err) => {
-                
-                console.log("Error: ", err);
-                return;
-            });
-    }
-    
-    /**
-     * Set property to published
-     * 
-     * @param {bool} value 
-     */
-    async setPropertyPublished(value) {
-        const instance = axios.create({
-            baseURL: `${window.location.origin}/user/property`,
-            timeout: 2000,
-            headers: {'Content-Type': 'application/json'}
-        });
-        const endpoint = `/publish_property/${this.propertyId}`;
-        
-        // Post data
-        await instance.post(endpoint, {
-            value,
-        })
-            .then((res) => res)
-            .catch((_err) => {
-                // It keeps throwing an error I don't really know what it is, it's too long.
-                // console.error(`Error when posting the image name: `, err);
-            });
     }
 }
