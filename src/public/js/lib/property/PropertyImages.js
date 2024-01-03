@@ -15,6 +15,7 @@ export default class PropertyImages {
         this.api = imagesAPI;
     }
     
+    // --- Operations ---
     /**
      * Get array of names only
      */
@@ -31,6 +32,17 @@ export default class PropertyImages {
     }
     
     /**
+     * Compare an array of names and get the elements that intersect with property image names
+     * 
+     * This is used for determining extra images that exceed the maximum limit.
+     * 
+     * @param {Array} imageNames Image names
+     */
+    namesIntersection(imageNames) {
+        return this.names.filter(element => imageNames.includes(element));
+    }
+    
+    /**
      * Get element at
      * 
      * @param {number} index Property image index
@@ -39,6 +51,7 @@ export default class PropertyImages {
         return this.propertyImages[index];
     }
     
+    // --- Special ---
     /**
      * Update property callback
      * 

@@ -20,3 +20,12 @@ Changed for simplicity 😜😝 -->
 - [ ] Frontend API to communicate with this tiny images app
     - [ ] Reads configuration and works fine
     - [ ] Perform the rest of operations
+
+# Configuration
+
+The configuration enforcement must first done in the backend and then the frontend,
+because even though we can block in the frontend, someone messing with endpoints, can easily overcome it.
+
+- [x] Maximum files
+
+We can easily do this in the backend with multer filter, read the file, check quantity, and if greater, bounce.

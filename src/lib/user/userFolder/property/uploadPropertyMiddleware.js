@@ -1,6 +1,8 @@
 import multer from "multer";
+import fs from "node:fs";
 
 import propertyFolder from "./propertyFolder.js";
+import propertyImagesConfiguration from "../../../../public/js/config/propertyImagesConfig.js";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -21,18 +23,25 @@ const storage = multer.diskStorage({
 
 const uploadProperty = multer({
     storage,
+    // Upload filter
     fileFilter: (req, file, cb) => {
-        // const { id } = req.params;
+        const { id } = req.params;
         
-        // Unnecessary, just replace previous files with the default configuration
+        // It's for each file
+        // console.log(`Is this for each or all together?: `, file);
         
-        // // Check if the image exists
-        // const propertyPath = propertyFolder(req.user.id, id);
-        // try {
-        //     fs.accessSync(propertyPath, constants.F_OK);
-        // } catch(err) {
-        //     // The image doesn't exists
-        // }
+        const propertyPath = propertyFolder(req.user.id, id);
+        
+        // Bounce images that are over the limit
+        const images = fs.readdirSync(propertyPath);
+        // console.log(`Images: `, images);
+        // console.log(`Images length: ${images.length}`);
+        if(images.length >= propertyImagesConfiguration.maxImages) {
+            // console.log(`Over the limit, bouncing...`);
+            
+            // Don't upload this image
+            return cb(null, false);
+        }
         
         // I can't believe this was set to false and was intervening with what I was doing
         return cb(null, true);

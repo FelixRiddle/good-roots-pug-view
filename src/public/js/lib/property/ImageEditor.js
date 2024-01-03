@@ -152,23 +152,6 @@ export default class ImageEditor {
     
     // --- Events ---
     /**
-     * Get images name
-     * 
-     * @returns {Array}
-     */
-    getImagesNameArray() {
-        const imagesInput = document.getElementById(this.inputId);
-        
-        let imagesName = [];
-        for(let image of imagesInput.files) {
-            console.log("Pushing: ", image.name);
-            imagesName.push(image.name);
-        }
-        
-        return imagesName;
-    }
-    
-    /**
      * On change send request to the server to check whether the file is ready to be
      * uploaded or it collides with another image
      */
@@ -182,13 +165,14 @@ export default class ImageEditor {
                 console.log("Images changed");
                 
                 console.log(`Property images: `, thisObject.propertyImages.propertyImages);
-        
+                
                 // Test
                 console.log(`Image names: `, this.propertyImages.names());
                 
                 // If the size is greater remove the images
+                // TODO: This may be better checked first in the backend and then the frontend
+                // because even though we block it here, someone messing with endpoints, can easily overcome this.
                 if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
-                    
                     // Get current images...
                     let currentImages = thisObject.getImagesNameArray();
                     

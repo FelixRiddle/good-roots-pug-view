@@ -9,22 +9,15 @@
     - [ ] Dropzone to add images
 - [x] Remove images on icon click
 
-# Configuration
+## On configuration maximum
 
-I need finer control than this, we're going to do this
+When the maximum is reached, we have to detect which ones are extra, to remove them from the input.
 
-- [ ] Create a js configuration file, export it to the frontend and also use it in the backend
-    - [ ] Images
-        - [ ] Maximum 10
-        - [ ] Minimum 1
-            - [ ] Properties with no images can't be published.
-            <!-- This is a quality control -->
-    - [ ] Size
-        - [ ] Maximum 5mb
-        - [ ] Minimum 100kb 🥶
-        <!-- I'm not so sure about this '1kb' thing, because it has to be pretty low res for it to be so low -->
-        <!-- Update: Changed it to 100 kb, because I've scaled down a house to 1366x768 and it weights 891kb 😒 -->
-        <!-- 100kb is already a dubious image, keep a watch on bro 🤔🤨😤 -->
+We first have to fetch image names to compare them to the input image names.
 
-- [ ] Configuration validation
-- [ ] Configuration testing
+But the image names are encoded, and also are a path of the public api(in property images).
+
+- [x] Decode names and remove path elements
+<!-- PropertyImages.names() -->
+
+Now we have to compare both of them to know which ones are different
