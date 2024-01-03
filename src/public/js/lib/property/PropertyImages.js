@@ -5,12 +5,23 @@ import ImagesAPI from "./ImagesAPI.js";
  * 
  */
 export default class PropertyImages {
+    propertyImages = [];
+    
     /**
      * 
      * @param {ImagesAPI} imagesAPI 
      */
     constructor(imagesAPI) {
         this.api = imagesAPI;
+    }
+    
+    /**
+     * Get element at
+     * 
+     * @param {number} index Property image index
+     */
+    at(index) {
+        return this.propertyImages[index];
     }
     
     /**
@@ -33,7 +44,8 @@ export default class PropertyImages {
             // console.log(`Response: `, images);
             // thisClass.propertyImages = images;
             // thisClass.previousImages = images;
-            thisClass.api.propertyImages = images;
+            // thisClass.api.propertyImages = images;
+            thisClass.propertyImages = images;
             
             thisClass.updatePropertyCallback();
         });

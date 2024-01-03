@@ -1,17 +1,18 @@
 import axios from "axios";
+import PropertyImages from "./PropertyImages.js";
 
 /**
  * Images API
  */
 export default class ImagesAPI {
     
-    propertyImages = [];
-    
     /**
+     * Images api
      * 
      * @param {number} propertyId This property id
+     * @param {PropertyImages} propertyImages Property images manager
      */
-    constructor(propertyId) {
+    constructor(propertyId, propertyImages) {
         // Create axios instance
         this.instance = axios.create({
             baseURL: `${window.location.origin}/user/property/images`,
@@ -19,6 +20,17 @@ export default class ImagesAPI {
             headers: {'Content-Type': 'application/json'}
         });
         this.propertyId = propertyId;
+        
+        this.propImgs = propertyImages;
+    }
+    
+    /**
+     * Set property images object
+     * 
+     * @param {PropertyImages} propertyImages Property images manager
+     */
+    setPropertyImagesObject(propertyImages) {
+        this.propImgs = propertyImages;
     }
     
     // --- API Calls ---
@@ -84,7 +96,7 @@ export default class ImagesAPI {
      * @param {number} index Image index
      */
     async removeImage(index) {
-        let imageName = this.propertyImages[index];
+        let imageName = this.propImgs.at(index);
         const endpoint = `/remove_image/${this.propertyId}`;
         
         // Post data

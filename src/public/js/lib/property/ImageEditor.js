@@ -5,8 +5,6 @@ import ImagesAPI from "./ImagesAPI.js";
 import PropertyImages from "./PropertyImages.js";
 import RemoveIcon from "./RemoveIcon.js";
 
-const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
-
 /**
  * Image editor
  * 
@@ -47,6 +45,10 @@ export default class ImageEditor {
         
         // Property images
         this.propertyImages = new PropertyImages(this.api);
+        
+        // Set it back to the api, wondering if this is ok?
+        this.api.setPropertyImagesObject(this.propertyImages);
+        
         const thisObj = this;
         this.propertyImages.setUpdatePropertyCallback(() => {
             thisObj.updateImageViews();
@@ -122,13 +124,13 @@ export default class ImageEditor {
      * Updates whether an img element is shown or not, and its src attribute.
      */
     updateImageViews() {
-        let propLength = this.api.propertyImages.length;
+        const propLength = this.propertyImages.propertyImages.length;
         let index = 0;
         
         for(let imgView of this.imagesView) {
             // Update location and visibility
             if(propLength > 0 && index < propLength) {
-                let srcLocation = `${location.origin}/${this.api.propertyImages[index]}`;
+                let srcLocation = `${location.origin}/${this.propertyImages.at(index)}`;
                 imgView.src = srcLocation;
                 imgView.hidden = false;
                 
@@ -178,7 +180,7 @@ export default class ImageEditor {
             imagesInput.addEventListener("change", async (e) => {
                 console.log("Images changed");
                 
-                console.log(`Property images: `, thisObject.api.propertyImages);
+                console.log(`Property images: `, thisObject.propertyImages.propertyImages);
                 
                 // If the size is greater remove the images
                 if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
@@ -214,11 +216,12 @@ export default class ImageEditor {
                 
                 // Update previous images input length
                 thisObject.previousImagesInputLength = imagesInput.files.length;
-                console.log(`Files: `, imagesInput.files);
                 
                 // Store current images as previous images
                 thisObject.previousImages = thisObject.getImagesNameArray();
-                console.log(`Previous images: `, thisObject.previousImages);
+                
+                // console.log(`Files: `, imagesInput.files);
+                // console.log(`Previous images: `, thisObject.previousImages);
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
