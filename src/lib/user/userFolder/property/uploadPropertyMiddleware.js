@@ -23,10 +23,6 @@ const storage = multer.diskStorage({
 
 const uploadProperty = multer({
     storage,
-    limits: {
-        // Image size limit(in bytes, that's why we multiply by 1000)
-        fileSize: propertyImagesConfiguration.maxSizeKb * 1000
-    },
     // Upload filter
     fileFilter: (req, file, cb) => {
         const { id } = req.params;
@@ -34,20 +30,37 @@ const uploadProperty = multer({
         // It's for each file
         // console.log(`Is this for each or all together?: `, file);
         
+        // Check types
+        if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/octet-stream") {
+            // Ok
+        } else if(file.mimetype === "video/mp4") {
+            // Ok
+        } else {
+            // Noooo, I don't like it.
+            return cb(null, false);
+        }
+        
+        // Check that the filesize isn't too large or too short
+        const maxFileSize = propertyImagesConfiguration.maxSizeKb * 1024;
+        const minFileSize = propertyImagesConfiguration.minSizeKb * 1024;
+        const fileSize = parseInt(req.headers["content-length"]);
+        if (fileSize <= minFileSize
+                || fileSize >= maxFileSize) {
+            console.log(`Given image is over the limit, or under minimum!1!!! 😠😡😤😤🤨🤨🚨🚨`);
+            return cb(null, false);
+        } else if (fileSize >= maxFileSize) {
+            return cb(null, false);
+        }
+        
         const propertyPath = propertyFolder(req.user.id, id);
         
         // Bounce images that are over the limit
         const images = fs.readdirSync(propertyPath);
-        // console.log(`Images: `, images);
-        // console.log(`Images length: ${images.length}`);
         if(images.length >= propertyImagesConfiguration.maxImages) {
-            // console.log(`Over the limit, bouncing...`);
-            
             // Don't upload this image
             return cb(null, false);
         }
         
-        // I can't believe this was set to false and was intervening with what I was doing
         return cb(null, true);
     }
 });
