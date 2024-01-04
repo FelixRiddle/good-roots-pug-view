@@ -23,6 +23,10 @@ const storage = multer.diskStorage({
 
 const uploadProperty = multer({
     storage,
+    limits: {
+        // Image size limit(in bytes, that's why we multiply by 1000)
+        fileSize: propertyImagesConfiguration.maxSizeKb * 1000
+    },
     // Upload filter
     fileFilter: (req, file, cb) => {
         const { id } = req.params;
