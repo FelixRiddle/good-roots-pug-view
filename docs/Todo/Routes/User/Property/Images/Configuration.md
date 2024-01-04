@@ -16,5 +16,4 @@ I will just mark it has completed when it's done in the backend(which is the onl
         <!-- Update: Changed it to 100 kb, because I've scaled down a house to 1366x768 and it weights 891kb 😒 -->
         <!-- 100kb is already a dubious image, keep a watch on bro 🤔🤨😤 -->
 
-- [ ] Configuration validation
 - [ ] Configuration testing

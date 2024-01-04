@@ -12,10 +12,10 @@ Use an array for each.
     This is really ambiguos, maybe it's better to replace maybe not I don't know
     
 - [ ] '/images/get_image' to get image/s
+- [x] '/images/get_all' to get every image
+<!-- used this instead of 'get_image' -->
 - [x] '/images/remove_image' to delete an image or multiple images
 - [x] '/images/set_image' to set the images
-<!-- (replace previous and delete previous that are no more) 
-Changed for simplicity 😜😝 -->
 
 - [ ] Frontend API to communicate with this tiny images app
     - [ ] Reads configuration and works fine
