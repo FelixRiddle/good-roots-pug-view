@@ -1,4 +1,6 @@
 # Delete a property
 
-- [ ] Delete property from the database
-- [ ] Delete property images
+- [x] Delete property from the database
+- [x] Delete property images
+- [x] Update frontend
+<!-- Just hid the row of the property on admin hehe -->

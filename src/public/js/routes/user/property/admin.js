@@ -21,6 +21,15 @@ function bindDeleteProperty(propertyId) {
             // Post to it
             await instance.post(`/delete/${propertyId}`);
             console.log(`Property ${propertyId} deleted`);
+            
+            // Hide row
+            const rowElement = document.getElementById(propertyId);
+            if(rowElement) {
+                rowElement.hidden = true;
+                rowElement.style = "display: none;";
+            } else {
+                console.log(`Row element for property ${propertyId} not found!!111`);
+            }
         });
     }
 }
