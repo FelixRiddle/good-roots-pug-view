@@ -39,10 +39,6 @@ export default class CarouselView {
             console.warn("Carousel element not found!");
             console.warn("This will cause the view to not work properly!");
             console.warn("Please add a 'div' with the id of 'carousel'");
-        } else {
-            // Add overflow hidden to it
-            this.carousel.classList.add("overflow-hidden");
-            this.carousel.classList.add("relative");
         }
         
         // Get property images
@@ -54,14 +50,7 @@ export default class CarouselView {
      * Create image views
      */
     createImageViews() {
-        
-        // Add images parent, to make them be horizontal
-        const imgsParent = document.createElement("div");
-        this.imgsParent = imgsParent;
-        imgsParent.classList.add("flex");
-        imgsParent.classList.add("overflow-hidden");
-        imgsParent.id = "horizontalView";
-        this.carousel.appendChild(imgsParent);
+        const imgsParent = document.getElementById("horizontalView");
         
         // Create image views
         const propertyImages = this.propertyImages.getAll();

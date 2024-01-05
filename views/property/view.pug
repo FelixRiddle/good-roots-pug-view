@@ -18,7 +18,8 @@ block content
                 
                 div(class="m-1 relative max-w-96")
                     //- Carousel of images
-                    div(id="carousel")
+                    div(id="carousel" class="overflow-hidden relative")
+                        div(id="horizontalView" class="flex transition ease-out duration-40")
                 
                 div(class="px-5 py-10 space-y-5")
                     p= property.description
