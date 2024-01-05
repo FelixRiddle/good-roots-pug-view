@@ -1,0 +1,45 @@
+extends ../index
+
+//- Single property view
+block content
+    div(class="py-5")
+        h1(class="text-4xl my-10 font-extrabold text-center")= property.title
+        
+        div
+            a(href="#" class="font-bold text-gray-600 text-sm") Categoria: 
+                span(class="font-normal")= property.category
+        
+        div(class="mt-5 md:flex md:gap-4")
+            div(class="md:w-2/3 bg-white shadow rounded-lg")
+                //- Property image
+                img(src="" alt=`${property.title} image` id="propertyImage")
+                
+                div(class="px-5 py-10 space-y-5")
+                    p= property.description
+                    
+                    h2(class="text-2xl leading-6 font-bold text-gray-900") Property information
+                    
+                    div(class="grid grid-cols-1 md:grid-cols-2")
+                        p(class="text-gray-600 font-bold text-xs") Bathrooms
+                            span(class="text-gray-800 block text-lg")= property.bathrooms
+                        
+                        p(class="text-gray-600 font-bold text-xs") Rooms
+                            span(class="text-gray-800 block text-lg")= property.rooms
+                        
+                        p(class="text-gray-600 font-bold text-xs") Parking
+                            span(class="text-gray-800 block text-lg")= property.parking
+                        
+                        p(class="text-gray-600 font-bold text-xs") Price
+                            span(class="text-gray-800 block text-lg")= property.price.name
+            
+            //- Map
+            div(class="md:w-1/3")
+                h3(class="text-center py-10 leading-6 text-2xl font-bold text-gray-900") Property location
+                
+                div(class="h-96" id="map")
+                    p(id="latitude" class="hidden")= property.latitude
+                    p(id="longitude" class="hidden")= property.longitude
+                
+                div(class="p-5")
+                    p(class="text-gray-600 font-bold text-xs") Direction 
+                        span(class="text-gray-800 block text-lg")= property.street
