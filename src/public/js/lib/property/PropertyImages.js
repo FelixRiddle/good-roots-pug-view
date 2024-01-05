@@ -24,6 +24,13 @@ export default class PropertyImages {
     }
     
     /**
+     * Get all
+     */
+    getAll() {
+        return this.propertyImages;
+    }
+    
+    /**
      * Get array of names only
      */
     names() {

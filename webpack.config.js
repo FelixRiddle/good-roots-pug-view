@@ -157,6 +157,13 @@ export default {
             ],
             filename: "js/routes/examples/publish_image/multer_example.js"
         },
+        // routes/property/view
+        routes_property_view: {
+            import: [
+                `${publicRoutes}property/view.js`
+            ],
+            filename: "js/routes/property/view.js"
+        },
         // User routes
         routes_user_property_set_image: {
             import: [

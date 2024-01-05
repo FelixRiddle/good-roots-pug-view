@@ -5,14 +5,20 @@ block content
     div(class="py-5")
         h1(class="text-4xl my-10 font-extrabold text-center")= property.title
         
+        //- pre= JSON.stringify(property, undefined, 4)
+        
         div
             a(href="#" class="font-bold text-gray-600 text-sm") Categoria: 
-                span(class="font-normal")= property.category
+                span(class="font-normal")= property.category.name
         
         div(class="mt-5 md:flex md:gap-4")
             div(class="md:w-2/3 bg-white shadow rounded-lg")
-                //- Property image
-                img(src="" alt=`${property.title} image` id="propertyImage")
+                //- //- Property image
+                //- img(src="" alt=`${property.title} image` id="propertyImage")
+                
+                div(class="m-1 relative max-w-96")
+                    //- Carousel of images
+                    div(id="carousel")
                 
                 div(class="px-5 py-10 space-y-5")
                     p= property.description
@@ -43,3 +49,6 @@ block content
                 div(class="p-5")
                     p(class="text-gray-600 font-bold text-xs") Direction 
                         span(class="text-gray-800 block text-lg")= property.street
+
+block scripts
+    script(src="/js/routes/property/view.js")

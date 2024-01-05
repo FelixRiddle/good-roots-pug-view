@@ -9,6 +9,15 @@ Or even simplier
 
 # Changelog
 
+[0.4.0]
+
+- Property view
+- Carousel view
+
+[0.3.0]
+
+- Delete a property
+
 [0.2.0] Edit property
 
 - The user can edit a property

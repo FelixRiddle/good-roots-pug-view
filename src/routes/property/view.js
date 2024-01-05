@@ -26,16 +26,11 @@ viewRoute.get("/view/:id", async (req, res) => {
                 as: "price"
             }]
         });
-        console.log(`Property found`);
-        // const property = propertyController.map(x => x.get({ plain: true }));
-        
-        console.log(`Property: `, property);
         
         // Check that the property exists
         if(!property) {
             console.log(`Property doesn't exists redirect to 404`);
-            // return res.redirect(page404);
-            return;
+            return res.redirect(page404);
         }
         
         return res.render("property/view", {
@@ -45,7 +40,7 @@ viewRoute.get("/view/:id", async (req, res) => {
         console.log(`Error when trying to view property`);
         console.error(err);
         console.log(`Redirect home`);
-        // return res.redirect(home);
+        return res.redirect(home);
     }
 });
 

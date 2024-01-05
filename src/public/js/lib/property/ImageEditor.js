@@ -41,8 +41,6 @@ export default class ImageEditor {
         // Images API
         this.api = new ImagesAPI(propertyId);
         
-        this.startAddImageViews();
-        
         // Property images
         this.propertyImages = new PropertyImages(this.api);
         
@@ -62,6 +60,9 @@ export default class ImageEditor {
         
         // Trigger update
         this.propertyImages.updatePropertyImages();
+        
+        // Add image views
+        this.startAddImageViews();
         
         // Publish property action
         this.bindPublishProperty();
