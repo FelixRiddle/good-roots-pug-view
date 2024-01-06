@@ -5,11 +5,16 @@ import PropertyImages from "../PropertyImages.js";
  * Carousel view
  */
 export default class CarouselView {
+    current = 0;
     
     /**
      * Carousel view
      */
     constructor() {
+        // Images container
+        const imgsParent = document.getElementById("horizontalView");
+        this.imagesParent = imgsParent;
+        
         // Get property id
         const paths = window.location.pathname.split("/");
         const propertyId = paths[paths.length - 1];
@@ -26,12 +31,20 @@ export default class CarouselView {
         
         // Set update callback
         const thisObj = this;
+        // Images will be updated only once
         this.propertyImages.setUpdatePropertyCallback(() => {
             console.log(`Images updated!`);
             
             // Create image views
             thisObj.createImageViews();
+        
+            // Others
+            thisObj.setCarouselButtonImages();
+            thisObj.setCarouselButtonActions();
         });
+        
+        // Get property images
+        this.propertyImages.updatePropertyImages();
         
         // Fetch carousel before updating properties
         this.carousel = document.getElementById("carousel");
@@ -40,21 +53,12 @@ export default class CarouselView {
             console.warn("This will cause the view to not work properly!");
             console.warn("Please add a 'div' with the id of 'carousel'");
         }
-        
-        // Get property images
-        console.log(`Updating images`);
-        this.propertyImages.updatePropertyImages();
-        
-        // Others
-        this.setCarouselButtonImages();
     }
     
     /**
      * Create image views
      */
     createImageViews() {
-        const imgsParent = document.getElementById("horizontalView");
-        
         // Create image views
         const propertyImages = this.propertyImages.getAll();
         let index = 0;
@@ -67,10 +71,19 @@ export default class CarouselView {
             imgEl.id = `image_${index}`;
             
             // Insert into the carousel view
-            imgsParent.appendChild(imgEl);
+            this.imagesParent.appendChild(imgEl);
             
             index++;
         }
+    }
+    
+    /**
+     * Update image
+     * 
+     * After the user clicks to move to the next or previous image call this function to move the image
+     */
+    updateImage() {
+        this.imagesParent.style = `transform: translateX(-${this.current * 100}%)`;
     }
     
     /**
@@ -85,6 +98,42 @@ export default class CarouselView {
         }
         if(carouselRightButtonImage) {
             carouselRightButtonImage.src = `${location.origin}/image/icons/arrow/black-solid/right-arrow.png`;
+        }
+    }
+    
+    /**
+     * Set carousel button actions
+     */
+    setCarouselButtonActions() {
+        const carouselLeftButton = document.getElementById("carouselLeftButton");
+        const carouselRightButton = document.getElementById("carouselRightButton");
+        
+        const images = this.propertyImages.getAll();
+        const imagesLength = images.length;
+        
+        const thisObj = this;
+        if(carouselLeftButton) {
+            carouselLeftButton.addEventListener("click", (e) => {
+                if(thisObj.current === 0) {
+                    thisObj.current = imagesLength - 1;
+                } else {
+                    thisObj.current -= 1;
+                }
+                
+                thisObj.updateImage();
+            });
+        }
+        
+        if(carouselRightButton) {
+            carouselRightButton.addEventListener("click", (e) => {
+                if(thisObj.current === imagesLength - 1) {
+                    thisObj.current = 0;
+                } else {
+                    thisObj.current += 1;
+                }
+                
+                thisObj.updateImage();
+            });
         }
     }
 }
