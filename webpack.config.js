@@ -95,17 +95,11 @@ export default {
             ],
             filename: `js/routes/user/property/admin.js`
         },
-        property1: {
+        property_view_map: {
             import: [
-                `${publicRoutes}user/property/edit.js`
+                `${publicRoutes}property/view/map.js`
             ],
-            filename: `js/routes/user/property/edit.js`
-        },
-        property2: {
-            import: [
-                `${publicRoutes}user/property/create.js`,
-            ],
-            filename: `js/routes/user/property/create.js`
+            filename: `js/property/view/map.js`
         },
         validation: {
             import: [
@@ -157,6 +151,7 @@ export default {
             ],
             filename: "js/routes/examples/publish_image/multer_example.js"
         },
+        // Property view
         // routes/property/view
         routes_property_view: {
             import: [
@@ -165,6 +160,18 @@ export default {
             filename: "js/routes/property/view.js"
         },
         // User routes
+        routes_user_property_create: {
+            import: [
+                `${publicRoutes}user/property/create.js`,
+            ],
+            filename: `js/routes/user/property/create.js`
+        },
+        routes_user_property_edit: {
+            import: [
+                `${publicRoutes}user/property/edit.js`
+            ],
+            filename: `js/routes/user/property/edit.js`
+        },
         routes_user_property_set_image: {
             import: [
                 `${publicRoutes}user/property/set_image.js`

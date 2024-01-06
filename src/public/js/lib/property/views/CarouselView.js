@@ -37,7 +37,7 @@ export default class CarouselView {
             
             // Create image views
             thisObj.createImageViews();
-        
+            
             // Others
             thisObj.setCarouselButtonImages();
             thisObj.setCarouselButtonActions();

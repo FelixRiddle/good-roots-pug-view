@@ -1,5 +1,8 @@
 extends ../index
 
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
 //- Single property view
 block content
     div(class="py-5")
@@ -71,4 +74,14 @@ block content
                         span(class="text-gray-800 block text-lg")= property.street
 
 block scripts
+    //- Leaflet
+    script(
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    )
+    
+    //- For locating the street
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+    
     script(src="/js/routes/property/view.js")
