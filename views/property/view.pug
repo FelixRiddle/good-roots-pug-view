@@ -20,6 +20,25 @@ block content
                     //- Carousel of images
                     div(id="carousel" class="overflow-hidden relative")
                         div(id="horizontalView" class="flex transition ease-out duration-40")
+                        
+                        //- Arrows
+                        div(class="absolute top-0 h-full w-full justify-between items-center flex px-10")
+                            button(id="carouselLeftButton")
+                                img(
+                                    class="hover:cursor-pointer"
+                                    id="carouselLeftButtonImage"
+                                    src="", alt="Button to move the carousel to the left"
+                                    width="32"
+                                    height="32"
+                                    )
+                            
+                            button(id="carouselRightButton")
+                                img(
+                                    id="carouselRightButtonImage"
+                                    src="", alt="Button to move the carousel to the right"
+                                    width="32"
+                                    height="32"
+                                    )
                 
                 div(class="px-5 py-10 space-y-5")
                     p= property.description

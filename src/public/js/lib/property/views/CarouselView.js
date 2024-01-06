@@ -44,6 +44,9 @@ export default class CarouselView {
         // Get property images
         console.log(`Updating images`);
         this.propertyImages.updatePropertyImages();
+        
+        // Others
+        this.setCarouselButtonImages();
     }
     
     /**
@@ -63,18 +66,25 @@ export default class CarouselView {
             imgEl.src = imgSource;
             imgEl.id = `image_${index}`;
             
-            // Don't hide the first image, hide the rest
-            const isFirstImage = index === 0;
-            if(!isFirstImage) {
-                // imgEl.style = "display: none;";
-            }
-            
-            console.log(`Image source: `, imgSource);
-            
             // Insert into the carousel view
             imgsParent.appendChild(imgEl);
             
             index++;
+        }
+    }
+    
+    /**
+     * Set carousel buttons image
+     */
+    setCarouselButtonImages() {
+        const carouselLeftButtonImage = document.getElementById("carouselLeftButtonImage");
+        const carouselRightButtonImage = document.getElementById("carouselRightButtonImage");
+        
+        if(carouselLeftButtonImage) {
+            carouselLeftButtonImage.src = `${location.origin}/image/icons/arrow/black-solid/left-arrow.png`;
+        }
+        if(carouselRightButtonImage) {
+            carouselRightButtonImage.src = `${location.origin}/image/icons/arrow/black-solid/right-arrow.png`;
         }
     }
 }
