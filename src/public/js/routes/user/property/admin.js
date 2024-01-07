@@ -59,6 +59,13 @@ function updateProperty(property) {
         // Set image source location
         propertyElement.src = `${location.origin}/${propertyImages[0]}`
     }
+    
+    // The title is an <a> element
+    // Set its href to the view of the property
+    const titleElement = document.getElementById(`propertyView_${property.id}`);
+    if(titleElement) {
+        titleElement.href = `${location.origin}/property/view/${property.id}`;
+    }
 }
 
 /**

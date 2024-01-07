@@ -1,4 +1,4 @@
 # Public view of property
 
-- [ ] Property view
-- [ ] Images carousel
+- [x] Property view
+- [x] Images carousel

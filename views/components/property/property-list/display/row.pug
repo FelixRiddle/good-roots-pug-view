@@ -9,7 +9,12 @@ div(
     //- Property information
     div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")
         //- Property title
-        a(class="block text-2xl font-extrabold text-indigo-600 truncate" href="#")= property.title
+        a(
+            class="block text-2xl font-extrabold text-indigo-600 truncate"
+            id=`propertyView_${property.id}`
+            href=`#`
+            target="_blank"
+        )= property.title
         
         //- Property name
         p(class="text-sm text-black font-bold")= property.category.name

@@ -12,7 +12,7 @@ Because the package was deprecated, I'll be not using it anymore.
 
 # About
 
-The project is about real state, in which you can register, login, publish your house, add images, etc.
+The project is a real estate app, in which you can register, login, publish your house, add images, etc.
 
 # Env variables to set
 

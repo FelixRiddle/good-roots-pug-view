@@ -13,6 +13,7 @@ Or even simplier
 
 - Property view
 - Carousel view
+- Clicking on a property opens a new tab to its view
 
 [0.3.0]
 
