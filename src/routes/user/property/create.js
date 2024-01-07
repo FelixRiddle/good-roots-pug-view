@@ -47,6 +47,7 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
             priceId,
             categoryId,
         } = req.body.property;
+        console.log(`Property: `, req.body.property);
         
         // Get user 'id' and rename it to 'userId'
         const { id: userId } = req.user;

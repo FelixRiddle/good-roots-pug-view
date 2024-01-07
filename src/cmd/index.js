@@ -55,7 +55,6 @@ let args = parser.parse_args();
 
 // Execute everything asynchronously
 (async () => {
-    
     // Tables
     await tables(args);
     

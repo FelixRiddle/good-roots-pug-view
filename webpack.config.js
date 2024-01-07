@@ -95,12 +95,12 @@ export default {
             ],
             filename: `js/routes/user/property/admin.js`
         },
-        property_view_map: {
-            import: [
-                `${publicRoutes}property/view/map.js`
-            ],
-            filename: `js/property/view/map.js`
-        },
+        // property_view_map: {
+        //     import: [
+        //         `${publicRoutes}property/view/map.js`
+        //     ],
+        //     filename: `js/property/view/map.js`
+        // },
         validation: {
             import: [
                 `${jsPath}validation/validateProperty.js`

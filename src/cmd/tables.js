@@ -1,5 +1,7 @@
 import db from "../config/db.js";
 
+import PropertyImages from "good-roots-assets/src/PropertyImages.js";
+
 import Category from "../models/Category.js";
 import Price from "../models/Price.js";
 import User from "../models/User.js";
@@ -27,8 +29,19 @@ async function main(args) {
     }
 }
 
-// Create every project table
+/**
+ * Create property folders and insert the correspondent images
+ */
+function updatePropertyImages() {
+    const propImgs = new PropertyImages();
+    console.log(`Property images: `, propImgs.getAll());
+}
+
+/**
+ * Create tables and seed some data
+ */
 async function upAll() {
+    
     try {
         // Authenticate
         await db.authenticate()
@@ -49,13 +62,21 @@ async function upAll() {
             User.bulkCreate(users),
         ]);
         
+        // Find user with email 'eugene@example.com'
+        // const user = User.find();
+        
+        // Set property images
+        updatePropertyImages();
+        
         console.log(`Tables seeded`);
     } catch(err) {
         console.log(err);
     }
 }
 
-// Destroy the data of every table
+/**
+ * Drop tables
+ */
 async function downAll() {
     try {
         // Authenticate
