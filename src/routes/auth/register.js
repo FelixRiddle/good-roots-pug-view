@@ -31,6 +31,7 @@ registerRouter.post("/register", async (req, res) => {
                     error: true,
                 }],
                 user: req.body,
+                userRegistered: false,
             });
         }
         
@@ -45,6 +46,7 @@ registerRouter.post("/register", async (req, res) => {
                 page: "Create account",
                 messages: [...val],
                 user: req.body,
+                userRegistered: false,
             });
         }
         
@@ -64,6 +66,7 @@ registerRouter.post("/register", async (req, res) => {
                     error: false,
                 }],
                 user: req.body,
+                userRegistered: false,
             });
         }
         
@@ -92,7 +95,8 @@ registerRouter.post("/register", async (req, res) => {
                 // Some messages should be notified, others not
                 shouldNotify: true,
                 error: false,
-            }]
+            }],
+            userRegistered: true,
         });
     } catch(err) {
         console.log(`Error: `, err);
@@ -108,7 +112,8 @@ registerRouter.post("/register", async (req, res) => {
                 // Some messages should be notified, others not
                 shouldNotify: true,
                 error: true,
-            }]
+            }],
+            userRegistered: false,
         });
     }
 });

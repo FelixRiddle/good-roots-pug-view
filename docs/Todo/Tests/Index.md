@@ -5,6 +5,12 @@ Perform tests on the application
 - [ ] Login
     - [ ] The user that is logged in can make changes on protected endpoints
 - [ ] Register
+    - [ ] Successful registration
+    - [ ] Failed registrations
+        - [ ] Wrong email
+        - [ ] Short password
+        - [ ] Long password
+        - [ ] Confirmation password mismatch
 
 # Security
 
@@ -14,3 +20,14 @@ Perform tests on the application
 - [ ] A user logged in can't change other users data by accessing protected endpoints
 
 Only when all these tests pass, can the website be considered secure.
+
+# Frontend testing
+
+Things to perform frontend testing
+
+- [ ] Seed data
+    - [x] Seed users
+    - [x] Seed categories
+    - [x] Seed prices
+    - [ ] Seed properties
+        - [ ] Seed property images
