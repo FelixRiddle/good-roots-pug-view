@@ -4,6 +4,10 @@ Project made along the course of [Node.js - Bootcamp Desarrollo Web inc. MVC y R
 
 Done in english because the default language of programming is english.
 
+# Commands
+
+Check [docs/Commands.md]
+
 # Notes
 
 - csurf package was deprecated
