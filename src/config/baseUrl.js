@@ -8,3 +8,12 @@ export default function baseUrl() {
     let port = process.env.PORT;
     return `http://${ip ? ip : "127.0.0.1"}:${port ? port : "3000"}`;
 }
+
+/**
+ * Alias for base url
+ * 
+ * @returns {string}
+ */
+export function serverUrl() {
+    return baseUrl();
+}

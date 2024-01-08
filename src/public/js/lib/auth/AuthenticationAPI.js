@@ -5,16 +5,32 @@ export default class AuthenticationAPI {
      * User data
      * 
      * @param {Object} userData User data
+     * @param {string} serverUrl The server url
      */
-    constructor(userData) {
+    constructor(userData, serverUrl) {
         this.userData = userData;
-        this.instance = axios.create({
-            baseURL: `${location.origin}/auth`,
-            timeout: 2000,
-            headers: {
-                "Content-Type": "application/json"
-            }
-          });
+        
+        // Location is not defined in nodejs
+        const isUndefined = typeof(location) === 'undefined';
+        if(!isUndefined) {
+            this.instance = axios.create({
+                baseURL: `${location.origin}/auth`,
+                timeout: 2000,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        } else if(!serverUrl) {
+            throw Error("Server url is required when the AuthenticationAPI is used in NodeJS");
+        } else {
+            this.instance = axios.create({
+                baseURL: `${serverUrl}/auth`,
+                timeout: 2000,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        }
     }
     
     /**
@@ -28,6 +44,6 @@ export default class AuthenticationAPI {
                 return;
             });
         
-        return res;
+        return res.data;
     }
 }

@@ -17,11 +17,13 @@ registerRouter.get("/register", (req, res) => {
 
 // Register user route
 registerRouter.post("/register", async (req, res) => {
+    console.log(`POST /auth/register`);
+    
     try {
         // Check that passwords match
         let expanded = expand(req);
         if(req.body.password != req.body.confirmPassword) {
-            return res.render("auth/register", {
+            return res.send({
                 // Expanded data
                 ...req.body,
                 ...expanded,
@@ -38,7 +40,7 @@ registerRouter.post("/register", async (req, res) => {
         // Validate data
         let val = validateRegister(req.body);
         if(val.length > 0) {
-            return res.render("auth/register", {
+            return res.send({
                 // Expanded data
                 ...req.body,
                 ...expanded,
@@ -56,7 +58,7 @@ registerRouter.post("/register", async (req, res) => {
         // Verify that the user is not duplicated
         const userExists = await User.findOne({ where: { email } });
         if(userExists) {
-            return res.render("auth/register", {
+            return res.send({
                 // Expanded data
                 ...req.body,
                 ...expanded,
@@ -85,7 +87,7 @@ registerRouter.post("/register", async (req, res) => {
         });
         
         // Show confirmation message
-        return res.render("home", {
+        return res.send({
             // Expanded data
             ...req.body,
             ...expanded,
@@ -102,7 +104,7 @@ registerRouter.post("/register", async (req, res) => {
         console.log(`Error: `, err);
         let expanded = expand(req);
         // Show confirmation message
-        return res.render("auth/register", {
+        return res.send({
             // Expanded data
             ...req.body,
             ...expanded,
