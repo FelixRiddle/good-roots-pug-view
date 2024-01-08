@@ -11,7 +11,7 @@
     "js": "webpack --watch",
     "dev": "concurrently \"npm run css\" \"npm run js\" \"DEBUG=express:view DEVELOPMENT=1 npm run server\"",
     "test_css": "concurrently \"npm run css\"",
-    "test": "node_modules/.bin/jasmine"
+    "test": "jasmine"
   },
   "keywords": [],
   "author": "",
