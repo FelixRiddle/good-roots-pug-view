@@ -1,5 +1,8 @@
+import axios from "axios";
 import fs from "node:fs";
 import generator from "generate-password";
+
+import { serverUrl } from "../env.js";
 
 export default class ConfirmationEmailPrivateKey {
     constructor() {
@@ -26,6 +29,34 @@ export default class ConfirmationEmailPrivateKey {
         });
     }
     
+    /**
+     * Confirm an email
+     * 
+     * @param {string} email User email
+     */
+    async confirmEmail(email) {
+        const instance = axios.create({
+            baseURL: `${serverUrl()}/auth`,
+            timeout: 2000,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = {
+            key: this.loadLocally(),
+            email,
+        };
+        console.log(`Confirming email with data: `, data);
+        
+        const result = await instance.post("/email", data)
+            .then((res) => res.data)
+            .catch((err) => {
+                
+            });
+        
+        return result;
+    }
+    
     // --- Save and retrieve ---
     /**
      * Default file path
@@ -45,12 +76,10 @@ export default class ConfirmationEmailPrivateKey {
      * Store locally as json
      */
     saveLocally() {
-        console.log(`Writing file to: `, this.filePath);
         const data = {
             key: this.emailConfirmationPrivateKey()
         };
         
-        console.log(`Storing data: `, data);
         fs.writeFileSync(this.filePath, JSON.stringify(data));
     }
     
@@ -70,13 +99,6 @@ export default class ConfirmationEmailPrivateKey {
      * @returns {bool} Whether the file exists or not
      */
     fileExists() {
-        // try {
-        //     fs.existsSync(this.filePath);
-        //     console.log(`File '${this.filePath}' exists!`);
-        //     return true;
-        // } catch(err) {
-        //     return false;
-        // }
         return fs.existsSync(this.filePath);
     }
 }

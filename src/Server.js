@@ -11,7 +11,6 @@ import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationE
 
 /**
  * Server
- * 
  */
 export default class Server {
     constructor() {
@@ -34,7 +33,6 @@ export default class Server {
         
         // Now handle saving the file so that the testing framework can access it
         const fileExists = emailPrivKey.fileExists();
-        console.log(`Data file exists?: `, fileExists);
         if(!fileExists) {
             // The file doesn't exists?, create it.
             emailPrivKey.saveLocally();
