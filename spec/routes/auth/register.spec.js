@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import privateConfirmEmail from "../../../src/api/auth/privateConfirmEmail.js";
 import { serverUrl } from "../../../src/controllers/env/env.js";
 import AuthenticationAPI from "../../../src/public/js/lib/auth/AuthenticationAPI.js";
+import { testSetup } from "../../../src/test/testSetup.js";
+import ConfirmationEmailPrivateKey from "../../../src/controllers/env/private/ConfirmationEmailPrivateKey.js";
 
 describe("auth/register", () => {
     
@@ -21,6 +23,12 @@ describe("auth/register", () => {
         password: "asd12345",
         confirmPassword: "asd12345"
     };
+    
+    const confirmEmail = new ConfirmationEmailPrivateKey();
+    confirmEmail.saveLocally();
+    
+    // Test setup
+    testSetup();
     
     const url = serverUrl();
     console.log(`Server url: ${url}`);

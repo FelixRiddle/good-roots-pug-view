@@ -7,7 +7,7 @@ import db from './config/db.js';
 import getUser from './middleware/auth/getUser.js';
 import routes from './routes/index.js';
 import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
-import { setConfirmationEmailPrivateKey } from './controllers/env/privateKeys.js';
+import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationEmailPrivateKey.js';
 
 /**
  * Server
@@ -28,7 +28,17 @@ export default class Server {
      */
     setupPrivateAccessKeys() {
         // Key for accessing a single endpoint to confirm the email
-        setConfirmationEmailPrivateKey();
+        // Setup the env var first
+        const emailPrivKey = new ConfirmationEmailPrivateKey();
+        emailPrivKey.setConfirmationEmailPrivateKey();
+        
+        // Now handle saving the file so that the testing framework can access it
+        const fileExists = emailPrivKey.fileExists();
+        console.log(`Data file exists?: `, fileExists);
+        if(!fileExists) {
+            // The file doesn't exists?, create it.
+            emailPrivKey.saveLocally();
+        }
     }
     
     /**

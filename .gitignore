@@ -7,6 +7,8 @@ public/uploads
 public/user
 public/main.js
 
+.cache/
+
 # Package lock backup
 package-lock.json.backup
 
