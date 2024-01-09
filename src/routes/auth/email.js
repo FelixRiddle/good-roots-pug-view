@@ -2,6 +2,7 @@ import express from "express";
 import User from "../../models/User.js";
 import { serverUrl } from "../../controllers/env/env.js";
 import { emailConfirmationPrivateKey, setConfirmationEmailPrivateKey } from "../../controllers/env/privateKeys.js";
+import ConfirmationEmailPrivateKey from "../../controllers/env/private/ConfirmationEmailPrivateKey.js";
 
 const emailRouter = express.Router();
 
@@ -64,8 +65,12 @@ emailRouter.post("/email", async(req, res) => {
             return res.redirect(home);
         }
         
+        // Fetch key from the json file
+        const backdoorEmailConfirmation = new ConfirmationEmailPrivateKey();
+        const key = backdoorEmailConfirmation.loadLocally();
+        
         // Check that it matches
-        const keysMatch = privateKey === emailConfirmationPrivateKey();
+        const keysMatch = privateKey === key;
         if(!keysMatch) {
             console.log(`Someone tried to access email confirmation private endpoint`);
             console.log(`Naughty, naughty 😈👿`);
@@ -91,17 +96,12 @@ emailRouter.post("/email", async(req, res) => {
         if(!user) {
             console.log(`Couldn't confirm the E-Mail, because the user doesn't exists!`)
             return res.redirect(home);
-        }
-        
-        // Confirm account
-        if(user.token == token) {
+        } else {
+            // Update the user
             user.token = "";
             user.confirmedEmail = true;
             
             await user.save();
-        } else {
-            console.log(`Couldn't confirm the E-Mail, tokens don't match!`);
-            return res.redirect(home);
         }
         
         console.log(`Email confirmed!`);
