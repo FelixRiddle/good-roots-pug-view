@@ -1,4 +1,4 @@
-// Set default env variables
+import dotenv from "dotenv";
 
 /**
  * Setup protocol
@@ -10,9 +10,15 @@ export function setupProtocol() {
 }
 
 /**
- * Setup all
+ * Setup environment variables
  */
 export function setupAll() {
+    
+    // Setup dotenv
+    dotenv.config({
+        path: ".env"
+    });
+    
     setupProtocol();
 }
 
