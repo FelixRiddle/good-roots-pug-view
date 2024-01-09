@@ -5,17 +5,22 @@ import expand from "../controllers/expand.js"
 const homeRouter = express.Router();
 
 const renderHome = (req, res) => {
-    console.log(`Get /home`);
-    console.log(`Rendering home!`);
+    console.log(`GET /home`);
     
-    let expanded = expand(req);
-    console.log(`Data: `, expanded);
-    console.log(`Rendering /home`);
-    return res.render(
-        "home", {
-            ...expanded
-        }
-    );
+    try {
+        let expanded = expand(req);
+        
+        console.log(`Data: `, expanded);
+        return res.render("home", {
+                ...expanded
+            }
+        );
+    } catch(err) {
+        console.error(err);
+        // If you can't even render home what do you even do?
+        // Maybe just render home with no data
+        return res.render("home");
+    }
 };
 
 homeRouter.get("/home", renderHome);

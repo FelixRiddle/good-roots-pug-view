@@ -113,10 +113,14 @@ loginRouter.post("/login", async (req, res) => {
         };
         const token = generateJwtToken(userSafe);
         
-        console.log(`Login ok, redirecting to admin panel`);
-        return res.cookie("_token", token, {
-            httpOnly: false,
-        }).redirect("/user/property/admin");
+        console.log(`Login ok, storing user cookie and redirecting to home`);
+        
+        // Store cookie
+        return res
+            .cookie("_token", token, {
+                httpOnly: false,
+            })
+            .redirect(home);
     } catch(err) {
         console.error(err);
         console.log(`There was an error when the user tried to log in redirecting to home`);

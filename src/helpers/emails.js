@@ -23,7 +23,7 @@ const registerEmail = async(data) => {
         html: `
             <p>Hello ${name}, verify your E-Mail for Good Roots</p>
             
-            <p>Your account is ready you have to confirm it by clicking 'Verify'</p>
+            <p>Your account is ready, you have to confirm it by clicking 'Verify'</p>
             <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/auth/confirmEmail/${token}">Verify</a>
             
             <p>If you didn't create this account, you can ignore this message</p>

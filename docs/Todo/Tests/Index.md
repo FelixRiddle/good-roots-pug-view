@@ -5,7 +5,15 @@ Perform tests on the application
 - [ ] Login
     - [ ] The user that is logged in can make changes on protected endpoints
 - [ ] Register
-    - [ ] Successful registration
+    - [x] Successful registration
+        - [ ] Confirm email
+        
+        This part is particularly hard, we can get a backdoor access token from the backend, because tests are executed from the backend, and we can set a scope for this token too, just for confirming the email for example.
+        
+        This way there's no way a user from the frontend will be able to access these endpoints without the token.
+        
+        - [ ] Login after it
+        - [ ] Delete user
     - [ ] Failed registrations
         - [ ] Wrong email
         - [ ] Short password

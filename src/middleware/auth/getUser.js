@@ -1,14 +1,17 @@
 /**
  * Get user
  * 
- * But if not user is found, it will let the user still access the requested page
+ * Different from protectRoute, because in this middleware the user is optional.
  */
 import jwt from "jsonwebtoken";
 
 import User from "../../models/User.js";
+import { serverUrl } from "../../controllers/env/env.js";
 
 // Get user
 const getUser = async (req, res, next) =>  {
+    const home = `${serverUrl()}/home`;
+    
     // Validate token
     try {
         // Check token
@@ -17,7 +20,15 @@ const getUser = async (req, res, next) =>  {
         
         if(token) {
             // Verify user
-            let decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            let decoded = undefined;
+            try {
+                const jwtData = jwt.verify(token, process.env.JWT_SECRET_KEY);
+                decoded = jwtData;
+            } catch(err) {
+                console.log(`The token couldn't be verified, maybe it has expired!`);
+                // console.error(err);
+                // return res.redirect(home);
+            }
             
             // Validate user
             const user = await User.scope("deletePassword").findByPk(decoded.id);
@@ -25,13 +36,23 @@ const getUser = async (req, res, next) =>  {
             // Store user on the request
             if(user) {
                 req.user = user;
+                // return next();
+            } else {
+                console.log(`The user doesn't exists`);
+                // return res.redirect(home);
             }
+        } else {
+            console.log(`The token wasn't found!`);
+            // return res.redirect(home);
         }
-        
     } catch(err) {
-        console.error(err);
+        console.log(`Error when veryfing token`);
+        
+        // Grave mistake, the page doesn't even render.
+        // return res.redirect(home);
     }
     
+    // Regardless of whether the token was found or not
     return next();
 }
 

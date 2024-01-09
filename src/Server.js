@@ -4,9 +4,10 @@ import express from 'express';
 
 // This script also sets up the environment variables in .env
 import db from './config/db.js';
-import routes from './routes/index.js';
 import getUser from './middleware/auth/getUser.js';
+import routes from './routes/index.js';
 import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
+import { setConfirmationEmailPrivateKey } from './controllers/env/privateKeys.js';
 
 /**
  * Server
@@ -18,6 +19,16 @@ export default class Server {
         this.app = app;
         
         this.createDirectories();
+        
+        this.setupPrivateAccessKeys();
+    }
+    
+    /**
+     * Setup private access keys
+     */
+    setupPrivateAccessKeys() {
+        // Key for accessing a single endpoint to confirm the email
+        setConfirmationEmailPrivateKey();
     }
     
     /**
