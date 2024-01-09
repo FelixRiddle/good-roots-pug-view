@@ -22,6 +22,8 @@ let positionChangeCallback = (newPosition) => {
     if(street) {
         street.value = streetName;
     }
+    
+    // Display street name to the user
     let showStreet = document.getElementById("show_street");
     if(showStreet) {
         showStreet.innerHTML = streetName;

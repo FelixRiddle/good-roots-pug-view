@@ -15,6 +15,10 @@ describe("auth/register", () => {
     it('Register user', async function() {
         const data = await api.registerUser();
         
+        // Now delete user, because we only need to check if register was successful
+        const res = await api.loginUser();
+        console.log(`Login response: `, res.data);
+        
         // This is practically the same as jest
         expect(data.userRegistered).toBe(true);
     });
