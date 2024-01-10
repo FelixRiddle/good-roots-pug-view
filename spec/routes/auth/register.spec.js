@@ -38,12 +38,10 @@ describe("auth/register", () => {
     };
     
     const url = serverUrl();
-    console.log(`Server url: ${url}`);
     const api = new TestAuthAPI(userData, url);
     
     it('Register user', async function() {
         const registerRes = await api.registerUser();
-        console.log(`Register response: `, registerRes);
         
         // Confirm user email
         await confirmUserEmail(userData.email);
