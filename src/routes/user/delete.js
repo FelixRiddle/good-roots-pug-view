@@ -5,7 +5,7 @@ import protectRoute from "../../middleware/auth/protectRoute.js";
 
 const deleteRouter = express.Router();
 
-deleteRouter.pos("/delete", protectRoute, async (req, res) => {
+deleteRouter.post("/delete", protectRoute, async (req, res) => {
     try {
         const userData = req.user;
         console.log(`User data: `, userData);

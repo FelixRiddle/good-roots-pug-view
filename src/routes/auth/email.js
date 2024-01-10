@@ -62,7 +62,9 @@ emailRouter.post("/email", async(req, res) => {
         
         if(!privateKey) {
             console.log(`Private access key not given`);
-            return res.redirect(home);
+            return res.send({
+                emailConfirmed: false,
+            });
         }
         
         // Fetch key from the json file
@@ -74,7 +76,9 @@ emailRouter.post("/email", async(req, res) => {
         if(!keysMatch) {
             console.log(`Someone tried to access email confirmation private endpoint`);
             console.log(`Naughty, naughty 😈👿`);
-            return res.redirect(home);
+            return res.send({
+                emailConfirmed: false,
+            });
         } else {
             // Keys match, now change key just in case
             setConfirmationEmailPrivateKey();
@@ -84,7 +88,9 @@ emailRouter.post("/email", async(req, res) => {
         const email = req.body.email;
         if(!email) {
             console.log(`Can't confirm email without an email`);
-            return res.redirect(home);
+            return res.send({
+                emailConfirmed: false,
+            });
         }
         
         // Verify if the token is correct
@@ -94,8 +100,10 @@ emailRouter.post("/email", async(req, res) => {
             },
         });
         if(!user) {
-            console.log(`Couldn't confirm the E-Mail, because the user doesn't exists!`)
-            return res.redirect(home);
+            console.log(`Couldn't confirm the E-Mail, because the user doesn't exists!`);
+            return res.send({
+                emailConfirmed: false,
+            });
         } else {
             // Update the user
             user.token = "";
@@ -105,11 +113,15 @@ emailRouter.post("/email", async(req, res) => {
         }
         
         console.log(`Email confirmed!`);
-        return res.redirect(home);
+        return res.send({
+            emailConfirmed: true,
+        });
     } catch(err) {
         console.log(`Error when confirming the email.`);
         console.error(err);
-        return res.redirect(home);
+        return res.send({
+            emailConfirmed: false,
+        });
     }
 });
 

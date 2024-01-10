@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 
-import privateConfirmEmail from "../../../src/api/auth/privateConfirmEmail.js";
 import { serverUrl } from "../../../src/controllers/env/env.js";
-import AuthenticationAPI from "../../../src/public/js/lib/auth/AuthenticationAPI.js";
 import ConfirmationEmailPrivateKey from "../../../src/controllers/env/private/ConfirmationEmailPrivateKey.js";
+import UserAPI from "../../../src/public/js/api/user/UserAPI.js";
+import TestAuthAPI from "../../../src/api/auth/TestAuthAPI.js";
 
 /**
  * Confirm user email through backdoor access
@@ -19,15 +19,11 @@ async function confirmUserEmail(email) {
     const privateKey = confirmEmail.loadLocally();
     
     console.log(`Private key: ${privateKey}`);
-    const confirmationRes = await confirmEmail.confirmEmail(email);
-    console.log(`Confirmation result: `, confirmationRes);
+    await confirmEmail.confirmEmail(email);
 }
 
 describe("auth/register", () => {
     
-    // IDK why but right after I completed the private email endpoint, jasmine just stopped setting up
-    // environment variables???????///? 😅😂
-    // This is a bit ridiculous
     // Setup dotenv
     dotenv.config({
         path: ".env"
@@ -43,7 +39,7 @@ describe("auth/register", () => {
     
     const url = serverUrl();
     console.log(`Server url: ${url}`);
-    const api = new AuthenticationAPI(userData, url);
+    const api = new TestAuthAPI(userData, url);
     
     it('Register user', async function() {
         const registerRes = await api.registerUser();
@@ -54,11 +50,14 @@ describe("auth/register", () => {
         
         // Login user to be able to delete it
         const loginRes = await api.loginUser();
-        console.log(`Login response: `, loginRes);
+        console.log(`User logged in`);
         
         // Now delete user, because we only need to check if register was successful
+        console.log(`Url: ${url}`);
+        const deleteRes = await api.deleteUser();
+        console.log(`User deleted, response: `, deleteRes);
         
         // This is practically the same as jest
-        expect(data.userRegistered).toBe(true);
+        expect(registerRes.userRegistered).toBe(true);
     });
 });
