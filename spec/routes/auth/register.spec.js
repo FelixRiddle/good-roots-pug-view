@@ -47,8 +47,9 @@ describe("auth/register", () => {
         await confirmUserEmail(userData.email);
         
         // Login user to be able to delete it
-        const loginRes = await api.loginUser();
+        const loginRes = await api.loginGetJwt();
         console.log(`User logged in`);
+        console.log(`Login response: `, loginRes);
         
         // Now delete user, because we only need to check if register was successful
         console.log(`Url: ${url}`);
