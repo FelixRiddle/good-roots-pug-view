@@ -1,6 +1,3 @@
-import axios from "axios";
-import PropertyModel from "./PropertyModel.js";
-
 /**
  * Property API
  */
@@ -39,5 +36,27 @@ export default class PropertyAPI {
             });
         
         return res;
+    }
+    
+    /**
+     * Delete all
+     * 
+     * Delete every user property
+     */
+    async deleteAll() {
+        const properties = await this.getAll();
+        
+        if(properties && properties.properties) {
+            for(const property of properties.properties) {
+                await this.instance.post(`/user/property/delete/${property.id}`)
+                    .then((res) => {
+                        // console.log(`Property ${property.title} deleted`);
+                        // console.log(`Response: `, res.data);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
+        }
     }
 }
