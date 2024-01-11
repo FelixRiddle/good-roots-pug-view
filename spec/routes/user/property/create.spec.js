@@ -25,11 +25,13 @@ describe("Create property", () => {
     beforeEach(async function() {
         // Register, and login
         await api.createLoginGetInstance();
+        console.log(`Created user logged in axios instance`);
     });
     
-    const propertyApi = new PropertyAPI(api.instance);
-    
     it('Successful property creation', async function() {
+        
+        const propertyApi = new PropertyAPI(api.instance);
+        console.log(`Set instance to property api`);
         
         // Create some property
         const property = {
@@ -47,9 +49,12 @@ describe("Create property", () => {
             published: true,
             userId: this.userId,
         };
-        const propertyCreatedResult = propertyApi.createProperty();
+        const propertyCreatedResult = await propertyApi.createProperty(property);
+        console.log(`Property created result: `, propertyCreatedResult);
         
         // Find the property
+        const properties = await propertyApi.getAll();
+        console.log(`User properties: `, properties);
         
         // Now delete the property
         

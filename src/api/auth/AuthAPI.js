@@ -27,7 +27,7 @@ export default class AuthAPI {
         await this.registerUser();
         
         // Confirm user email
-        await confirmUserEmail(userData.email);
+        await confirmUserEmail(this.userData.email);
         
         // Login user to be able to delete it
         await this.loginGetJwt();

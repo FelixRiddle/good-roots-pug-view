@@ -19,7 +19,20 @@ export default class PropertyAPI {
      * @param {object} property Property information
      */
     async createProperty(property) {
-        const res = await this.instance.post("/user/property/create", property)
+        const res = await this.instance.post("/user/property/create", {property})
+            .then((res) => res.data)
+            .catch((err) => {
+                console.error(err);
+            });
+        
+        return res;
+    }
+    
+    /**
+     * Get all
+     */
+    async getAll() {
+        const res = await this.instance.get("/user/property/operation/get_all")
             .then((res) => res.data)
             .catch((err) => {
                 console.error(err);

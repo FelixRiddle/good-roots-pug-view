@@ -13,7 +13,13 @@ const validatePropertyData = async (req, res, next) =>  {
         next();
     } catch(err) {
         console.log(err);
-        return res.send({});
+        console.log(`Property coudln't be validated`);
+        return res.send({
+            messages: [{
+                message: "Property couldn't be validated",
+                error: true,
+            }]
+        });
     }
 }
 
