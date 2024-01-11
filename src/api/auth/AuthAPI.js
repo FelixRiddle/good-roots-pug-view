@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export default class TestAuthAPI {
+import { confirmUserEmail } from "../../../spec/routes/auth/authUtils.js";
+
+export default class AuthAPI {
     /**
      * User data
      * 
@@ -12,6 +14,25 @@ export default class TestAuthAPI {
         this.serverUrl = serverUrl;
         
         this.setInstance(serverUrl);
+    }
+    
+    /**
+     * Create logged in axios instance
+     * 
+     * Create user, confirm email, login and get axios instance
+     * 
+     * @returns {AxiosInstance} Axios instance
+     */
+    async createLoginGetInstance() {
+        await this.registerUser();
+        
+        // Confirm user email
+        await confirmUserEmail(userData.email);
+        
+        // Login user to be able to delete it
+        await this.loginGetJwt();
+        
+        return this.instance;
     }
     
     /**

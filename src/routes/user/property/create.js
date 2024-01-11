@@ -75,6 +75,7 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         let setImageUrl = `/user/property/set_image/${id}`;
         console.log(`Set image url: ${setImageUrl}`);
         return res.send({
+            propertyCreated: true,
             nextUrl: setImageUrl,
         });
     } catch(err) {

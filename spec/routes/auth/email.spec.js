@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-import TestAuthAPI from "../../../src/api/auth/TestAuthAPI.js";
+import TestAuthAPI from "../../../src/api/auth/AuthAPI.js";
 import { confirmUserEmail } from "./authUtils.js";
 
 describe("auth/email", () => {
