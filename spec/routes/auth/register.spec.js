@@ -11,14 +11,11 @@ import TestAuthAPI from "../../../src/api/auth/TestAuthAPI.js";
  * @param {string} email User email
  */
 async function confirmUserEmail(email) {
-    console.log(`Confirming user email`);
     
     // Confirm E-mail
     // Get private access key to confirm the email
     const confirmEmail = new ConfirmationEmailPrivateKey();
-    const privateKey = confirmEmail.loadLocally();
     
-    console.log(`Private key: ${privateKey}`);
     await confirmEmail.confirmEmail(email);
 }
 
@@ -32,7 +29,7 @@ describe("auth/register", () => {
     // Create user data
     const userData = {
         name: "Some name",
-        email: "some_email1234@email.com",
+        email: "some_email@email.com",
         password: "asd12345",
         confirmPassword: "asd12345"
     };
@@ -47,14 +44,10 @@ describe("auth/register", () => {
         await confirmUserEmail(userData.email);
         
         // Login user to be able to delete it
-        const loginRes = await api.loginGetJwt();
-        console.log(`User logged in`);
-        console.log(`Login response: `, loginRes);
+        await api.loginGetJwt();
         
         // Now delete user, because we only need to check if register was successful
-        console.log(`Url: ${url}`);
-        const deleteRes = await api.deleteUser();
-        console.log(`User deleted, response: `, deleteRes);
+        await api.deleteUser();
         
         // This is practically the same as jest
         expect(registerRes.userRegistered).toBe(true);

@@ -46,7 +46,6 @@ export default class ConfirmationEmailPrivateKey {
             key: this.loadLocally(),
             email,
         };
-        console.log(`Confirming email with data: `, data);
         
         await instance.post("/email", data)
             .then((res) => res)

@@ -31,8 +31,6 @@ export default class TestAuthAPI {
         if(jwtToken) {
             // Add jwt token
             headers["Cookie"] = `_token=${jwtToken}`;
-            console.log(`Added jwt authentication token to axios instance`);
-            console.log(`Header: `, headers["Cookie"]);
         }
         
         if(!isUndefined) {
@@ -103,6 +101,9 @@ export default class TestAuthAPI {
                 console.error(err);
                 return;
             });
+        
+        // Update instance
+        this.setInstance(this.serverUrl, res.data.token);
         
         return res.data;
     }
