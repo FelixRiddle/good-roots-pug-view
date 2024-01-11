@@ -36,12 +36,14 @@ loginGetJwtRouter.post("/login_get_jwt", async(req, res) => {
                 httpOnly: false,
             })
             .send({
+                loggedIn: true,
                 token,
             });
     } catch(err) {
         console.error(err);
         console.log(`There was an error when the user tried to log in redirecting to home`);
         return res.send({
+            loggedIn: false,
             messages: [{
                 message: "Error please try again later",
                 error: true,
