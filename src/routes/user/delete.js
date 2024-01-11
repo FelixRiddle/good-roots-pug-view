@@ -8,7 +8,6 @@ const deleteRouter = express.Router();
 deleteRouter.post("/delete", protectRoute, async (req, res) => {
     try {
         const userData = req.user;
-        console.log(`User data: `, userData);
         
         // Get user data
         const { email } = userData;
