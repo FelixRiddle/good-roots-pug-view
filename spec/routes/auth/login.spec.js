@@ -13,7 +13,7 @@ describe("auth/register", () => {
     // Create user data
     const userData = {
         name: "Some name",
-        email: "some_email@email.com",
+        email: "some_email0@email.com",
         password: "asd12345",
         confirmPassword: "asd12345"
     };
@@ -21,19 +21,15 @@ describe("auth/register", () => {
     const url = serverUrl();
     const api = new TestAuthAPI(userData, url);
     
-    it('Register user', async function() {
-        const registerRes = await api.registerUser();
+    it('Login user', async function() {
+        await api.registerUser();
         
-        // Confirm user email
         await confirmUserEmail(userData.email);
         
-        // Login user to be able to delete it
-        await api.loginGetJwt();
+        const loginRes = await api.loginGetJwt();
         
-        // Now delete user, because we only need to check if register was successful
         await api.deleteUser();
         
-        // This is practically the same as jest
-        expect(registerRes.userRegistered).toBe(true);
+        expect(typeof(loginRes.token) === 'string').toBe(true);
     });
 });
