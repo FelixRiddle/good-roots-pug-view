@@ -11,7 +11,9 @@ async function confirmUserEmail(email) {
     // Get private access key to confirm the email
     const confirmEmail = new ConfirmationEmailPrivateKey();
     
-    await confirmEmail.confirmEmail(email);
+    const res = await confirmEmail.confirmEmail(email);
+    
+    return res;
 }
 
 export {

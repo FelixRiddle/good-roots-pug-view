@@ -47,9 +47,11 @@ export default class ConfirmationEmailPrivateKey {
             email,
         };
         
-        await instance.post("/email", data)
+        const res = await instance.post("/email", data)
             .then((res) => res)
             .catch((err) => { });
+        
+        return res.data;
     }
     
     // --- Save and retrieve ---

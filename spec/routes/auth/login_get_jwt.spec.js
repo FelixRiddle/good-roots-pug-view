@@ -4,7 +4,7 @@ import { serverUrl } from "../../../src/controllers/env/env.js";
 import TestAuthAPI from "../../../src/api/auth/TestAuthAPI.js";
 import { confirmUserEmail } from "./authUtils.js";
 
-describe("auth/register", () => {
+describe("auth/login_get_jwt", () => {
     // Setup dotenv
     dotenv.config({
         path: ".env"
@@ -30,6 +30,6 @@ describe("auth/register", () => {
         
         await api.deleteUser();
         
-        expect(typeof(loginRes.token) === 'string').toBe(true);
+        expect(loginRes && loginRes.token && typeof(loginRes.token) === 'string').toBe(true);
     });
 });

@@ -53,7 +53,6 @@ emailRouter.get("/email/:token", async(req, res) => {
  * 
  */
 emailRouter.post("/email", async(req, res) => {
-    const home = `${serverUrl()}/home`;
     console.log(`POST /auth/email`);
     
     try {
