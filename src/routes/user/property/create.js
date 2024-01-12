@@ -81,9 +81,10 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
     } catch(err) {
         console.log(`Error detected, the user will be redirected to properties`);
         console.error(err);
+        return res.send({
+            propertyCreated: false,
+        });
     }
-    
-    return res.redirect("user/admin");
 });
 
 export default createPropertyRouter;

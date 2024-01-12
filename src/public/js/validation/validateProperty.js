@@ -22,16 +22,26 @@ function validateProperty(property) {
         .createScope(idBasedScope, "categoryId", property.categoryId)
             .isNotFalsy()
             .isInt()
-            .numRange(0, 20)
-        // Others
+            .numRange(0, 7)
         .useScope(idBasedScope, "priceId", property.priceId)
+            .isInt()
+            .numRange(0, 10)
+        // Others
         .useScope(idBasedScope, "rooms", property.rooms)
+            .isInt()
+            .numRange(0, 9)
         .useScope(idBasedScope, "parking", property.parking)
+            .isInt()
+            .numRange(0, 4)
         .useScope(idBasedScope, "bathrooms", property.bathrooms)
+            .isInt()
+            .numRange(0, 4)
         .createScope(coordinateScope, "latitude", property.latitude)
             .isNotFalsy()
             .isFloat()
         .useScope(coordinateScope, "longitude", property.longitude)
+            .isNotFalsy()
+            .isFloat()
         .createScope("street", "street", property.street)
             .isNotFalsy();
     
