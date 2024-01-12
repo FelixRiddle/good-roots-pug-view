@@ -63,8 +63,6 @@ editRouter.get("/edit/:id", async (req, res) => {
 
 // For post, we have to validate the property data again
 editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
-    const adminPanel = "user/property/admin";
-    
     let url = serverUrl();
     console.log(`Server url ${url}`);
     
@@ -80,22 +78,12 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             console.log(`Validation didn't pass`);
             console.log(`Messages: `, result);
             
-            // Get price and category
-            const [
-                categories,
-                prices,
-            ] = await Promise.all([
-                Category.findAll(),
-                Price.findAll(),
-            ]);
-            
-            return res.render(
-                `user/property/edit/${id}`, {
-                page: `Edit property`,
-                categories,
-                prices,
-                messages: result,
-                property: req.body,
+            return res.send({
+                messages: [{
+                    message: "Couldn't update the property",
+                    error: true,
+                }],
+                editSuccessful: false,
             });
         }
         console.log(`Property data validated`);
@@ -103,13 +91,25 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         // Check that property exists
         const property = await Property.findByPk(id);
         if(!property) {
-            return res.redirect(adminPanel);
+            return res.send({
+                messages: [{
+                    message: "Couldn't update the property",
+                    error: true,
+                }],
+                editSuccessful: false,
+            });
         }
         console.log(`Property exists`);
         
         // Check that the property owner is the user that made the request
         if(property.userId.toString() !== req.user.id.toString()) {
-            return res.redirect(adminPanel)
+            return res.send({
+                messages: [{
+                    message: "Couldn't update the property",
+                    error: true,
+                }],
+                editSuccessful: false,
+            });
         }
         console.log(`The user owns the property`);
         
@@ -143,13 +143,23 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         await property.save();
         console.log(`Property updated, going to set image`);
         
-        let nextLink = `${serverUrl()}/user/property/set_image/${property.id}`;
-        console.log(`Next link: ${nextLink}`);
-        return res.redirect(nextLink);
+        return res.send({
+            messages: [{
+                message: "Property updated",
+                error: false,
+            }],
+            editSuccessful: true,
+        });
     } catch(err) {
         console.log(err);
         
-        return res.redirect(adminPanel);
+        return res.send({
+            messages: [{
+                message: "Couldn't update the property",
+                error: true,
+            }],
+            editSuccessful: false,
+        });
     }
 });
 
