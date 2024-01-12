@@ -9,6 +9,12 @@ Or even simplier
 
 # Changelog
 
+[0.5.0]
+
+- Tests
+    - Authentication
+    - Properties
+
 [0.4.0]
 
 - Property view

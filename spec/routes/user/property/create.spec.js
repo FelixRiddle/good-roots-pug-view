@@ -48,7 +48,6 @@ describe("Create property", () => {
             userId: this.userId,
         };
         const propertyCreatedResult = await propertyApi.createProperty(property);
-        console.log(`Property created: `, propertyCreatedResult);
         
         // Now delete every user property
         await propertyApi.deleteAll();
@@ -116,8 +115,6 @@ describe("Create property", () => {
     
     it('Bad rooms quantity', async function() {
         const propertyApi = new PropertyAPI(api.instance);
-        
-        console.log(`Typeof: ${typeof(10)}`);
         
         // Create some property
         const property = {
@@ -242,7 +239,7 @@ describe("Create property", () => {
             latitude: 35.0831751,
             longitude: -90.022207,
             priceId: 4,
-            categoryId: 10,
+            categoryId: 8,
             image: "",
             // This is here but in the endpoint it does nothing
             published: true,
