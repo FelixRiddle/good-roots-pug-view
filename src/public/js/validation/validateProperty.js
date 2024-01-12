@@ -7,7 +7,6 @@ import { Validator } from "felixriddle.checkpoint";
  * @returns {Array} Array of errors
  */
 function validateProperty(property) {
-    let idBasedScope = "id_based";
     let coordinateScope = "coordinate_scope";
     let val = new Validator()
         // Title scope    
@@ -19,29 +18,26 @@ function validateProperty(property) {
             .isNotFalsy()
             .lengthRange(10, 512)
         // Categories and price
-        .createScope(idBasedScope, "categoryId", property.categoryId)
-            .isNotFalsy()
+        .createScope("cateogry", "categoryId", property.categoryId)
             .isInt()
             .numRange(0, 7)
-        .useScope(idBasedScope, "priceId", property.priceId)
+        .createScope("price", "priceId", property.priceId)
             .isInt()
             .numRange(0, 10)
         // Others
-        .useScope(idBasedScope, "rooms", property.rooms)
+        .createScope("rooms", "rooms", property.rooms)
             .isInt()
             .numRange(0, 9)
-        .useScope(idBasedScope, "parking", property.parking)
+        .createScope("parking", "parking", property.parking)
             .isInt()
             .numRange(0, 4)
-        .useScope(idBasedScope, "bathrooms", property.bathrooms)
+        .createScope("bathrooms", "bathrooms", property.bathrooms)
             .isInt()
             .numRange(0, 4)
         .createScope(coordinateScope, "latitude", property.latitude)
             .isNotFalsy()
             .isFloat()
         .useScope(coordinateScope, "longitude", property.longitude)
-            .isNotFalsy()
-            .isFloat()
         .createScope("street", "street", property.street)
             .isNotFalsy();
     
