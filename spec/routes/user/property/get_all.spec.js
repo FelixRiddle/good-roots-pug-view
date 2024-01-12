@@ -4,7 +4,7 @@ import { serverUrl } from "../../../../src/controllers/env/env.js";
 import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
-describe("Create property", () => {
+describe("Get all", () => {
     // Setup dotenv
     dotenv.config({
         path: ".env"
@@ -27,7 +27,7 @@ describe("Create property", () => {
         await api.createLoginGetInstance();
     });
     
-    it('Successful property creation', async function() {
+    it('Get all test', async function() {
         const propertyApi = new PropertyAPI(api.instance);
         
         // Create some property
