@@ -1,9 +1,15 @@
+/**
+ * Edit endpoint
+ * 
+ * For data validation it uses the same as create endpoint so there's no need to test that
+ */
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../../src/controllers/env/env.js";
 import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
+// For data validation it uses the same as create endpoint so there's no need to test that
 describe("Edit", () => {
     // Setup dotenv
     dotenv.config({
@@ -27,6 +33,7 @@ describe("Edit", () => {
         await api.createLoginGetInstance();
     });
     
+    // For data validation it uses the same as create endpoint so there's no need to test that
     it('Success property edit', async function() {
         const propertyApi = new PropertyAPI(api.instance);
         
@@ -52,16 +59,13 @@ describe("Edit", () => {
         // Get property
         const properties = await propertyApi.getAll();
         const serverProperty = properties.properties[0];
-        console.log(`Property: `, serverProperty);
         
         // Update its title
         const newPropertyTitle = "Luxury House";
         serverProperty.title = newPropertyTitle;
-        console.log(`New title: `, serverProperty.title);
         
         // Update it
         const editPropertyRes = await propertyApi.editPropertyById(serverProperty.id, serverProperty);
-        console.log(`Edit property res: `, editPropertyRes);
         
         expect(editPropertyRes.updated).toBe(true);
     });
@@ -84,19 +88,16 @@ describe("Edit", () => {
             image: "",
             // This is here but in the endpoint it does nothing
             published: true,
-            userId: this.userId,
         };
         await propertyApi.createProperty(property);
         
         // Get property
         const properties = await propertyApi.getAll();
         const serverProperty = properties.properties[0];
-        console.log(`Property: `, serverProperty);
         
         // Update its title
         const newPropertyTitle = "Luxury House";
         serverProperty.title = newPropertyTitle;
-        console.log(`New title: `, serverProperty.title);
         
         // Update it
         await propertyApi.editPropertyById(serverProperty.id, serverProperty);
@@ -104,7 +105,6 @@ describe("Edit", () => {
         // Fetch again
         const updatedProperties = await propertyApi.getAll();
         const updatedProperty = updatedProperties.properties[0];
-        console.log(`Updated property: `, updatedProperty);
         
         // Now delete every user property
         await propertyApi.deleteAll();
