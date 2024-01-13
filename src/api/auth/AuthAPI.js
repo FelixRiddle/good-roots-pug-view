@@ -142,4 +142,47 @@ export default class AuthAPI {
         
         return res.data;
     }
+    
+    // --- Email ---
+    /**
+     * Send email to reset password
+     * 
+     * The reset password process can't be done without this step, to ensure the user and
+     * email exists and the user owns that email.
+     */
+    async enableResetPassword() {
+        const res = await this.instance.post("/user/password/reset", {
+            email: this.userData.email,
+        })
+            .then((res) => res.data)
+            .catch((err) => {
+                console.error(err);
+                return;
+            });
+        
+        return res;
+    }
+    
+    /**
+     * Create new passsword
+     * 
+     * Second step of resetting password, with this step the user sets the new password.
+     * 
+     * @param {string} token Token to reset the password
+     * @param {string} password 
+     * @param {string} confirmPassword 
+     */
+    async createNewPassword(token, password, confirmPassword) {
+        const res = await this.instance.post(`/user/password/create/${token}`, {
+            password,
+            confirmPassword
+        })
+            .then((res) => res.data)
+            .catch((err) => {
+                console.error(err);
+                return;
+            });
+        
+        return res;
+    }
 }

@@ -26,6 +26,7 @@ export default class Server {
      * Setup private access keys
      */
     setupPrivateAccessKeys() {
+        // --- Email private key ---
         // Key for accessing a single endpoint to confirm the email
         // Setup the env var first
         const emailPrivKey = new ConfirmationEmailPrivateKey();
@@ -37,6 +38,8 @@ export default class Server {
             // The file doesn't exists?, create it.
             emailPrivKey.saveLocally();
         }
+        
+        // --- Reset password private key ---
     }
     
     /**

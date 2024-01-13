@@ -44,7 +44,7 @@ resetRouter.post("/reset", async (req, res) => {
         if(!result.isEmpty()) {
             console.log(`Didn't pass validation`);
             return res.send({
-                
+                resetEmailSent: false,
             });
         }
         
@@ -58,7 +58,7 @@ resetRouter.post("/reset", async (req, res) => {
         if(!user) {
             console.log(`User doesn't exists`);
             return res.send({
-                
+                resetEmailSent: false,
             });
         }
         
@@ -75,11 +75,11 @@ resetRouter.post("/reset", async (req, res) => {
         
         // TODO: Show confirmation message
         return res.send({
-            
+            resetEmailSent: true,
         });
     } catch(err) {
         return res.send({
-            
+            resetEmailSent: false,
         });
     }
 });
