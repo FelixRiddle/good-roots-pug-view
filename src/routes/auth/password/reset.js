@@ -17,55 +17,71 @@ resetRouter.get("/reset", async (req, res) => {
     });
 });
 
-
-// Reset password
+/**
+ * Start reset password process
+ * 
+ * This is for a person that's not logged in, for a person that's is logged in, you don't even
+ * need to send a confirmation email.
+ * 
+ * Steps:
+ * 1) Validate email
+ * 2) Validate user exists
+ * 3) Send reset password email
+ */
 resetRouter.post("/reset", async (req, res) => {
-    let expanded = expand(req);
+    console.log(`POST /auth/password/reset`);
     
-    // Validation
-    await check("email").isEmail().withMessage("The email is wrong").run(req);
-    
-    let result = validationResult(req);
-    
-    // Confirm that the user is Ok
-    if(!result.isEmpty()) {
-        return res.render(`${expanded.websiteInfo.baseUrl}/user/auth/password/reset`, {
-            page: "Reset your password",
-            errors: result.array(),
-        });
-    }
-    
-    // Search for the user
-    const { email } = req.body;
-    const user = await User.findOne({
-        where: {
-            email
+    try {
+        // Validation
+        await check("email")
+            .isEmail()
+            .withMessage("The 'email' is wrong")
+            .run(req);
+        
+        let result = validationResult(req);
+        
+        // Confirm that the user is Ok
+        if(!result.isEmpty()) {
+            console.log(`Didn't pass validation`);
+            return res.send({
+                
+            });
         }
-    });
-    if(!user) {
-        return res.render(`${expanded.websiteInfo.baseUrl}/user/auth/password/reset`, {
-            page: "Reset your password",
-            errors: [{
-                msg: "The given email doesn't exists in the database"
-            }],
+        
+        // Search for the user
+        const { email } = req.body;
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        });
+        if(!user) {
+            console.log(`User doesn't exists`);
+            return res.send({
+                
+            });
+        }
+        
+        // Generate a token and send the id
+        user.token = generateId();
+        await user.save();
+        
+        // Send an email
+        emailForgotPassword({
+            name: user.name,
+            email,
+            token: user.token,
+        });
+        
+        // TODO: Show confirmation message
+        return res.send({
+            
+        });
+    } catch(err) {
+        return res.send({
+            
         });
     }
-    
-    // Generate a token and send the id
-    user.token = generateId();
-    await user.save();
-    
-    // Send an email
-    emailForgotPassword({
-        name: user.name,
-        email,
-        token: user.token,
-    });
-    
-    // TODO: Show confirmation message
-    return res.render(`${expanded.websiteInfo.baseUrl}/home`, {
-        page: "Good roots",
-    });
 });
 
 export default resetRouter;
