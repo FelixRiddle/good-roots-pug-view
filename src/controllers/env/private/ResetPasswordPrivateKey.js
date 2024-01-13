@@ -4,6 +4,13 @@ import { serverUrl } from "../env.js";
 import { LocalStorage } from "./LocalStorage.js";
 
 /**
+ * Default file path
+ */
+function defaultFilePath() {
+    return "./.cache/routes/auth/resetPasswordPrivateKey.json";
+}
+
+/**
  * Reset password private key management
  */
 export default class ResetPasswordPrivateKey extends LocalStorage {
@@ -11,7 +18,7 @@ export default class ResetPasswordPrivateKey extends LocalStorage {
      * Reset password private key management
      */
     constructor() {
-        super("KEY_RESET_PASSWORD", this.defaultFilePath())
+        super("KEY_RESET_PASSWORD", defaultFilePath());
     }
     
     /**
@@ -40,10 +47,4 @@ export default class ResetPasswordPrivateKey extends LocalStorage {
     }
     
     // --- Save and retrieve ---
-    /**
-     * Default file path
-     */
-    defaultFilePath() {
-        return "./.cache/routes/auth/resetPasswordPrivateKey.json";
-    }
 }

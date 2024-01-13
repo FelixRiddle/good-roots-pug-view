@@ -8,6 +8,7 @@ import getUser from './middleware/auth/getUser.js';
 import routes from './routes/index.js';
 import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
 import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationEmailPrivateKey.js';
+import ResetPasswordPrivateKey from './controllers/env/private/ResetPasswordPrivateKey.js';
 
 /**
  * Server
@@ -40,6 +41,13 @@ export default class Server {
         }
         
         // --- Reset password private key ---
+        const resetPassPrivKey = new ResetPasswordPrivateKey();
+        resetPassPrivKey.setPrivateKey();
+        
+        const fileExistsA = resetPassPrivKey.fileExists();
+        if(!fileExistsA) {
+            resetPassPrivKey.saveLocally();
+        }
     }
     
     /**
