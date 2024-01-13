@@ -59,4 +59,22 @@ export default class PropertyAPI {
             }
         }
     }
+    
+    /**
+     * Edit property by id
+     * 
+     * @param {number} id Property id
+     * @param {object} property Property information to update
+     */
+    async editPropertyById(id, property) {
+        const res = await this.instance.post(`/user/property/edit/${id}`, {
+            property
+        })
+            .then((res) => res.data)
+            .catch((err) => {
+                console.error(err);
+            });
+        
+        return res;
+    }
 }

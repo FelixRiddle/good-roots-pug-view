@@ -34,10 +34,12 @@ function validateProperty(property) {
         .createScope("bathrooms", "bathrooms", property.bathrooms)
             .isInt()
             .numRange(0, 4)
-        .createScope(coordinateScope, "latitude", property.latitude)
+        .createScope("latitude", "latitude", property.latitude)
             .isNotFalsy()
             .isFloat()
-        .useScope(coordinateScope, "longitude", property.longitude)
+        .createScope("longitude", "longitude", property.longitude)
+            .isNotFalsy()
+            .isFloat()
         .createScope("street", "street", property.street)
             .isNotFalsy();
     

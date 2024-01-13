@@ -6,7 +6,6 @@ import Property from "../../../models/Property.js";
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
 import { serverUrl } from "../../../controllers/env/env.js";
-import validateProperty from "../../../public/js/validation/validateProperty.js";
 
 const editRouter = express.Router();
 
@@ -73,21 +72,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         let newProperty = req.body.property;
         console.log(`Property data: `, newProperty);
         
-        let result = validateProperty(newProperty);
-        if(result.length > 0) {
-            console.log(`Validation didn't pass`);
-            console.log(`Messages: `, result);
-            
-            return res.send({
-                messages: [{
-                    message: "Couldn't update the property",
-                    error: true,
-                }],
-                editSuccessful: false,
-            });
-        }
-        console.log(`Property data validated`);
-        
         // Check that property exists
         const property = await Property.findByPk(id);
         if(!property) {
@@ -96,7 +80,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                     message: "Couldn't update the property",
                     error: true,
                 }],
-                editSuccessful: false,
+                updated: false,
             });
         }
         console.log(`Property exists`);
@@ -108,7 +92,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                     message: "Couldn't update the property",
                     error: true,
                 }],
-                editSuccessful: false,
+                updated: false,
             });
         }
         console.log(`The user owns the property`);
@@ -148,7 +132,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 message: "Property updated",
                 error: false,
             }],
-            editSuccessful: true,
+            updated: true,
         });
     } catch(err) {
         console.log(err);
@@ -158,7 +142,7 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 message: "Couldn't update the property",
                 error: true,
             }],
-            editSuccessful: false,
+            updated: false,
         });
     }
 });
