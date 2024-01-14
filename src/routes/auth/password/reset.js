@@ -18,7 +18,7 @@ resetRouter.get("/reset", async (req, res) => {
 });
 
 /**
- * Start reset password process
+ * Start unauthenticated password reset process
  * 
  * This is for a person that's not logged in, for a person that's is logged in, you don't even
  * need to send a confirmation email.
@@ -45,11 +45,15 @@ resetRouter.post("/reset", async (req, res) => {
             console.log(`Didn't pass validation`);
             return res.send({
                 resetEmailSent: false,
+                messages: [{
+                    message: "Email is wrong!",
+                    error: true,
+                }]
             });
         }
         
         // Search for the user
-        const { email } = req.user;
+        const { email } = req.body;
         const user = await User.findOne({
             where: {
                 email
@@ -59,6 +63,10 @@ resetRouter.post("/reset", async (req, res) => {
             console.log(`User doesn't exists`);
             return res.send({
                 resetEmailSent: false,
+                messages: [{
+                    message: "The user doesn't exist",
+                    error: true,
+                }]
             });
         }
         
@@ -78,8 +86,13 @@ resetRouter.post("/reset", async (req, res) => {
             resetEmailSent: true,
         });
     } catch(err) {
+        console.error(err);
         return res.send({
             resetEmailSent: false,
+            messages: [{
+                message: "Unknown error",
+                error: true,
+            }]
         });
     }
 });
