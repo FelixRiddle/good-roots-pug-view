@@ -14,7 +14,7 @@ authRoutes.use(emailRouter);
 authRoutes.use(loginGetJwtRouter);
 authRoutes.use(loginRouter);
 authRoutes.use(logoutRouter);
-authRoutes.use(passwordRouter)
-authRoutes.use(registerRouter)
+authRoutes.use(registerRouter);
+authRoutes.use("/password", passwordRouter);
 
 export default authRoutes;

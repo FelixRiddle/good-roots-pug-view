@@ -23,6 +23,7 @@ export default class AuthAPI {
      * Creates the class and logs in with a random user email to prevent collisions
      */
     static createAndLogin() {
+        // I don't think using the environment variables works in the frontend
         const url = serverUrl();
         
         // Setup user
