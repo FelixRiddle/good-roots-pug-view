@@ -1,6 +1,8 @@
 import axios from "axios";
+import generator from 'generate-password';
 
 import { confirmUserEmail } from "../../../spec/routes/auth/authUtils.js";
+import { serverUrl } from "../../controllers/env/env.js";
 
 export default class AuthAPI {
     /**
@@ -14,6 +16,31 @@ export default class AuthAPI {
         this.serverUrl = serverUrl;
         
         this.setInstance(serverUrl);
+    }
+    
+    // --- For easier setup ---
+    /**
+     * Creates the class and logs in with a random user email to prevent collisions
+     */
+    static createAndLogin() {
+        const url = serverUrl();
+        
+        // Setup user
+        const extendEmail = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        const email = `user_${extendEmail}@email.com`;
+        const userData = {
+            name: "Some name",
+            email: email,
+            password: "asd12345",
+            confirmPassword: "asd12345"
+        };
+        const api = new AuthAPI(userData, url);
+        api.setupLoggedInInstance();
+        
+        return api;
     }
     
     /**
@@ -33,6 +60,13 @@ export default class AuthAPI {
         await this.loginGetJwt();
         
         return this.instance;
+    }
+    
+    /**
+     * Alias
+     */
+    async setupLoggedInInstance() {
+        return this.createLoginGetInstance();
     }
     
     /**

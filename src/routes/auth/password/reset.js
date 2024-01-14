@@ -49,7 +49,7 @@ resetRouter.post("/reset", async (req, res) => {
         }
         
         // Search for the user
-        const { email } = req.body;
+        const { email } = req.user;
         const user = await User.findOne({
             where: {
                 email

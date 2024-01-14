@@ -45,6 +45,4 @@ export default class ResetPasswordPrivateKey extends LocalStorage {
         
         return res.data;
     }
-    
-    // --- Save and retrieve ---
 }
