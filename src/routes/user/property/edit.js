@@ -70,7 +70,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
         
         // Validation
         let newProperty = req.body.property;
-        console.log(`Property data: `, newProperty);
         
         // Check that property exists
         const property = await Property.findByPk(id);
@@ -83,7 +82,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 updated: false,
             });
         }
-        console.log(`Property exists`);
         
         // Check that the property owner is the user that made the request
         if(property.userId.toString() !== req.user.id.toString()) {
@@ -95,7 +93,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
                 updated: false,
             });
         }
-        console.log(`The user owns the property`);
         
         // Extract data
         const {
@@ -125,7 +122,6 @@ editRouter.post("/edit/:id", validatePropertyData, async (req, res) => {
             categoryId,
         });
         await property.save();
-        console.log(`Property updated, going to set image`);
         
         return res.send({
             messages: [{

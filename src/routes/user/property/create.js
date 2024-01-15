@@ -33,7 +33,6 @@ createPropertyRouter.get(`/create`, async (req, res) => {
 createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
     // Insert on the database
     try {
-        console.log(`Create property`);
         // Extract data
         const {
             title,
@@ -70,9 +69,7 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         });
         let id = property.id;
         
-        console.log(`Success the user will be going to set the image`);
         let setImageUrl = `/user/property/set_image/${id}`;
-        console.log(`Set image url: ${setImageUrl}`);
         return res.send({
             propertyCreated: true,
             nextUrl: setImageUrl,

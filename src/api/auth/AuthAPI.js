@@ -5,6 +5,8 @@ import { confirmUserEmail } from "../../../spec/routes/auth/authUtils.js";
 import { serverUrl } from "../../controllers/env/env.js";
 
 export default class AuthAPI {
+    loggedIn = false;
+    
     /**
      * User data
      * 
@@ -22,7 +24,7 @@ export default class AuthAPI {
     /**
      * Creates the class and logs in with a random user email to prevent collisions
      */
-    static createAndLogin() {
+    static async createAndLogin() {
         // I don't think using the environment variables works in the frontend
         const url = serverUrl();
         
@@ -39,7 +41,7 @@ export default class AuthAPI {
             confirmPassword: "asd12345"
         };
         const api = new AuthAPI(userData, url);
-        api.setupLoggedInInstance();
+        await api.setupLoggedInInstance();
         
         return api;
     }
@@ -49,16 +51,27 @@ export default class AuthAPI {
      * 
      * Create user, confirm email, login and get axios instance
      * 
+     * @param {boolean} [debug=false] Debug data
      * @returns {AxiosInstance} Axios instance
      */
-    async createLoginGetInstance() {
-        await this.registerUser();
+    async createLoginGetInstance(debug = false) {
+        const registerRes = await this.registerUser();
+        if(debug) {
+            console.log(`Register res: `, registerRes);
+        }
         
         // Confirm user email
-        await confirmUserEmail(this.userData.email);
+        const confirmRes = await confirmUserEmail(this.userData.email);
+        if(debug) {
+            console.log(`Confirm email res: `, confirmRes);
+        }
         
         // Login user to be able to delete it
-        await this.loginGetJwt();
+        const loginRes = await this.loginGetJwt();
+        if(debug) {
+            console.log(`Login res: `, loginRes);
+            console.log(`Is user logged in?: ${this.loggedIn}`);
+        }
         
         return this.instance;
     }
@@ -160,6 +173,8 @@ export default class AuthAPI {
         
         // Update instance
         this.setInstance(this.serverUrl, res.data.token);
+        
+        this.loggedIn = true;
         
         return res.data;
     }

@@ -11,11 +11,10 @@ describe("Start password reset process", () => {
     
     it('Successfully started', async function() {
         // Fast setup
-        const api = AuthAPI.createAndLogin();
+        const api = await AuthAPI.createAndLogin();
         
         const passwordApi = new ResetPasswordAPI(api.userData);
         const resetRes = await passwordApi.resetPassword();
-        console.log(`Reset res: `, resetRes);
         
         // Delete user
         await api.deleteUser();

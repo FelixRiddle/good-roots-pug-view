@@ -28,8 +28,6 @@ loginGetJwtRouter.post("/login_get_jwt", async(req, res) => {
         const userSafe = loginVal.getUserSafe();
         const token = generateJwtToken(userSafe);
         
-        console.log(`Login ok`);
-        
         // Store cookie
         return res
             .cookie("_token", token, {

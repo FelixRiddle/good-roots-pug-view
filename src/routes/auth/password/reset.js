@@ -39,6 +39,7 @@ resetRouter.post("/reset", async (req, res) => {
             .run(req);
         
         let result = validationResult(req);
+        console.log(`Body: `, req.body);
         
         // Confirm that the user is Ok
         if(!result.isEmpty()) {
@@ -54,11 +55,13 @@ resetRouter.post("/reset", async (req, res) => {
         
         // Search for the user
         const { email } = req.body;
+        console.log(`User email: ${email}`);
         const user = await User.findOne({
             where: {
                 email
             }
         });
+        console.log(`User found: `, user);
         if(!user) {
             console.log(`User doesn't exists`);
             return res.send({

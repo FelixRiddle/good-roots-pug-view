@@ -38,12 +38,10 @@ deleteRouter.post("/delete/:id", async (req, res) => {
         
         // Delete property folder
         const propertyFolder = relativePropertyFolder(req.user.id, id);
-        console.log(`Property folder: `, propertyFolder);
         
         // Remove it
         try {
             fs.rmSync(propertyFolder, { recursive: true, force: true });
-            console.log(`Folder removed`);
         } catch(err) {
             // If we can't delete the folder, don't delete the property either
             console.error(err);
@@ -57,7 +55,6 @@ deleteRouter.post("/delete/:id", async (req, res) => {
         
         // Delete it
         await propertyController.destroy();
-        console.log(`Property deleted`);
         
         return res.send({
             messages: [{

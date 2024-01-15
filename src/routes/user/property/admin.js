@@ -11,7 +11,6 @@ const adminRoutes = express.Router();
 const admin = async(req, res) => {
     try {
         const { id: userId } = req.user;
-        console.log(`User ID: ${userId}`);
         
         // Fetch properties from the database that are owned by this user
         const propertiesRes = await Property.findAll({
