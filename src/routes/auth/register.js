@@ -5,6 +5,7 @@ import { generateId } from "../../helpers/tokens.js";
 import User from "../../models/User.js";
 import expand from "../../controllers/expand.js";
 import validateRegister from "../../public/js/validation/validateRegister.js";
+import { isEmailDisabled } from "../../controllers/env/env.js";
 
 const registerRouter = express.Router();
 
@@ -79,12 +80,18 @@ registerRouter.post("/register", async (req, res) => {
             confirmedEmail: false,
         });
         
-        // Send confirmation email
-        registerEmail({
-            name,
-            email,
-            token: user.token,
-        });
+        // Check if sending email is enabled or not
+        if(!isEmailDisabled()) {
+            // Send confirmation email
+            registerEmail({
+                name,
+                email,
+                token: user.token,
+            });
+            console.log(`Send confirmation email.`);
+        } else {
+            console.log(`Do not send confirmation email.`);
+        }
         
         // Show confirmation message
         return res.send({

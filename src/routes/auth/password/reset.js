@@ -5,6 +5,7 @@ import { emailForgotPassword } from "../../../helpers/emails.js";
 import { generateId } from "../../../helpers/tokens.js";
 import User from "../../../models/User.js";
 import expand from "../../../controllers/expand.js";
+import { isEmailDisabled } from "../../../controllers/env/env.js";
 
 const resetRouter = express.Router();
 
@@ -39,7 +40,6 @@ resetRouter.post("/reset", async (req, res) => {
             .run(req);
         
         let result = validationResult(req);
-        console.log(`Body: `, req.body);
         
         // Confirm that the user is Ok
         if(!result.isEmpty()) {
@@ -55,13 +55,11 @@ resetRouter.post("/reset", async (req, res) => {
         
         // Search for the user
         const { email } = req.body;
-        console.log(`User email: ${email}`);
         const user = await User.findOne({
             where: {
                 email
             }
         });
-        console.log(`User found: `, user);
         if(!user) {
             console.log(`User doesn't exists`);
             return res.send({
@@ -78,11 +76,19 @@ resetRouter.post("/reset", async (req, res) => {
         await user.save();
         
         // Send an email
-        emailForgotPassword({
-            name: user.name,
-            email,
-            token: user.token,
-        });
+        // Check if sending email is enabled or not
+        // This is used for testing
+        if(!isEmailDisabled()) {
+            // Send confirmation email
+            emailForgotPassword({
+                name: user.name,
+                email,
+                token: user.token,
+            });
+            console.log(`Send confirmation email.`);
+        } else {
+            console.log(`Do not send confirmation email.`);
+        }
         
         // TODO: Show confirmation message
         return res.send({

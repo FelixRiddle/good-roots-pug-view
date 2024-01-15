@@ -56,6 +56,9 @@ EMAIL_PORT=2525
 EMAIL_USER=YOUR_MAILTRAP_USER
 EMAIL_PASSWORD=YOUR_MAILTRAP_PASSWORD
 
+# When you reach a rate limit, you might want to turn this on
+DISABLE_MAIL=false
+
 # JWT Secret key
 # It should have a minimum of 64 characters by JWT standard
 JWT_SECRET_KEY=YOUR_SECRET

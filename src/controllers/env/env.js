@@ -13,3 +13,14 @@ export function serverUrl() {
     // Nevertheless, it could also be production too.
     return `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`;
 }
+
+/**
+ * Check if email is disabled
+ * 
+ * That is the application will not send any email.
+ * 
+ * @returns {bool}
+ */
+export function isEmailDisabled() {
+    return !process.env.DISABLE_EMAIL || process.env.DISABLE_EMAIL.toLowerCase() === "false";
+}
