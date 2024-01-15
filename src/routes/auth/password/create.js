@@ -87,7 +87,7 @@ createRouter.post("/create/:token", async (req, res) => {
             salt
         );
         
-        // Delete the token
+        // Delete token
         user.token = "";
         
         // Save user
