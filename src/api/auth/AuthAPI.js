@@ -47,6 +47,22 @@ export default class AuthAPI {
     }
     
     /**
+     * Create and log in, but with custom user data
+     * 
+     * @param {object} userData User data
+     */
+    static async createAndLoginCustomUserData(userData) {
+        // I don't think using the environment variables works in the frontend
+        const url = serverUrl();
+        
+        // Setup user
+        const api = new AuthAPI(userData, url);
+        await api.setupLoggedInInstance();
+        
+        return api;
+    }
+    
+    /**
      * Create logged in axios instance
      * 
      * Create user, confirm email, login and get axios instance

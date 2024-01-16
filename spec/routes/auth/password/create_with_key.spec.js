@@ -4,6 +4,7 @@ import generator from 'generate-password';
 import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
 import ResetPasswordAPI from "../../../../src/api/auth/ResetPasswordAPI.js";
 import ResetPasswordPrivateKey from "../../../../src/controllers/env/private/ResetPasswordPrivateKey.js";
+import { serverUrl } from "../../../../src/controllers/env/env.js";
 
 describe("Create with key", () => {
     // Setup dotenv
@@ -42,6 +43,39 @@ describe("Create with key", () => {
         
         expect(createPasswordResponse.updated).toBe(true);
     });
-        
+    
     // Check if we can login with the new password
+    it('Successful re-login with the new password', async function() {
+        // Fast setup
+        const api = await AuthAPI.createAndLogin();
+        
+        const passwordApi = new ResetPasswordAPI(api.userData);
+        await passwordApi.resetPassword();
+        
+        // Clone data and change password
+        const newUserData = JSON.parse(JSON.stringify(api.userData));
+        // Setup user
+        const newUserPassword = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        newUserData.password = newUserPassword;
+        newUserData.confirmPassword = newUserPassword;
+        
+        // Change api data
+        passwordApi.userData = newUserData;
+        
+        const privKeyApi = new ResetPasswordPrivateKey();
+        await passwordApi.createWithKey(privKeyApi.loadLocally());
+        
+        // --- Try to log in with the new password ---
+        const apiA = new AuthAPI(newUserData, serverUrl());
+        const loginRes = await apiA.loginGetJwt();
+        
+        // Delete user
+        // TODO: Hmmm, after changing password it should log out from everywhere right?
+        await api.deleteUser();
+        
+        expect(loginRes.loggedIn).toBe(true);
+    });
 });
