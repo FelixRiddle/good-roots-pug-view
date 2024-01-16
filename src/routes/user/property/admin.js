@@ -10,6 +10,18 @@ const adminRoutes = express.Router();
 
 const admin = async(req, res) => {
     try {
+        // Query parameters
+        const { page } = req.query;
+        const pageExpression = /^[0-9]$/;
+        
+        // Check that validation passes
+        if(!pageExpression.test(page)) {
+            // Show the first page then
+            console.log(`Didn't pass expression validation, redirecting to first page!`);
+            return res.redirect(`/user/property/admin?page=1`);
+        }
+        
+        // User data
         const { id: userId } = req.user;
         
         // Fetch properties from the database that are owned by this user
@@ -57,9 +69,7 @@ const admin = async(req, res) => {
         });
     } catch(err) {
         console.error(err);
-        return res.render("home", {
-            page: "Home",
-        });
+        return res.redirect("/home");
     }
 }
 

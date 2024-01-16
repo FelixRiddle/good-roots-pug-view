@@ -9,6 +9,12 @@ Or even simplier
 
 # Changelog
 
+[0.6.0]
+
+Going to continue the course, in this version I will do pagination of the admin page.
+
+- Admin page, pagination
+
 [0.5.0]
 
 - Tests
