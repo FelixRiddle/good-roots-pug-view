@@ -78,4 +78,66 @@ describe("Create with key", () => {
         
         expect(loginRes.loggedIn).toBe(true);
     });
+    
+    it('Password too large', async function() {
+        // Fast setup
+        const api = await AuthAPI.createAndLogin();
+        
+        const passwordApi = new ResetPasswordAPI(api.userData);
+        await passwordApi.resetPassword();
+        
+        // Clone data and change password
+        const newUserData = JSON.parse(JSON.stringify(api.userData));
+        // Setup user
+        const newUserPassword = generator.generate({
+            // Too large
+            length: 65,
+            numbers: true
+        });
+        newUserData.password = newUserPassword;
+        newUserData.confirmPassword = newUserPassword;
+        
+        // Change api data
+        passwordApi.userData = newUserData;
+        
+        const privKeyApi = new ResetPasswordPrivateKey();
+        const createPasswordResponse = await passwordApi.createWithKey(privKeyApi.loadLocally());
+        
+        // Delete user
+        // TODO: Hmmm, after changing password it should log out from everywhere right?
+        await api.deleteUser();
+        
+        expect(!createPasswordResponse.updated).toBe(true);
+    });
+    
+    it('Password too short', async function() {
+        // Fast setup
+        const api = await AuthAPI.createAndLogin();
+        
+        const passwordApi = new ResetPasswordAPI(api.userData);
+        await passwordApi.resetPassword();
+        
+        // Clone data and change password
+        const newUserData = JSON.parse(JSON.stringify(api.userData));
+        // Setup user
+        const newUserPassword = generator.generate({
+            // Too short
+            length: 7,
+            numbers: true
+        });
+        newUserData.password = newUserPassword;
+        newUserData.confirmPassword = newUserPassword;
+        
+        // Change api data
+        passwordApi.userData = newUserData;
+        
+        const privKeyApi = new ResetPasswordPrivateKey();
+        const createPasswordResponse = await passwordApi.createWithKey(privKeyApi.loadLocally());
+        
+        // Delete user
+        // TODO: Hmmm, after changing password it should log out from everywhere right?
+        await api.deleteUser();
+        
+        expect(!createPasswordResponse.updated).toBe(true);
+    });
 });
