@@ -33,6 +33,11 @@ describe("Edit", () => {
         await api.createLoginGetInstance();
     });
     
+    // Run code after each test is complete
+    afterEach(async () => {
+        await api.deleteUser();
+    });
+    
     // For data validation it uses the same as create endpoint so there's no need to test that
     it('Success property edit', async function() {
         const propertyApi = new PropertyAPI(api.instance);
@@ -40,7 +45,7 @@ describe("Edit", () => {
         // Create some property
         const property = {
             title: "Shack",
-            description: "This is a luxury house",
+            description: "Success property edit",
             rooms: 3,
             parking: 2,
             bathrooms: 3,
@@ -67,6 +72,9 @@ describe("Edit", () => {
         // Update it
         const editPropertyRes = await propertyApi.editPropertyById(serverProperty.id, serverProperty);
         
+        // Delete property
+        await propertyApi.deleteAll();
+        
         expect(editPropertyRes.updated).toBe(true);
     });
     
@@ -76,7 +84,7 @@ describe("Edit", () => {
         // Create some property
         const property = {
             title: "Shack",
-            description: "This is a luxury house",
+            description: "Title updated",
             rooms: 3,
             parking: 2,
             bathrooms: 3,
@@ -96,7 +104,7 @@ describe("Edit", () => {
         const serverProperty = properties.properties[0];
         
         // Update its title
-        const newPropertyTitle = "Luxury House";
+        const newPropertyTitle = "Title updated";
         serverProperty.title = newPropertyTitle;
         
         // Update it
@@ -110,5 +118,5 @@ describe("Edit", () => {
         await propertyApi.deleteAll();
         
         expect(updatedProperty.title === newPropertyTitle).toBe(true);
-    })
+    });
 });

@@ -15,7 +15,7 @@ describe("User register", () => {
     it('Successful user registration', async function() {
         // Create user data
         const userData = {
-            name: "Some name",
+            name: "Successful User Registration",
             email: "some_email@email.com",
             password: "asd12345",
             confirmPassword: "asd12345"
@@ -43,7 +43,7 @@ describe("User register", () => {
     it("Short user password on register", async function() {
         // Create user data
         const userData = {
-            name: "Some name",
+            name: "Short password",
             email: "some_email3@gmail.com",
             password: "asd",
             confirmPassword: "asd"
@@ -64,31 +64,10 @@ describe("User register", () => {
     it("Password too large", async function() {
         // Create user data
         const userData = {
-            name: "Some name",
+            name: "Password too large",
             email: "some_email4@gmail.com",
             password: "Woh0dgvEByn6skV1BpUvx7X7XLio0HdaHtrMpacGBTCFImpjHUTb5fERCWkvV5A2A",
             confirmPassword: "Woh0dgvEByn6skV1BpUvx7X7XLio0HdaHtrMpacGBTCFImpjHUTb5fERCWkvV5A2A"
-        };
-        
-        const api = new TestAuthAPI(userData, url);
-        
-        // The user will not be able to register so we can skip deletion
-        const registerRes = await api.registerUser();
-        const registered = registerRes.userRegistered;
-        
-        // If it's false, then the user is not registered
-        // Flip the bit to check against true
-        expect(!registered).toBe(true);
-    });
-    
-    // Confirm password mismatch
-    it("Password too large", async function() {
-        // Create user data
-        const userData = {
-            name: "Some name",
-            email: "some_email5@gmail.com",
-            password: "asdf1234",
-            confirmPassword: "asdf12345"
         };
         
         const api = new TestAuthAPI(userData, url);
@@ -106,7 +85,8 @@ describe("User register", () => {
     it("Bad email", async function() {
         // Create user data
         const userData = {
-            name: "Some name",
+            // To identify them in DBeaver, I will put the test name here
+            name: "Bad email",
             // Doesn't have domain name
             email: "some_email6@.com",
             password: "asdf1234",
@@ -118,6 +98,14 @@ describe("User register", () => {
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
         const registered = registerRes.userRegistered;
+        
+        // Just remember, registration shouldn't work, but why it does????
+        // Maybe it's somewhere else?
+        // // Log in
+        // await api.loginGetJwt();
+        
+        // // Delete user
+        // await api.deleteUser();
         
         // If it's false, then the user is not registered
         // Flip the bit to check against true
@@ -149,7 +137,7 @@ describe("User register", () => {
         // Create user data
         const userData = {
             name: "aa",
-            email: "some_email5@gmail.com",
+            email: "name_too_short@gmail.com",
             password: "asdf1234",
             confirmPassword: "asdf1234"
         };
@@ -170,7 +158,7 @@ describe("User register", () => {
         const userData = {
             // Name too long
             name: "CsSAVM7muEYXrEkZd6n8T1SoPoxgMNxsZ2UJSlthE6BPSCmeX72jU5EHULhn7rq7rAUNYtGeTOeW7URRra4fQ5DNQVF0iMYv80wkbU9I7bv0T30rvTlLkJKTufo0FPgqA",
-            email: "some_email5@gmail.com",
+            email: "name_too_long@gmail.com",
             password: "asdf1234",
             confirmPassword: "asdf1234"
         };
