@@ -13,7 +13,9 @@ Or even simplier
 
 - Tests
     - Authentication
+        - Reset password
     - Properties
+    - User
 
 [0.4.0]
 
