@@ -12,8 +12,8 @@ describe("Get all", () => {
     
     // Create user data
     const userData = {
-        name: "Some name",
-        email: "some_email2@email.com",
+        name: "Get all",
+        email: "get_all_tests@email.com",
         password: "asd12345",
         confirmPassword: "asd12345"
     };
@@ -25,6 +25,10 @@ describe("Get all", () => {
     beforeEach(async function() {
         // Register, and login
         await api.createLoginGetInstance();
+    });
+    
+    afterEach(async function() {
+        await api.deleteUser();
     });
     
     it('Get all test', async function() {

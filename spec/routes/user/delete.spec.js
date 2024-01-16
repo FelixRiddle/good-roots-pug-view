@@ -12,8 +12,8 @@ describe("Delete user", () => {
     
     // Create user data
     const userData = {
-        name: "Some name",
-        email: "some_email2@email.com",
+        name: "Delete user",
+        email: "delete_user@email.com",
         password: "asd12345",
         confirmPassword: "asd12345"
     };

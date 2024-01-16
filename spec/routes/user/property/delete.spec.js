@@ -12,8 +12,8 @@ describe("Delete", () => {
     
     // Create user data
     const userData = {
-        name: "Some name",
-        email: "some_email2@email.com",
+        name: "Delete property",
+        email: "delete_property_tests@email.com",
         password: "asd12345",
         confirmPassword: "asd12345"
     };
@@ -25,6 +25,10 @@ describe("Delete", () => {
     beforeEach(async function() {
         // Register, and login
         await api.createLoginGetInstance();
+    });
+    
+    afterEach(async () => {
+        await api.deleteUser();
     });
     
     it('Delete property', async function() {
