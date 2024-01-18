@@ -24,23 +24,37 @@ const admin = async(req, res) => {
         // User data
         const { id: userId } = req.user;
         
+        // Limit and skips
+        const limit = 10;
+        const skip = ((page * limit) - limit);
+        
         // Fetch properties from the database that are owned by this user
-        const propertiesRes = await Property.findAll({
-            where: {
-                userId,
-            },
-            include: [
-                {
-                    raw: true,
-                    model: Category,
-                    as: 'category'
-                }, {
-                    raw: true,
-                    model: Price,
-                    as: "price"
-                }
-            ]
-        });
+        const [propertiesRes, total] = await Promise.all([
+            Property.findAll({
+                limit,
+                offset: skip,
+                where: {
+                    userId,
+                },
+                include: [
+                    {
+                        raw: true,
+                        model: Category,
+                        as: 'category'
+                    }, {
+                        raw: true,
+                        model: Price,
+                        as: "price"
+                    }
+                ]
+            }),
+            // Get the quantity of user properties
+            Property.count({
+                where: {
+                    userId,
+                },
+            })
+        ]);
         
         // Thanks sensei for this incredible response
         // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
@@ -65,6 +79,13 @@ const admin = async(req, res) => {
         return res.render("user/property/admin", {
             page: "My Properties",
             properties,
+            // Total pages
+            pages: Math.ceil(total / limit),
+            // Other
+            currentPage: Number(page),
+            total,
+            offset: skip,
+            limit,
             ...expanded,
         });
     } catch(err) {

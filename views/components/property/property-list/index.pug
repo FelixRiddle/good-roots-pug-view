@@ -2,8 +2,31 @@
 //- 
 //- Properties has to be on scope
 div(class="bg-white shadow rounded-lg")
+    //- Show property rows
     ul(class="divide-y divide-gray-200")
         each property in properties
             li
                 include ./display/row
-
+    
+    //- Show pages
+    div(class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6")
+        //- For mobile
+        div(class="flex-1 flex justify-between sm:hidden")
+            a(href=`/user/property/admin?page=${currentPage - 1}`
+            class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === 1 ? 'pointer-events-none bg-gray-200' : ''}`) Previous
+            
+            a(href=`/user/property/admin?page=${currentPage + 1}` class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === pages ? 'pointer-events-none bg-gray-200' : ''}`) Next
+        
+        //- For larger screens
+        div(class="hidden")
+            div(class="sm:flex-1 sm:flex sm:items-center sm:justify-between")
+                p(class="text-sm text-gray-700 gap-2") Showing 
+                    span(class="font-medium") #{offset + 1} to 
+                    span(class="font-medium") #{total < limit + offset ? total : offset + limit} of 
+                    span(class="font-medium") #{total} results.
+            
+            div
+                nav(class="relative z-0 inline-flex rounded-md shadow-md")
+                    - let n = 1;
+                        while n <= pages
+                            a(href=`/user/property/admin?page=${n}` class=`${currentPage == n ? 'bg-indigo-50 border-indigo-500 text-indigo-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'} relative inline-flex items-center px-4 py-2 border text-sm font-medium`) #{n++} 

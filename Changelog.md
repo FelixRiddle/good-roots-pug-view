@@ -13,7 +13,7 @@ Or even simplier
 
 Going to continue the course, in this version I will do pagination of the admin page.
 
-- Admin page, pagination
+- Pagination for admin page
 
 [0.5.0]
 
