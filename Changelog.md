@@ -9,11 +9,19 @@ Or even simplier
 
 # Changelog
 
+[0.7.0]
+
+Continuing the course, this is the part of creating the start page.
+
+- Start page
+
 [0.6.0]
 
 Going to continue the course, in this version I will do pagination of the admin page.
 
 - Pagination for admin page
+- User can click the number of the page they want to see
+- Mobile users compatibility
 
 [0.5.0]
 

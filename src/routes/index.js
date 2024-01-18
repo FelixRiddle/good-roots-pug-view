@@ -7,6 +7,7 @@ import authRoutes from "./auth/index.js";
 import apiRouter from "./api/index.js";
 import examplesRouter from "./examples/index.js";
 import propertyRoutes from "./property/index.js";
+import categoryRouter from "./category.js";
 
 const routes = express.Router();
 
@@ -20,5 +21,6 @@ routes.use("/user", protectRoute, userRoutes);
 routes.use(express.static("public"));
 
 routes.use(homeRouter);
+routes.use(categoryRouter);
 
 export default routes;

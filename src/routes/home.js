@@ -8,9 +8,8 @@ const renderHome = (req, res) => {
     console.log(`GET /home`);
     
     try {
-        let expanded = expand(req);
+        const expanded = expand(req);
         
-        console.log(`Data: `, expanded);
         return res.render("home", {
                 ...expanded
             }
@@ -23,6 +22,7 @@ const renderHome = (req, res) => {
     }
 };
 
+homeRouter.get("/feed", renderHome);
 homeRouter.get("/home", renderHome);
 homeRouter.get("/", renderHome);
 
