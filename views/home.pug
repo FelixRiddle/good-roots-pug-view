@@ -1,4 +1,25 @@
 extends index
 
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
 block content
     h1.font-bold.text-center Home 
+    
+    div(class="py-5")
+        h1(class="text-center text-4xl font-extrabold") Map location 
+        
+        div(id="map")
+
+block scripts
+    //- Leaflet
+    script(
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    )
+    
+    //- For locating the street
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+    
+    script(src="/js/routes/home.js")

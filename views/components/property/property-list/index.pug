@@ -18,7 +18,7 @@ div(class="bg-white shadow rounded-lg")
             a(href=`/user/property/admin?page=${currentPage + 1}` class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === pages ? 'pointer-events-none bg-gray-200' : ''}`) Next
         
         //- For larger screens
-        div(class="hidden")
+        div()
             div(class="sm:flex-1 sm:flex sm:items-center sm:justify-between")
                 p(class="text-sm text-gray-700 gap-2") Showing 
                     span(class="font-medium") #{offset + 1} to 

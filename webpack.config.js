@@ -88,19 +88,6 @@ export default {
             ],
             filename: "js/navbar/index.js"
         },
-        // Properties
-        routes_user_property_admin: {
-            import: [
-                `${publicRoutes}user/property/admin.js`
-            ],
-            filename: `js/routes/user/property/admin.js`
-        },
-        // property_view_map: {
-        //     import: [
-        //         `${publicRoutes}property/view/map.js`
-        //     ],
-        //     filename: `js/property/view/map.js`
-        // },
         validation: {
             import: [
                 `${jsPath}validation/validateProperty.js`
@@ -151,6 +138,12 @@ export default {
             ],
             filename: "js/routes/examples/publish_image/multer_example.js"
         },
+        routes_home: {
+            import: [
+                `${publicRoutes}home.js`
+            ],
+            filename: "js/routes/home.js"
+        },
         // Property view
         // routes/property/view
         routes_property_view: {
@@ -158,6 +151,13 @@ export default {
                 `${publicRoutes}property/view.js`
             ],
             filename: "js/routes/property/view.js"
+        },
+        // Properties
+        routes_user_property_admin: {
+            import: [
+                `${publicRoutes}user/property/admin.js`
+            ],
+            filename: `js/routes/user/property/admin.js`
         },
         // User routes
         routes_user_property_create: {
