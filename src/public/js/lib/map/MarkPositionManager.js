@@ -39,8 +39,8 @@ export default class MarkPositionManager {
      */
     createMap(elementId) {
         // Create map
-        let map = L.map(elementId).setView([51.505, -0.09], 13);
-
+        const map = L.map(elementId).setView([51.505, -0.09], 13);
+        
         // Add tile layer
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
@@ -55,7 +55,7 @@ export default class MarkPositionManager {
      * Set position to user position once
      */
     setPositionToUserPosition() {
-        let thisObj = this;
+        const thisObj = this;
         this.map.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
             .on('locationfound', function(e) {
                 thisObj.marker.setLatLng(e.latlng);
