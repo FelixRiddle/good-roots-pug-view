@@ -1,10 +1,11 @@
+import PropertyAPI from "../api/property/PropertyAPI.js";
 
 /**
  * Create map
  * 
  * @param {string} elementId 
  */
-function createMapOn(elementId="map") {
+async function createMapOn(elementId="map") {
     const map = L.map(elementId).setView([37.7750224, -122.4536641], 13);
     
     // Add tile layer
@@ -13,6 +14,13 @@ function createMapOn(elementId="map") {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     console.log(`Map created!`);
+    
+    const propApi = new PropertyAPI();
+    const properties = await propApi.fetchAll();
+    
+    console.log(`Properties: `, properties);
 }
 
-createMapOn();
+(async() => {
+    await createMapOn();
+})();
