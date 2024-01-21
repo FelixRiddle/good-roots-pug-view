@@ -16,9 +16,19 @@ async function createMapOn(elementId="map") {
     console.log(`Map created!`);
     
     const propApi = new PropertyAPI();
-    const properties = await propApi.fetchAll();
+    const resData = await propApi.fetchAll();
+    const properties = resData.properties;
     
     console.log(`Properties: `, properties);
+    
+    for(const property of properties) {
+        const marker = new L.marker([
+            property.latitude,
+            property.longitude
+        ], {
+            autoPan: true,
+        }).addTo(map);
+    }
 }
 
 (async() => {
