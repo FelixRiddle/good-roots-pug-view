@@ -27,7 +27,14 @@ async function createMapOn(elementId="map") {
             property.longitude
         ], {
             autoPan: true,
-        }).addTo(map);
+        }).addTo(map)
+        .bindPopup(`
+        <p class="text-indigo-600 font-bold">${property.category.name}</p>
+        <h1 class="text-xl font-extrabold uppercase my-2">${property.title}</h1>
+        <img src="" alt="Imagen de la propiedad ${property.title}"/>
+        <p class="text-gray-600 font-bold">${property.price.name}</p>
+        <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
+        `);
     }
 }
 
