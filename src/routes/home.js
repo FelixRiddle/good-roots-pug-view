@@ -1,19 +1,27 @@
 import express from "express";
 
 import expand from "../controllers/expand.js"
+import Category from "../models/Category.js";
+import Price from "../models/Price.js";
 
 const homeRouter = express.Router();
 
-const renderHome = (req, res) => {
+const renderHome = async (req, res) => {
     console.log(`GET /home`);
     
     try {
         const expanded = expand(req);
         
+        const [categories, prices] = await Promise.all([
+            Category.findAll({raw: true}),
+            Price.findAll({raw: true})
+        ]);
+        
         return res.render("home", {
-                ...expanded
-            }
-        );
+            ...expanded,
+            categories,
+            prices,
+        });
     } catch(err) {
         console.error(err);
         // If you can't even render home what do you even do?
