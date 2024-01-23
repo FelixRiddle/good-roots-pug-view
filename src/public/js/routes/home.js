@@ -3,9 +3,11 @@ import PropertyAPI from "../api/property/PropertyAPI.js";
 class StartPage {
     map = null;
     filter = {
-        category: "",
-        price: "",
+        category: undefined,
+        price: undefined,
     };
+    showProperties = [];
+    markers = [];
     
     constructor() {
         // this.map = map;
@@ -22,6 +24,63 @@ class StartPage {
         this.setupFilters();
         
         console.log(`Setup completed`);
+    }
+    
+    // --- Filters ---
+    /**
+     * Check if there's at least one filter
+     * 
+     * It uses an 'or' because it checks if at least ONE filter is on
+     */
+    filterExists() {
+        const customFilter = this.filter;
+        return typeof(customFilter.category) !== typeof(undefined) || typeof(customFilter.price) !== typeof(undefined);
+    }
+    
+    /**
+     * Filter properties
+     * 
+     * After each filter update, or property update, call this function
+     */
+    filterProperties() {
+        console.log(`Current filters: `, this.filter);
+        const thisObj = this;
+        const customFilter = this.filter;
+        
+        // Filter properties
+        const result = this.properties.filter((prop) => {
+            
+            // Check that there's a custom filter
+            // If there's none, just return the property
+            if(!thisObj.filterExists()) {
+                return prop;
+            }
+            
+            // Filter by category
+            if(typeof(customFilter.category) !== typeof(undefined)) {
+                // Check that the property category matches the filter category
+                // For this we will return undefined for each property that doesn't matches
+                
+                // If they don't match, return undefined
+                if(prop.category.id !== customFilter.category) {
+                    return;
+                }
+            }
+            
+            // Filter by price
+            if(typeof(customFilter.price) !== typeof(undefined)) {
+                if(prop.price.id !== customFilter.price) {
+                    return;
+                }
+            }
+            
+            // Filters Ok
+            // Just return the property
+            return prop;
+        });
+        
+        this.showProperties = result;
+        console.log(`Properties that match filters: `, result);
     }
     
     /**
@@ -47,11 +106,17 @@ class StartPage {
         // Enable setting filters for category
         categoryElement.addEventListener("change", (e) => {
             thisObj.filter.category = parseInt(e.target.value);
+            
+            // Update markers
+            thisObj.updateMapMarkers();
         });
         
         // Enable setting filters for price
         priceElement.addEventListener("change", (e) => {
             thisObj.filter.price = parseInt(e.target.value);
+            
+            // Update markers
+            thisObj.updateMapMarkers();
         });
         
         console.log(`Filters enabled`);
@@ -72,6 +137,11 @@ class StartPage {
         
         const map = L.map(elementId).setView([37.7750224, -122.4536641], 13);
         
+        // This doesn't work
+        map.on("load", function (e) {
+            console.log(`Map loaded!`);
+        });
+        
         // Add tile layer
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
@@ -82,15 +152,48 @@ class StartPage {
         this.map = map;
     }
     
+    // --- Property markers ---
     /**
-     * Update map things
+     * Delete all markers
      */
-    updateMapMarkers() {
-        if(!this.map) {
-            console.log(`The map doesn't exists!`);
-            return;
+    deleteAllMarkers() {
+        // Delete previous markers
+        if(this.markers.length > 0) {
+            for(const marker of this.markers) {
+                this.map.removeLayer(marker);
+            }
         }
-        
+    }
+    
+    /**
+     * Create filter markers
+     */
+    createFilterMarkers() {
+        console.log(`Show properties: `, this.showProperties);
+        for(const property of this.showProperties) {
+            const marker = new L.marker([
+                property.latitude,
+                property.longitude
+            ], {
+                autoPan: true,
+            }).addTo(this.map)
+            .bindPopup(`
+            <p class="text-indigo-600 font-bold">${property.category.name}</p>
+            <h1 class="text-xl font-extrabold uppercase my-2">${property.title}</h1>
+            <img src="" alt="Imagen de la propiedad ${property.title}"/>
+            <p class="text-gray-600 font-bold">${property.price.name}</p>
+            <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
+            `);
+            
+            // Add to the list of markers
+            this.markers.push(marker);
+        }
+    }
+    
+    /**
+     * Create markers for each property
+     */
+    createPropertyMarkers() {
         for(const property of this.properties) {
             const marker = new L.marker([
                 property.latitude,
@@ -105,9 +208,30 @@ class StartPage {
             <p class="text-gray-600 font-bold">${property.price.name}</p>
             <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
             `);
+            
+            // Add to the list of markers
+            this.markers.push(marker);
         }
     }
     
+    /**
+     * Update map things
+     */
+    updateMapMarkers() {
+        if(!this.map) {
+            console.log(`The map doesn't exists!`);
+            return;
+        }
+        
+        // Filter properties 
+        this.filterProperties();
+        
+        // Re-Create the markers
+        this.deleteAllMarkers();
+        this.createFilterMarkers();
+    }
+    
+    // --- Api calls ---
     /**
      * Fetch properties
      */
@@ -116,6 +240,9 @@ class StartPage {
         const resData = await this.propertyApi.fetchAll();
         const properties = resData.properties;
         this.properties = properties;
+        
+        // Update markers
+        this.updateMapMarkers();
         
         console.log(`Properties: `, properties);
     }
