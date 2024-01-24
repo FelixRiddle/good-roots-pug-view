@@ -29,6 +29,17 @@ block content
                         option(value=price.id)= price.name
         
         div(id="map" class="h-[600px] mt-5")
+        
+        //- Idea: make each view of properties [Visibility toggleable] and save the state
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10") List 
+            
+            div(class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5")
+                each property in properties
+                    div(class="bg-white shadow rounded-lg")
+                        img(class="object-cover h-72 w-full" alt=`House ${property.title}`)
+                        div(class="p-5 space-y-2")
+                            h3(class="text-2xl")
 
 block scripts
     //- Leaflet

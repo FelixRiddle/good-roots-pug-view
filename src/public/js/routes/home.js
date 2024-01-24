@@ -1,6 +1,6 @@
 import PropertyAPI from "../api/property/PropertyAPI.js";
 
-class StartPage {
+class PropertiesMap {
     map = null;
     filter = {
         category: undefined,
@@ -249,6 +249,6 @@ class StartPage {
 }
 
 (async() => {
-    const startPage = new StartPage();
-    await startPage.start();
+    const propsMap = new PropertiesMap();
+    await propsMap.start();
 })();
