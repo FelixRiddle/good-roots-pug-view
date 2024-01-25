@@ -3,6 +3,14 @@ import PropertyImages from "./PropertyImages.js";
 
 /**
  * Images API
+ * 
+ * Images API is an endpoint abstraction to manage property images.
+ * 
+ * What it does:
+ * 1) Fetches property images
+ * 2) Removes images
+ * 3) Sets images
+ * 4) Can also publish/unpublish a property
  */
 export default class ImagesAPI {
     

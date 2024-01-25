@@ -1,4 +1,6 @@
 import PropertyAPI from "../api/property/PropertyAPI.js";
+import ImagesAPI from "../lib/property/ImagesAPI.js";
+import PropertyImages from "../lib/property/PropertyImages.js";
 
 class PropertiesMap {
     map = null;
@@ -180,7 +182,10 @@ class PropertiesMap {
             .bindPopup(`
             <p class="text-indigo-600 font-bold">${property.category.name}</p>
             <h1 class="text-xl font-extrabold uppercase my-2">${property.title}</h1>
-            <img src="" alt="Imagen de la propiedad ${property.title}"/>
+            
+            <!-- Image -->
+            <img src="" alt="Image of the property ${property.title}"/>
+            
             <p class="text-gray-600 font-bold">${property.price.name}</p>
             <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
             `);
@@ -231,6 +236,50 @@ class PropertiesMap {
         this.createFilterMarkers();
     }
     
+    // --- Miscellaneous ---
+    /**
+     * 
+     * @param {Array} properties Array of properties
+     * @returns {Array} Properties with the field 'images' that has a url pointing to the image.
+     */
+    updatePropertyImages(properties) {
+        for(const property in properties) {
+            // Images API
+            const imagesApi = new ImagesAPI(property.id);
+            
+            // Property images
+            const propertyImages = new PropertyImages(imagesApi);
+            
+            // Set it back to the api, wondering if this is ok?
+            imagesApi.setPropertyImagesObject(propertyImages);
+            
+            // This is a goddam mess
+            // Images will be updated only once
+            propertyImages.setUpdatePropertyCallback(() => {
+                console.log(`Property '${property.title}', images fetch!`);
+            
+                // Get property images
+                const newPropertyImages = propertyImages.getAll();
+                let index = 0;
+                property.images = [];
+                for(const imgLocation of newPropertyImages) {
+                    // Set image source
+                    const imgSource = `${location.origin}/${imgLocation}`;
+                    
+                    // Push the source
+                    property.images.push(imgSource);
+                    
+                    index++;
+                }
+            });
+            
+            // Get property images
+            propertyImages.updatePropertyImages();
+        }
+        
+        return properties;
+    }
+    
     // --- Api calls ---
     /**
      * Fetch properties
@@ -238,13 +287,17 @@ class PropertiesMap {
     async fetchProperties() {
         this.propertyApi = new PropertyAPI();
         const resData = await this.propertyApi.fetchAll();
-        const properties = resData.properties;
+        let properties = resData.properties;
+        
+        // --- Set properties image ---
+        properties = this.updatePropertyImages(properties);
+        
         this.properties = properties;
         
         // Update markers
         this.updateMapMarkers();
         
-        console.log(`Properties: `, properties);
+        console.log(`Properties(with images): `, properties);
     }
 }
 
