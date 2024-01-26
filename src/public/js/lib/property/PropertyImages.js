@@ -31,6 +31,32 @@ export default class PropertyImages {
     }
     
     /**
+     * Get all images url
+     * 
+     * Converts the property images location to image urls, using 'location.origin' as the base url.
+     * 
+     * @returns {Array} Array of images url
+     */
+    getAllImagesUrl() {
+        // Create image views
+        const propertyImages = this.getAll();
+        let index = 0;
+        let imagesUrl = [];
+        
+        for(const imgLocation of propertyImages) {
+            // Set image source
+            const imgSource = `${location.origin}/${imgLocation}`;
+            
+            // Insert into the carousel view
+            imagesUrl.push(imgSource);
+            
+            index++;
+        }
+        
+        return imagesUrl;
+    }
+    
+    /**
      * Get array of names only
      */
     names() {
@@ -76,6 +102,16 @@ export default class PropertyImages {
     }
     
     /**
+     * Call update property callback
+     */
+    callUpdatePropertyCB() {
+        // Check if it exists
+        if(this.updatePropertyCallback) {
+            this.updatePropertyCallback();
+        }
+    }
+    
+    /**
      * Update property images
      */
     updatePropertyImages() {
@@ -83,13 +119,22 @@ export default class PropertyImages {
         let propertyImages = Promise.resolve(this.api.fetchAll());
         let thisClass = this;
         propertyImages.then((images) => {
-            // console.log(`Response: `, images);
-            // thisClass.propertyImages = images;
-            // thisClass.previousImages = images;
-            // thisClass.api.propertyImages = images;
             thisClass.propertyImages = images;
             
-            thisClass.updatePropertyCallback();
+            thisClass.callUpdatePropertyCB();
         });
+    }
+    
+    /**
+     * Update but async
+     */
+    async updatePropertyImagesAsync() {
+        // Fetch property images, if they exist
+        const propertyImages = await this.api.fetchAll();
+        this.propertyImages = propertyImages;
+        
+        this.callUpdatePropertyCB();
+        
+        return propertyImages;
     }
 }
