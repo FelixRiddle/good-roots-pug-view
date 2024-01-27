@@ -21,6 +21,17 @@ const renderHome = async (req, res) => {
                 where: {
                     published: true,
                 },
+                include: [
+                    {
+                        raw: true,
+                        model: Category,
+                        as: 'category'
+                    }, {
+                        raw: true,
+                        model: Price,
+                        as: "price"
+                    }
+                ]
             })
         ]);
         
