@@ -1,5 +1,5 @@
-import PropertyAPI from "../../api/property/PropertyAPI.js";
-import { updatePropertyImages } from "./images/index.js";
+import PropertyAPI from "../../../api/property/PropertyAPI.js";
+import { updatePropertyImages } from "../images/index.js";
 
 export default class PropertiesMap {
     map = null;
