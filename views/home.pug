@@ -4,12 +4,13 @@ block styles
     link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
 
 block content
-    h1.font-bold.text-center Home 
-    
     div(class="py-5")
-        h1(class="text-center text-4xl font-extrabold") Map location 
+        h1(class="text-center text-4xl font-extrabold") Home 
         
-        div(class="flex flex-col md:flex-row items-center py-10 gap-4")
+        //- Map that shows houses
+        h4(class="py-10 text-center text-2xl") Map of houses 
+        
+        div(class="flex flex-col md:flex-row items-center gap-4")
             h2(class="text-sm uppercase text-gray-800 font-bold") Filters
             
             //- Filter by category
@@ -46,6 +47,9 @@ block content
                             
                             //- pre= JSON.stringify(property, undefined, 4)
                             
+                            p(class="text-sm text-gray-600") House type  
+                                span(class="text-gray-800 font-bold")= property["category.name"]
+                            
                             p(class="text-sm text-gray-600") Rooms 
                                 span(class="text-gray-800 font-bold")= property.rooms
                             
@@ -55,7 +59,7 @@ block content
                             p(class="text-sm text-gray-600") Price 
                                 span(class="text-gray-800 font-bold")= property["price.name"]
                             
-                            a(href=`/property/view/${property.id}` class="bg-indigo-600 w-full text-center block font-bold text-white p-2 uppercase rounded" target="_blank") Go to property
+                            a(href=`/property/view/${property.id}` class="bg-green-600 w-full text-center block font-bold text-white p-2 uppercase rounded" target="_blank") Go to property
 
 block scripts
     //- Leaflet
