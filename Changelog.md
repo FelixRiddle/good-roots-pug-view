@@ -14,6 +14,9 @@ Or even simplier
 Continuing the course, this is the part of creating the start page.
 
 - Start page
+- Grid house view with images
+
+This is difficult to do, because previously, I fetched images only by authentication
 
 [0.6.0]
 

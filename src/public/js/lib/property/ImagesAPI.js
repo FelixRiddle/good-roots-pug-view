@@ -48,6 +48,7 @@ export default class ImagesAPI {
     async fetchAll() {
         let res = await this.instance.get(`/get_all/${this.propertyId}`)
             .then((res) => {
+                console.log(`Fetch property images result: `, res.data);
                 return res;
             }).catch((err) => {
                 console.log(`Error when fetching image names from the backend: `, err);

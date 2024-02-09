@@ -19,11 +19,15 @@ async function getAllPropertyImagesUrl(propertyId) {
     // Get property images
     await propertyImages.updatePropertyImagesAsync();
     
-    return propertyImages.getAllImagesUrl();
+    const imagesUrl = propertyImages.getAllImagesUrl();
+    
+    return imagesUrl;
 }
 
 /**
  * Update property images
+ * 
+ * Creates the field 'images' in every property given, which is an array of the property images.
  * 
  * @param {Array} properties Array of properties
  * @returns {Array} Properties with the field 'images' that has a url pointing to the image.
@@ -41,7 +45,29 @@ async function updatePropertyImages(properties) {
     return properties;
 }
 
+/**
+ * Update property images for guest user
+ * 
+ * Creates the field 'images' in every property given, which is an array of the property images.
+ * 
+ * @param {Array} properties Array of properties
+ * @returns {Array} Properties with the field 'images' that has a url pointing to the image.
+ */
+async function guestUpdatePropertyImages(properties) {
+    // This could be faster, because promises are separated, and executed asynchronously, maybe?
+    // const propertyImages = await Promise.all([
+    //     ...properties.map(async (property) => await getAllPropertyImagesUrl(property.id))
+    // ]);
+    
+    for(const property of properties) {
+        property.images = await getAllPropertyImagesUrl(property.id);
+    }
+    
+    return properties;
+}
+
 export {
     getAllPropertyImagesUrl,
+    guestUpdatePropertyImages,
     updatePropertyImages,
 }
