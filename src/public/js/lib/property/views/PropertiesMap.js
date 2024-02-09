@@ -236,11 +236,9 @@ export default class PropertiesMap {
     async fetchProperties() {
         this.propertyApi = new PropertyAPI();
         const resData = await this.propertyApi.fetchAll();
-        const responseProperties = resData.properties;
         
-        // --- Set properties image ---
-        const properties = await updatePropertyImages(responseProperties);
-        
+        // Properties come with the images
+        const properties = resData.properties;
         this.properties = properties;
         
         // Update markers

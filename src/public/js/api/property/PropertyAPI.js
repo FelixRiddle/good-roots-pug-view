@@ -23,7 +23,7 @@ export default class PropertyAPI {
                 }
             });
             
-            console.log(`Detected frontend`);
+            // console.log(`Detected frontend`);
         } else if(!serverUrl) {
             throw Error("Server url is required when the UserAPI is used in NodeJS");
         } else {
@@ -35,7 +35,7 @@ export default class PropertyAPI {
                 }
             });
             
-            console.log(`Detected backend`);
+            // console.log(`Detected backend`);
         }
     }
     
@@ -43,16 +43,12 @@ export default class PropertyAPI {
      * Fetch all
      */
     fetchAll() {
-        console.log(`PropertyAPI | /operation/get_all`);
         const res = this.instance.get("/operation/get_all")
             .then((res) => {
-                console.log(`Properties fetched!`);
-                
                 return res.data;
             })
             .catch((err) => {
                 console.error(err);
-                console.log(`Error, couldn't fetch the properties`);
             });
         
         return res;

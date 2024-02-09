@@ -5,7 +5,6 @@ import PropertyAPI from "../../../api/property/PropertyAPI.js";
  */
 export default class GridPropertiesView {
     constructor() {
-        console.log(`Grid property view`);
     }
     
     /**
@@ -35,15 +34,12 @@ export default class GridPropertiesView {
                 console.warn(`A property grid image element couldn't be found!!`);
             }
         }
-        
-        console.log(`Properties image updated`);
     }
     
     /**
      * Fetch properties
      */
     async updateProperties() {
-        console.log(`Fetching properties`);
         this.propertyApi = new PropertyAPI();
         const resData = await this.propertyApi.fetchAll();
         
@@ -51,6 +47,5 @@ export default class GridPropertiesView {
         const properties = resData.properties;
         
         this.properties = properties;
-        console.log(`Properties ok`);
     }
 }
