@@ -9,6 +9,18 @@ Or even simplier
 
 # Changelog
 
+[0.8.0]
+
+Status messages
+
+They were somehow working before, but I've completely changed the scheme, now they don't, in this version this is going to be fixed, it's specially necessary when uploading a heavy image.
+
+- Fix status messages
+
+Messages:
+* Warn when uploading a heavy image
+* Warn for invalid data in formularies
+
 [0.7.0]
 
 Continuing the course, this is the part of creating the start page.
