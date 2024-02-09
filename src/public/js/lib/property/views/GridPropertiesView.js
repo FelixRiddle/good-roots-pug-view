@@ -1,12 +1,11 @@
 import PropertyAPI from "../../../api/property/PropertyAPI.js";
-import { updatePropertyImages } from "../images/index.js";
 
 /**
  * Grid properties view
  */
 export default class GridPropertiesView {
     constructor() {
-        
+        console.log(`Grid property view`);
     }
     
     /**
@@ -36,19 +35,22 @@ export default class GridPropertiesView {
                 console.warn(`A property grid image element couldn't be found!!`);
             }
         }
+        
+        console.log(`Properties image updated`);
     }
     
     /**
      * Fetch properties
      */
     async updateProperties() {
+        console.log(`Fetching properties`);
         this.propertyApi = new PropertyAPI();
         const resData = await this.propertyApi.fetchAll();
-        const responseProperties = resData.properties;
         
-        // --- Set properties image ---
-        const properties = await updatePropertyImages(responseProperties);
+        // Properties now come with the images
+        const properties = resData.properties;
         
         this.properties = properties;
+        console.log(`Properties ok`);
     }
 }

@@ -1,7 +1,7 @@
 import express from "express";
 
 import userFolderMiddleware from "../../../../middleware/user/userFolderMiddleware.js";
-import { relativePropertyImages } from "../../../../lib/user/userFolder/property/propertyFolder.js";
+import { relativePropertyImagesNorm } from "../../../../lib/user/userFolder/property/propertyFolder.js";
 
 const getAllRouter = express.Router();
 
@@ -10,7 +10,7 @@ getAllRouter.get("/get_all/:id", userFolderMiddleware, (req, res) => {
     try {
         const { id } = req.params;
         
-        let relPropImgs = relativePropertyImages(req.user.id, id);
+        let relPropImgs = relativePropertyImagesNorm(req.user.id, id);
         
         return res.send({
             images: relPropImgs,
