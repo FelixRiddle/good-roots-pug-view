@@ -3,7 +3,7 @@ import express from "express";
 import Property from "../../../models/Property.js";
 import Price from "../../../models/Price.js";
 import Category from "../../../models/Category.js";
-import { relativePropertyImages } from "../../../lib/user/userFolder/property/propertyFolder.js";
+import { relativePropertyImagesNorm } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const getAllRoutes = express.Router();
 
@@ -31,7 +31,7 @@ getAllRoutes.get("/get_all", async (req, res) => {
             const userId = property.userId;
             const propertyId = property.id;
             
-            const propertyImages = relativePropertyImages(userId, propertyId);
+            const propertyImages = relativePropertyImagesNorm(userId, propertyId);
             property.images = propertyImages;
         }
         

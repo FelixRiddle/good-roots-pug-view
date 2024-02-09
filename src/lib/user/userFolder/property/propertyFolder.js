@@ -71,3 +71,31 @@ export function relativePropertyImages(userId, id) {
     
     return imagesURI;
 }
+
+/**
+ * The same as relative property images
+ * 
+ * But it starts from public, which makes it not be protected '/public/[IMAGE LOCATION]'
+ * Making the public folder start from the bare url, was my mistake, prepositioning '/public' is the norm.
+ * 
+ * @param {string} userId 
+ * @param {number} id The property id
+ * @returns {array} Array of property images relative path from public directory
+ */
+export function relativePropertyImagesNorm(userId, id) {
+    let images = fs.readdirSync(relativePropertyFolder(userId, id), { withFileTypes: true });
+    
+    let imagesURI = [];
+    for(let image of images) {
+        let encodedImageName = encodeURIComponent(image.name);
+        
+        // Because express doesn't add the 'public' part to it, we have to remove it
+        let imagePath = image.path.substring(7, image.path.length);
+        
+        let imageURI = `public/${imagePath}/${encodedImageName}`;
+        
+        imagesURI.push(imageURI);
+    }
+    
+    return imagesURI;
+}
