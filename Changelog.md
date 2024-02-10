@@ -26,9 +26,15 @@ Messages:
 Continuing the course, this is the part of creating the start page.
 
 - Start page
+- Map house view
+    - Markers on houses location
+    - Markers show a short description
+    - You can go to the house page in the marker
 - Grid house view with images
 
 This is difficult to do, because previously, I fetched images only by authentication
+
+Note: Houses are fetched all at once still, there's no chunking yet.
 
 [0.6.0]
 

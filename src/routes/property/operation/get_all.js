@@ -10,7 +10,6 @@ const getAllRoutes = express.Router();
 getAllRoutes.get("/get_all", async (req, res) => {
     try {
         const properties = await Property.findAll({
-            raw: true,
             where: {
                 published: true,
             },
@@ -32,10 +31,12 @@ getAllRoutes.get("/get_all", async (req, res) => {
             const propertyId = property.id;
             
             const propertyImages = relativePropertyImagesNorm(userId, propertyId);
-            property.images = propertyImages;
+            
+            // It's a sequelize object, so insert it into data values
+            property.dataValues.images = propertyImages;
         }
         
-        console.log(`Properties(with images): `, properties);
+        // console.log(`Properties(with images): `, properties);
         
         return res.send({
             properties,

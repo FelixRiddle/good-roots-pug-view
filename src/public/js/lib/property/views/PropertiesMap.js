@@ -9,6 +9,7 @@ export default class PropertiesMap {
     };
     showProperties = [];
     markers = [];
+    debug = false;
     
     constructor() {
         
@@ -163,7 +164,20 @@ export default class PropertiesMap {
      * Create filter markers
      */
     createFilterMarkers() {
+        if(this.debug) {
+            console.log(`Creating markers that pass the filters`);
+            console.log(`Properties: `, this.showProperties);
+        }
+        
+        let index = 0;
         for(const property of this.showProperties) {
+            
+            if(this.debug) {
+                console.log(`I(For each): ${index}`);
+                console.log(`Current property: `, property);
+                console.log(`Property name: ${property.title}`);
+            }
+            
             const marker = new L.marker([
                 property.latitude,
                 property.longitude
@@ -171,18 +185,20 @@ export default class PropertiesMap {
                 autoPan: true,
             }).addTo(this.map)
             .bindPopup(`
-            <p class="text-indigo-600 font-bold">${property.category.name}</p>
-            <h1 class="text-xl font-extrabold uppercase my-2">${property.title}</h1>
-            
-            <!-- Image -->
-            <img src="${property.images[0]}" alt="Image of the property ${property.title}"/>
-            
-            <p class="text-gray-600 font-bold">${property.price.name}</p>
-            <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
+                <p class="text-indigo-600 font-bold">${property.category.name}</p>
+                <h1 class="text-xl font-extrabold uppercase my-2">${property.title}</h1>
+                
+                <!-- Image -->
+                <img src="${property.images[0]}" alt="Image of the property ${property.title}"/>
+                
+                <p class="text-gray-600 font-bold">${property.price.name}</p>
+                <a href="${location.origin}/property/view/${property.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase rounded">Go to property<a/>
             `);
             
             // Add to the list of markers
             this.markers.push(marker);
+            
+            index++;
         }
     }
     
@@ -217,8 +233,16 @@ export default class PropertiesMap {
      */
     updateMapMarkers() {
         if(!this.map) {
-            console.log(`The map doesn't exists!`);
+            if(this.debug) {
+                console.log(`The map doesn't exists!`);
+            }
+            
+            // Don't proceed or it will crash everything.
             return;
+        } else {
+            if(this.debug) {
+                console.log(`Map ok, updating markers`);
+            }
         }
         
         // Filter properties 
@@ -227,6 +251,10 @@ export default class PropertiesMap {
         // Re-Create the markers
         this.deleteAllMarkers();
         this.createFilterMarkers();
+        
+        if(this.debug) {
+            console.log(`Markers created!`);
+        }
     }
     
     // --- Api calls ---

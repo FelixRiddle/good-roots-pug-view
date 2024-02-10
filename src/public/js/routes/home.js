@@ -9,15 +9,13 @@ import GridPropertiesView from "../lib/property/views/GridPropertiesView.js";
         const propsMap = new PropertiesMap();
         await propsMap.start();
     } catch(err) {
-        
+        console.error(err);
     }
-    
-    console.log(`Code didn't crash, continuing!`);
     
     try {
         const gridPropertiesView = new GridPropertiesView();
         await gridPropertiesView.setup();
     } catch(err) {
-        
+        console.error(err);
     }
 })();
