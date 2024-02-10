@@ -1,5 +1,6 @@
 // Styling
 import "../../../css/components/property/ImageEditor.scss";
+import PropertyImagesUtils from "../../config/PropertyImagesUtils.js";
 import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
 import ImagesAPI from "./ImagesAPI.js";
 import PropertyImages from "./PropertyImages.js";
@@ -179,9 +180,16 @@ export default class ImageEditor {
                 // Test
                 console.log(`Image names: `, this.propertyImages.names());
                 
+                // I need to get the new files only
+                
+                // Remove files that don't fit the size configuration
+                // if(PropertyImagesUtils.maxFileSizeMB() > ) {
+                    
+                // }
+                
                 // If the size is greater remove the images
-                // TODO: This may be better checked first in the backend and then the frontend
-                // because even though we block it here, someone messing with endpoints, can easily overcome this.
+                // TODO: This limit has to work on the backend too, and test it.
+                // TODO: This limit has to work here on the frontend, and test it.
                 if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
                     // Get current images...
                     let currentImages = thisObject.getImagesNameArray();
@@ -205,24 +213,34 @@ export default class ImageEditor {
                         `/set_image/${this.propertyId}`,
                         formData
                     );
+                    
+                    // Success
+                    this.onSuccessImagesChange(imagesInput);
                 } else {
-                    // Removal
+                    // Remove extra images
                 }
-                
-                // Update images view
-                thisObject.propertyImages.updatePropertyImages();
-                
-                // Update previous images input length
-                thisObject.previousImagesInputLength = imagesInput.files.length;
-                
-                // Store current images as previous images
-                thisObject.previousImages = thisObject.getImagesNameArray();
-                
-                // console.log(`Files: `, imagesInput.files);
-                // console.log(`Previous images: `, thisObject.previousImages);
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
         }
+    }
+    
+    /**
+     * When images change and it's successful, call this function
+     * 
+     * @param {HTMLInputElement} imagesInput Images input
+     */
+    onSuccessImagesChange(imagesInput) {
+        // Update images view
+        this.propertyImages.updatePropertyImages();
+        
+        // Update previous images input length
+        this.previousImagesInputLength = imagesInput.files.length;
+        
+        // Store current images as previous images
+        this.previousImages = this.getImagesNameArray();
+        
+        console.log(`Files: `, imagesInput.files);
+        console.log(`Previous images: `, this.previousImages);
     }
 }

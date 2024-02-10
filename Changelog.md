@@ -21,6 +21,13 @@ Messages:
 * Warn when uploading a heavy image
 * Warn for invalid data in formularies
 
+[0.7.1]
+
+This update is set to improve the section of setting an image
+
+- The frontend validates the image size
+- [Development] Code is cleaner
+
 [0.7.0]
 
 Continuing the course, this is the part of creating the start page.
