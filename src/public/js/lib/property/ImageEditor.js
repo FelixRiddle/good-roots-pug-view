@@ -192,7 +192,8 @@ export default class ImageEditor {
                 // TODO: This limit has to work here on the frontend, and test it.
                 if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
                     // Get current images...
-                    let currentImages = thisObject.getImagesNameArray();
+                    // Idk where the 'getImagesNameArray' method went, it seems it was deleted, my bad.
+                    // let currentImages = thisObject.getImagesNameArray();
                     
                     return;
                 }
@@ -214,11 +215,12 @@ export default class ImageEditor {
                         formData
                     );
                     
-                    // Success
-                    this.onSuccessImagesChange(imagesInput);
                 } else {
                     // Remove extra images
                 }
+                
+                // Success
+                this.onSuccessImagesChange(imagesInput);
             });
         } else {
             console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
@@ -238,9 +240,15 @@ export default class ImageEditor {
         this.previousImagesInputLength = imagesInput.files.length;
         
         // Store current images as previous images
-        this.previousImages = this.getImagesNameArray();
+        // This method doesn't exist anymore
+        // this.previousImages = this.getImagesNameArray();
         
         console.log(`Files: `, imagesInput.files);
         console.log(`Previous images: `, this.previousImages);
+        
+        // Remove images from the input
+        // We will use the names to check which ones do exist
+        console.log(`Images input value: `, imagesInput.value);
+        imagesInput.value = [];
     }
 }
