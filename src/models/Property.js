@@ -45,16 +45,17 @@ const Property = db.define("property", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    // It will save the location to the image
-    image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     published: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
     },
+    // // Store status messages about the property
+    // // Mainly because multer doesn't allow to send messages
+    // statusMessages: {
+    //     type: DataTypes.JSON,
+    //     allowNull: false,
+    // },
 }, {
     tableName: "property",
 });

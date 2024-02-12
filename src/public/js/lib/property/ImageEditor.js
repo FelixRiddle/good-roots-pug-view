@@ -183,9 +183,19 @@ export default class ImageEditor {
                 // I need to get the new files only
                 
                 // Remove files that don't fit the size configuration
-                // if(PropertyImagesUtils.maxFileSizeMB() > ) {
+                for(const image of imagesInput.files) {
+                    const bytesSize = image.size;
+                    const sizeInMB = (bytesSize / (1024*1024)).toFixed(2);
                     
-                // }
+                    // Check that file sizes are below the maximum allowed
+                    const maxSize = PropertyImagesUtils.maxFileSizeMB();
+                    if(maxSize < sizeInMB) {
+                        // Create status message
+                        console.log(`Max size exceeded!`);
+                        
+                        return;
+                    }
+                };
                 
                 // If the size is greater remove the images
                 // TODO: This limit has to work on the backend too, and test it.
@@ -243,12 +253,8 @@ export default class ImageEditor {
         // This method doesn't exist anymore
         // this.previousImages = this.getImagesNameArray();
         
-        console.log(`Files: `, imagesInput.files);
-        console.log(`Previous images: `, this.previousImages);
-        
         // Remove images from the input
         // We will use the names to check which ones do exist
-        console.log(`Images input value: `, imagesInput.value);
         imagesInput.value = [];
     }
 }

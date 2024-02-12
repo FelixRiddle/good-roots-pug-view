@@ -7,10 +7,10 @@ export default class PropertyImagesUtils {
      * Convert to megabytes
      */
     static maxFileSizeMB() {
-        return propertyImagesConfiguration.maxSizeKb * 1024;
+        return propertyImagesConfiguration.maxSizeKb / 1024;
     }
     
     static minFileSize() {
-        return propertyImagesConfiguration.minSizeKb * 1024;
+        return propertyImagesConfiguration.minSizeKb / 1024;
     }
 }
