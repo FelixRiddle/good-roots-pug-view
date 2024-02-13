@@ -45,7 +45,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
             messages: [{
                 message: "Images updated!!!11",
                 error: false,
-            }]
+            }],
         });
     } catch(err) {
         console.log(`Error: `);

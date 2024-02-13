@@ -1,4 +1,4 @@
-// Styling
+import Status from "../../../../status/Status.js";
 import "../../../css/components/property/ImageEditor.scss";
 import PropertyImagesUtils from "../../config/PropertyImagesUtils.js";
 import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
@@ -186,12 +186,18 @@ export default class ImageEditor {
                 for(const image of imagesInput.files) {
                     const bytesSize = image.size;
                     const sizeInMB = (bytesSize / (1024*1024)).toFixed(2);
+                    console.log(`Image: `, image);
                     
                     // Check that file sizes are below the maximum allowed
                     const maxSize = PropertyImagesUtils.maxFileSizeMB();
                     if(maxSize < sizeInMB) {
-                        // Create status message
                         console.log(`Max size exceeded!`);
+                        
+                        // Create status message
+                        const statusMsg = new Status("Max file size exceeded", true);
+                        
+                        // Insert into this element
+                        statusMsg.insertIntoHtml("messageList");
                         
                         return;
                     }
