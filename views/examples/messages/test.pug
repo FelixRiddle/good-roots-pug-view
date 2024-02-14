@@ -1,0 +1,21 @@
+extends ../index
+
+block content
+    div Test messages 
+    
+    p This is an example to test messages
+    
+    //- Add message
+    form(action="") 
+        //- Message
+        label(for="msgDesc") Message
+        input(type="text" id="msgDesc" style="display: block; border: solid cyan; border-radius: 10px;") 
+        
+        //- Error
+        label(for="msgError") Is error 
+        input(type="checkbox" id="msgError" style="display: block;")
+        
+        button(style="display: block; border: solid cyan; border-radius: 10px; background-color: white;") Create message
+
+block scripts
+    script(src="/js/routes/examples/messages/test.js")

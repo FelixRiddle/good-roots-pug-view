@@ -119,6 +119,13 @@ export default {
             ],
             filename: "js/routes/examples/map/street_name.js"
         },
+        // Messages/Status
+        routes_examples_messages_test: {
+            import: [
+                `${publicRoutes}examples/messages/test.js`
+            ],
+            filename: "js/routes/examples/map/test.js"
+        },
         // Multer
         routes_examples_publish_image_dropzone: {
             import: [
