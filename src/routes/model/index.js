@@ -1,6 +1,6 @@
 import express from "express";
 
-import userMessagesRouter from "./user-messages.js";
+import userMessagesRouter from "./user-messages/index.js";
 
 const modelRouter = express.Router();
 
