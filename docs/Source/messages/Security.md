@@ -4,6 +4,9 @@
 
 To not overload the system and prevent abusers from storing data on my servers haha
 
+    - [ ] Tier of importance
+        - [ ] Delete less important messages first
+
 - [ ] Maximum of 10000 messages queries per day
 
 The same to prevent from abusers.

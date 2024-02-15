@@ -8,12 +8,14 @@ import apiRouter from "./api/index.js";
 import examplesRouter from "./examples/index.js";
 import propertyRoutes from "./property/index.js";
 import categoryRouter from "./category.js";
+import modelRouter from "./model/index.js";
 
 const routes = express.Router();
 
 routes.use("/api", apiRouter);
 routes.use("/auth", authRoutes);
 routes.use("/examples", examplesRouter);
+routes.use("/model", modelRouter);
 routes.use("/property", propertyRoutes);
 routes.use("/user", protectRoute, userRoutes);
 
