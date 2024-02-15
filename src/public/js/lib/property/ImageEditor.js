@@ -1,7 +1,8 @@
-import Status from "../../../../status/Status.js";
+// import Status from "../../../../status/Status.js";
 import "../../../css/components/property/ImageEditor.scss";
 import PropertyImagesUtils from "../../config/PropertyImagesUtils.js";
 import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
+import Message from "../../messages/controller/Message.js";
 import ImagesAPI from "./ImagesAPI.js";
 import PropertyImages from "./PropertyImages.js";
 import RemoveIcon from "./RemoveIcon.js";
@@ -193,11 +194,11 @@ export default class ImageEditor {
                     if(maxSize < sizeInMB) {
                         console.log(`Max size exceeded!`);
                         
-                        // Create status message
-                        const statusMsg = new Status("Max file size exceeded", true);
+                        // Create message
+                        const message = new Message("Max file size exceeded", true);
                         
                         // Insert into this element
-                        statusMsg.insertIntoHtml("messageList");
+                        message.insertIntoHtml("messageList");
                         
                         return;
                     }

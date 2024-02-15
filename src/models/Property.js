@@ -50,12 +50,6 @@ const Property = db.define("property", {
         allowNull: false,
         defaultValue: false,
     },
-    // // Store status messages about the property
-    // // Mainly because multer doesn't allow to send messages
-    // statusMessages: {
-    //     type: DataTypes.JSON,
-    //     allowNull: false,
-    // },
 }, {
     tableName: "property",
 });

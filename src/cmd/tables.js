@@ -6,6 +6,9 @@ import Category from "../models/Category.js";
 import Price from "../models/Price.js";
 import User from "../models/User.js";
 
+// Some tables have to be imported just to be defined
+import UserMessages from "../models/UserMessages.js";
+
 import users from "../seed/users.js";
 import prices from "../seed/prices.js";
 import categories from "../seed/categories.js";
@@ -30,7 +33,7 @@ async function main(args) {
 }
 
 /**
- * Create property folders and insert the correspondent images
+ * Create property folders and insert the corresponding images
  */
 function updatePropertyImages() {
     const propImgs = new PropertyImages();

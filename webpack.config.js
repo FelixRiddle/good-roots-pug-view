@@ -124,7 +124,7 @@ export default {
             import: [
                 `${publicRoutes}examples/messages/test.js`
             ],
-            filename: "js/routes/examples/map/test.js"
+            filename: "js/routes/examples/messages/test.js"
         },
         // Multer
         routes_examples_publish_image_dropzone: {

@@ -17,7 +17,11 @@ import Message from "./Message.js";
  * 
  */
 export default class MessageController {
-    constructor(elementId) {
+    /**
+     * 
+     * @param {string} elementId The element id
+     */
+    constructor(elementId="messageList") {
         this.elementId = elementId;
     }
     

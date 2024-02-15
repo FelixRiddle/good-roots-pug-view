@@ -34,20 +34,34 @@ export default class Message {
         const messageElement = document.createElement(this.elementTag);
         
         // Create text container
-        const textContainer = messageElement.createElement("span");
-        const textNode = textContainer.createTextNode(this.message);
+        const textContainer = document.createElement("span");
+        const textNode = document.createTextNode(this.message);
+        console.log(`This message: `, this.message);
+        
+        messageElement.appendChild(textContainer);
+        textContainer.appendChild(textNode);
+        console.log(`Text container`);
         
         // Data
-        const dataContainer = messageElement.createElement("span");
+        const dataContainer = document.createElement("span");
         // Assign a data class to identify it
         dataContainer.classList.add("data");
         // Hide it
         dataContainer.hidden = true;
         
-        messageElement.appendChild(textContainer);
-        textContainer.appendChild(textNode);
+        // Add the data
+        // I think it would be easier to just push it to a database
+        const data = {
+            message: this.message,
+            error: this.error
+        };
+        const dataTextNode = document.createTextNode(JSON.stringify(data));
+        dataContainer.appendChild(dataTextNode);
+        messageElement.appendChild(dataContainer);
+        console.log(`Data container`);
+        console.log(`It should be visible now`);
         
-        return statusElement;
+        return messageElement;
     }
     
     /**
@@ -61,9 +75,13 @@ export default class Message {
             return;
         }
         
+        console.log(`Element found, appending message`);
         this.element = element;
         
+        const resultElement = this.createHtmlElement();
+        console.log(`Element created: `, resultElement);
+        
         // Insert element
-        element.appendChild(this.createHtmlElement());
+        element.appendChild(resultElement);
     }
 }

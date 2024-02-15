@@ -9,13 +9,13 @@ block content
     form(action="") 
         //- Message
         label(for="msgDesc") Message
-        input(type="text" id="msgDesc" style="display: block; border: solid cyan; border-radius: 10px;") 
+        input(type="text" id="msgDesc" style="display: block; border: solid cyan; border-radius: 4px;") 
         
         //- Error
         label(for="msgError") Is error 
         input(type="checkbox" id="msgError" style="display: block;")
         
-        button(style="display: block; border: solid cyan; border-radius: 10px; background-color: white;") Create message
+        button(id="msgCreate" style="display: block; border: solid cyan; border-radius: 4px; background-color: white;") Create message
 
 block scripts
     script(src="/js/routes/examples/messages/test.js")
