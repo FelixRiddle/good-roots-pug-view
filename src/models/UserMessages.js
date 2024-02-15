@@ -10,6 +10,10 @@ const UserMessages = db.define("user-messages", {
         primaryKey: true,
         autoIncrement: true,
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     message: {
         type: DataTypes.TEXT,
         allowNull: false,
