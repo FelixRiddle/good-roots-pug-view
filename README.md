@@ -1,3 +1,7 @@
+# About
+
+The project is a real estate app, in which you can register, login, publish your house, add images, etc.
+
 # Course project
 
 Project made along the course of [Node.js - Bootcamp Desarrollo Web inc. MVC y REST APIs](https://www.udemy.com/course/nodejs-bootcamp-desarrollo-web-mvc-y-rest-apis/).
@@ -6,17 +10,14 @@ Done in english because the default language of programming is english.
 
 # Commands
 
-Check [docs/Commands.md]
+Check [docs/Commands/Commands.md]
 
 # Notes
 
 - csurf package was deprecated
 
 Because the package was deprecated, I'll be not using it anymore.
-
-# About
-
-The project is a real estate app, in which you can register, login, publish your house, add images, etc.
+It was used in the course.
 
 # Env variables to set
 

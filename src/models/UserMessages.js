@@ -18,6 +18,10 @@ const UserMessages = db.define("user-messages", {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    status: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    }
 }, {
     tableName: "user-messages",
 });
