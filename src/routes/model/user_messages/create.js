@@ -1,5 +1,6 @@
 import express from "express";
 import UserMessages from "../../../models/UserMessages.js";
+import Message from "../../../public/js/messages/controller/Message.js";
 
 const createRouter = express.Router();
 
@@ -10,7 +11,7 @@ createRouter.post("/create", async(req, res) => {
         if(!messageInfo.message) {
             return res.send({
                 messages: [
-                    // Error, no message given
+                    new Message("Message not given", 4)
                 ]
             });
         }
@@ -18,9 +19,9 @@ createRouter.post("/create", async(req, res) => {
         if(!messageInfo.status) {
             return res.send({
                 messages: [
-                    // Error, no status given
+                    new Message("Status not given", 4)
                 ]
-            })
+            });
         }
         
         // Insert into the database
@@ -32,14 +33,14 @@ createRouter.post("/create", async(req, res) => {
         
         return res.send({
             messages: [
-                // Ok
+                userMessage,
             ]
         });
     } catch(err) {
         console.error(err);
         return res.send({
             messages: [
-                // Error
+                new Message("Unknown error when storing a message on the database", 4)
             ]
         });
     }

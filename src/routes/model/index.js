@@ -1,9 +1,9 @@
 import express from "express";
 
-import userMessagesRouter from "./user-messages/index.js";
+import userMessagesRouter from "./user_messages/index.js";
 
 const modelRouter = express.Router();
 
-modelRouter.use("/model", userMessagesRouter);
+modelRouter.use("/user_messages", userMessagesRouter);
 
 export default modelRouter;

@@ -12,11 +12,14 @@ import modelRouter from "./model/index.js";
 
 const routes = express.Router();
 
+// Open routes
 routes.use("/api", apiRouter);
 routes.use("/auth", authRoutes);
 routes.use("/examples", examplesRouter);
-routes.use("/model", modelRouter);
 routes.use("/property", propertyRoutes);
+
+// Protected routes
+routes.use("/model", protectRoute, modelRouter);
 routes.use("/user", protectRoute, userRoutes);
 
 // Public assets folder

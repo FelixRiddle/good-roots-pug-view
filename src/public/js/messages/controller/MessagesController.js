@@ -1,15 +1,6 @@
 import Message from "./Message.js";
 
 /**
- * Status
- * 
- * 0) Success
- * 1) Warning
- * 2) Error
- * 3) Normal message
- */
-
-/**
  * Message controller
  * 
  * Follow the classic rule of, if you want a change that modifies a lot of behavior,
@@ -47,10 +38,10 @@ export default class MessageController {
      * Insert new message
      * 
      * @param {string} message Message
-     * @param {bool} error Whether it's an error or not
+     * @param {Number} status Status
      */
-    insertMessage(message, error) {
-        const msg = new Message(message, error);
+    insertMessage(message, status) {
+        const msg = new Message(message, status);
         msg.insertIntoHtml(this.elementId);
     }
 }

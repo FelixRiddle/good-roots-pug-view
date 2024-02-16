@@ -7,7 +7,7 @@ Store as base64
 
 - [x] Message title(optional)
 
-- [ ] Status
+- [x] Status
 
 Message status, can be one of the following(represented by an integer)
 

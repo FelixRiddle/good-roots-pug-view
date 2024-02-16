@@ -3,17 +3,27 @@
  */
 export default class Message {
     message = "";
-    error = false;
     element = undefined;
+    
+    // Deprecated
+    // Use status instead
+    error = false;
+    
+    // 1) Normal
+    // 2) Success
+    // 3) Warning
+    // 4) Error
+    // 5) Notification
+    status = 1;
     
     /**
      * 
      * @param {string} message Message
      * @param {bool} error Whether it's an error or not
      */
-    constructor(message, error, elementTag="li") {
+    constructor(message, status, elementTag="li") {
         this.message = message;
-        this.error = error;
+        this.status = status;
         this.elementTag = elementTag;
     }
     
@@ -24,8 +34,6 @@ export default class Message {
      *  li
      *      span
      *          {message}
-     *      span(hidden=true class="data")
-     *          {data}
      * 
      * @returns {Element} The html element
      */
@@ -41,25 +49,6 @@ export default class Message {
         messageElement.appendChild(textContainer);
         textContainer.appendChild(textNode);
         console.log(`Text container`);
-        
-        // Data
-        const dataContainer = document.createElement("span");
-        // Assign a data class to identify it
-        dataContainer.classList.add("data");
-        // Hide it
-        dataContainer.hidden = true;
-        
-        // Add the data
-        // I think it would be easier to just push it to a database
-        const data = {
-            message: this.message,
-            error: this.error
-        };
-        const dataTextNode = document.createTextNode(JSON.stringify(data));
-        dataContainer.appendChild(dataTextNode);
-        messageElement.appendChild(dataContainer);
-        console.log(`Data container`);
-        console.log(`It should be visible now`);
         
         return messageElement;
     }

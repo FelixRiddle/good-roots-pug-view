@@ -4,7 +4,7 @@ Messages from the system to the user, like notifications, errors, updates, data 
 
 - [ ] Messages
     - [ ] CRUD
-        - [ ] Create
+        - [x] Create
         - [ ] Read
         - [ ] Delete
 
