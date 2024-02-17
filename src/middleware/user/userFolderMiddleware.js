@@ -23,6 +23,10 @@ export default async function userFolderMiddleware(req, res, next) {
             console.log(`Full url: `, req.originalUrl);
         }
         
+        // Start creating the debug property upload messages from here
+        // First message, attempting to upload a property
+        
+        
         // Create user folder first
         // Get user plain information
         const user = req.user.get({plain: true});
