@@ -24,8 +24,9 @@ const storage = multer.diskStorage({
 const uploadProperty = multer({
     storage,
     // Upload filter
-    fileFilter: (req, file, cb) => {
+    fileFilter: async (req, file, cb) => {
         const { id } = req.params;
+        console.log(`Trying to upload an image for the property with id: ${id}`);
         
         // It's for each file
         // console.log(`Is this for each or all together?: `, file);

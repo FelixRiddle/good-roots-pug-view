@@ -8,6 +8,7 @@ import User from "../models/User.js";
 
 // Some tables have to be imported just to be defined
 import UserMessages from "../models/UserMessages.js";
+import DebugPropertyImageUpload from "../models/DebugPropertyImageUpload.js";
 
 import users from "../seed/users.js";
 import prices from "../seed/prices.js";
