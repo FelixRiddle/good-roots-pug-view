@@ -1,11 +1,13 @@
 // import Status from "../../../../status/Status.js";
-import "../../../css/components/property/ImageEditor.scss";
-import PropertyImagesUtils from "../../config/PropertyImagesUtils.js";
-import propertyImagesConfiguration from "../../config/propertyImagesConfig.js";
-import Message from "../../messages/controller/Message.js";
-import ImagesAPI from "./ImagesAPI.js";
-import PropertyImages from "./PropertyImages.js";
-import RemoveIcon from "./RemoveIcon.js";
+import "../../../../css/components/property/ImageEditor.scss";
+import PropertyImagesUtils from "../../../config/PropertyImagesUtils.js";
+import propertyImagesConfiguration from "../../../config/propertyImagesConfig.js";
+import Message from "../../../messages/controller/Message.js";
+import MessageController from "../../../messages/controller/MessagesController.js";
+import ImagesAPI from "../ImagesAPI.js";
+import PropertyImages from "../PropertyImages.js";
+import RemoveIcon from "../RemoveIcon.js";
+import ImageInputChange from "./image_input_change/ImageInputChange.js";
 
 /**
  * Image editor
@@ -167,13 +169,27 @@ export default class ImageEditor {
      * On change send request to the server to check whether the file is ready to be
      * uploaded or it collides with another image
      */
-    bindOnChange() {
+    async bindOnChange() {
+        const inputChange = new ImageInputChange(this.api, this.inputId);
+        
+        // Enable all rules
+        inputChange.imagesNotZero();
+        inputChange.uploadImages();
+        inputChange.removeExtraImages();
+        inputChange.removeHeavyImages();
+        inputChange.removeImagesWhenFinished();
+        
+        await inputChange.enableWithCallback(() => {});
+        
+        return;
+        // Leaving here for reference or something IDK
         const imagesInput = document.getElementById(this.inputId);
         if(imagesInput) {
             // I had problems once for using 'this' keyword inside an event listener, so I rather
             // not do that.
             let thisObject = this;
-            imagesInput.addEventListener("change", async (e) => {
+            
+            imagesInput.addEventListener("change", async (event) => {
                 console.log("Images changed");
                 
                 console.log(`Property images: `, thisObject.propertyImages.propertyImages);
@@ -195,10 +211,8 @@ export default class ImageEditor {
                         console.log(`Max size exceeded!`);
                         
                         // Create message
-                        const message = new Message("Max file size exceeded", true);
-                        
-                        // Insert into this element
-                        message.insertIntoHtml("messageList");
+                        const msgCtrl = new MessageController();
+                        msgCtrl.insertMessage("Max file size exceeded", 4);
                         
                         return;
                     }
@@ -224,16 +238,13 @@ export default class ImageEditor {
                     // let res = await thisObject.preflightRequest(imagesInput.files);
                     
                     // Get form data from it
-                    var formData = new FormData(document.getElementById("publish_image"));
+                    let formData = new FormData(document.getElementById("publish_image"));
                     
                     // Send images to server
                     await thisObject.api.instance.postForm(
                         `/set_image/${this.propertyId}`,
                         formData
                     );
-                    
-                } else {
-                    // Remove extra images
                 }
                 
                 // Success

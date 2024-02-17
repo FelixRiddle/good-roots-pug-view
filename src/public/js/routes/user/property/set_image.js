@@ -1,4 +1,4 @@
-import ImageEditor from "../../../lib/property/ImageEditor.js";
+import ImageEditor from "./../../../lib/property/images_editor/ImageEditor.js";
 
 let buttonElement = document.getElementById("publish");
 if(buttonElement) {
@@ -17,5 +17,5 @@ if(formulary) {
 (async () => {
     let imgEditor = new ImageEditor("images");
     
-    imgEditor.bindOnChange();
+    await imgEditor.bindOnChange();
 })();
