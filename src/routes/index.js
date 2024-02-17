@@ -9,18 +9,23 @@ import examplesRouter from "./examples/index.js";
 import propertyRoutes from "./property/index.js";
 import categoryRouter from "./category.js";
 import modelRouter from "./model/index.js";
+import debugRouter from "./debug/index.js";
 
 const routes = express.Router();
 
 // Open routes
 routes.use("/api", apiRouter);
 routes.use("/auth", authRoutes);
-routes.use("/examples", examplesRouter);
 routes.use("/property", propertyRoutes);
 
 // Protected routes
 routes.use("/model", protectRoute, modelRouter);
 routes.use("/user", protectRoute, userRoutes);
+
+// Admin routes
+// TODO: Admin protection
+routes.use("/debug", debugRouter);
+routes.use("/examples", examplesRouter);
 
 // Public assets folder
 routes.use(express.static("public"));

@@ -37,6 +37,7 @@ const uploadProperty = multer({
             // Ok
         } else {
             // Noooo, I don't like it.
+            console.log(`Image format is not accepted by the server`);
             return cb(null, false);
         }
         
@@ -48,8 +49,6 @@ const uploadProperty = multer({
                 || fileSize >= maxFileSize) {
             console.log(`Given image is over the limit, or under minimum!1!!! 😠😡😤😤🤨🤨🚨🚨`);
             return cb(null, false);
-        } else if (fileSize >= maxFileSize) {
-            return cb(null, false);
         }
         
         const propertyPath = propertyFolder(req.user.id, id);
@@ -57,10 +56,12 @@ const uploadProperty = multer({
         // Bounce images that are over the limit
         const images = fs.readdirSync(propertyPath);
         if(images.length >= propertyImagesConfiguration.maxImages) {
+            console.log(`Max images limit exceeded!`);
             // Don't upload this image
             return cb(null, false);
         }
         
+        console.log(`Image uploaded!`);
         return cb(null, true);
     }
 });
