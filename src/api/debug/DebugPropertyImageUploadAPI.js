@@ -1,12 +1,14 @@
-import DebugPropertyImageUploadClass from "../../debug/DebugPropertyImageUploadClass.js";
+import axios from "axios";
+
+import DebugPropertyImageUploadModel from "../../debug/DebugPropertyImageUploadModel.js";
 
 /**
  * 
  */
 export default class DebugPropertyImageUploadAPI {
     
-    constructor() {
-        
+    constructor(serverUrl, jwtToken = '') {
+        this.setInstance(serverUrl, jwtToken);
     }
     
     /**
@@ -16,8 +18,6 @@ export default class DebugPropertyImageUploadAPI {
      * @param {string} jwtToken JWT Authentication token(optional)
      */
     setInstance(serverUrl, jwtToken = '') {
-        // Location is not defined in nodejs
-        const isUndefined = typeof(location) === 'undefined';
         
         // Create headers
         let headers = {
@@ -28,6 +28,8 @@ export default class DebugPropertyImageUploadAPI {
             headers["Cookie"] = `_token=${jwtToken}`;
         }
         
+        // Location is not defined in nodejs
+        const isUndefined = typeof(location) === 'undefined';
         if(!isUndefined) {
             this.instance = axios.create({
                 withCredentials: true,
@@ -47,6 +49,20 @@ export default class DebugPropertyImageUploadAPI {
         }
     }
     
+    // --- Information ---
+    setActionStage(actionStage) {
+        this.actionStage = actionStage;
+    }
+    
+    setCourseUUID(uuid){
+        this.courseUuid = uuid;
+    }
+    
+    setImageNames(images) {
+        this.imageNames = images;
+    }
+    
+    // --- Actual functionality ---
     /**
      * Create message
      * 
@@ -56,11 +72,26 @@ export default class DebugPropertyImageUploadAPI {
      * @param {*} imageName 
      * @returns 
      */
-    async createMessage(title, message, status, imageName) {
-        // Create message
-        const imageInfo = new DebugPropertyImageUploadClass(title, message, status, imageName);
+    async createMessage(title, message, status) {
+        if(!this.courseUuid) {
+            throw Error("Course uuid can't be empty!");
+        }
         
-        const res = await this.instance.post("/debug/model/debug_property_image_upload", {
+        if(!this.actionStage) {
+            throw Error("Action stage can't be empty!");
+        }
+        
+        // Create message
+        const imageInfo = new DebugPropertyImageUploadModel(
+            title,
+            message,
+            status,
+            this.imageNames,
+            this.courseUuid,
+            this.actionStage,
+        );
+        
+        const res = await this.instance.post("/debug/model/debug_property_image_upload/create", {
             imageInfo,
         })
             .then((res) => res)

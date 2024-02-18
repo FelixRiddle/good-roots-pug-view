@@ -17,14 +17,16 @@ const createRouter = express.Router();
 createRouter.post("/create", async (req, res) => {
     try {
         const imageInfo = req.body.imageInfo;
-        const { message, status } = imageInfo;
+        const { message, status, actionCourseUuid, actionStage } = imageInfo;
         
         const propImage = await DebugPropertyImageUpload.create({
             action: imageInfo.action,
-            image_name: imageInfo.imageName,
+            imageNames: imageInfo.imageNames,
             title: imageInfo.title,
             message,
             status,
+            actionCourseUuid,
+            actionStage
         });
         
         return res.send({

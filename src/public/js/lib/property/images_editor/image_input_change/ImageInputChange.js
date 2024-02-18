@@ -1,3 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
+
+import DebugPropertyImageUploadAPI from "../../../../../../api/debug/DebugPropertyImageUploadAPI.js";
 import PropertyImagesUtils from "../../../../config/PropertyImagesUtils.js";
 import propertyImagesConfiguration from "../../../../config/propertyImagesConfig.js";
 import MessageController from "../../../../messages/controller/MessagesController.js";
@@ -14,6 +17,12 @@ const REMOVE_EXTRA_IMAGES = 4;
 // Executed at the end
 const REMOVE_IMAGES_WHEN_FINISHED = 1;
 const UPLOAD_IMAGES = 3;
+
+// Action stage
+// 1) Frontend validation
+const ACTION_STAGE = 1;
+// Course uuid
+const COURSE_UUID = uuidv4();
 
 /**
  * On images input change
@@ -39,6 +48,9 @@ export default class ImageInputChange {
     
     stop = false;
     
+    // For the debugging api
+    debugEnabled = false;
+    
     /**
      * 
      * @param {ImagesAPI} api 
@@ -56,6 +68,32 @@ export default class ImageInputChange {
     }
     
     /**
+     * Enable debug
+     */
+    async enableDebug() {
+        console.log(`[Image input change] Enabled debug`);
+        
+        // Debug
+        this.debugImageUploadAPI = new DebugPropertyImageUploadAPI();
+        console.log(`Uuid type: ${typeof(COURSE_UUID)}`);
+        
+        // Identification information
+        this.debugImageUploadAPI.setActionStage(ACTION_STAGE);
+        this.debugImageUploadAPI.setCourseUUID(COURSE_UUID)
+        
+        // Create first message
+        this.debugImageUploadAPI.createMessage(
+            "Start process",
+            "Start process of uploading an image",
+            0,
+            ""
+        );
+        
+        // Tell the class that debug was enabled
+        this.debugEnabled = true;
+    }
+    
+    /**
      * The callback is awaited
      * 
      * @param {function} cb Callback
@@ -67,7 +105,7 @@ export default class ImageInputChange {
             
             // Start rules
             if(thisObj.startRules.length > 0) {
-                thisObj.onStart();
+                await thisObj.onStart();
                 
                 // Some rules may want to stop the code from running
                 if(thisObj.stop) {
@@ -105,13 +143,13 @@ export default class ImageInputChange {
     /**
      * Functions at the start
      */
-    onStart() {
+    async onStart() {
         for(let rule of this.startRules) {
             switch(rule) {
                 case IMAGES_NOT_ZERO: {
                     console.log("Images not zero");
                     // Remove images from the input
-                    this.imagesNotZeroFn();
+                    await this.imagesNotZeroFn();
                     break;
                 }
             };
@@ -170,7 +208,7 @@ export default class ImageInputChange {
     }
     
     // --- Rules functions ---
-    imagesNotZeroFn() {
+    async imagesNotZeroFn() {
         // Check that there are files
         const files = this.imagesInput.files;
         console.log(`Images: `, files.length);
@@ -178,6 +216,23 @@ export default class ImageInputChange {
             console.log("No images, stop");
             
             this.stop = true;
+        }
+        
+        // Check for debug thingy
+        if(this.debugEnabled) {
+            if(this.stop) {
+                await this.debugImageUploadAPI.createMessage(
+                    "More than zero images",
+                    "Validate that there are more than zero images",
+                    4,
+                );
+            } else {
+                await this.debugImageUploadAPI.createMessage(
+                    "More than zero images",
+                    "Validate that there are more than zero images",
+                    2,
+                );
+            }
         }
     }
     

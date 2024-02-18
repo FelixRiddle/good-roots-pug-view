@@ -7,11 +7,13 @@
  *      status: 1,
  *      message: 'Message',
  */
-export default class DebugPropertyImageUploadClass {
-    constructor(title, message, status, imageName) {
+export default class DebugPropertyImageUploadModel {
+    constructor(title, message, status, imageNames, uuid, actionStage) {
         this.title = title;
         this.message = message;
         this.status = status;
-        this.imageName = imageName;
+        this.imageNames = imageNames;
+        this.actionCourseUuid = uuid;
+        this.actionStage = actionStage;
     }
 }

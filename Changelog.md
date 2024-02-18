@@ -26,6 +26,7 @@ Messages:
 This update is set to improve the section of setting an image
 
 - The frontend validates the image size
+- [Development] Adding a section for debug visualization
 - [Development] Code is cleaner
 
 [0.7.0]

@@ -172,6 +172,8 @@ export default class ImageEditor {
     async bindOnChange() {
         const inputChange = new ImageInputChange(this.api, this.inputId);
         
+        await inputChange.enableDebug();
+        
         // Enable all rules
         inputChange.imagesNotZero();
         inputChange.uploadImages();

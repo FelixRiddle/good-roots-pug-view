@@ -3,11 +3,28 @@ import { DataTypes } from "sequelize";
 import db from "../config/db.js";
 
 const DebugPropertyImageUpload = db.define("debug-property-image-upload", {
+    // This is for every entry, I need a bigger set, which will be the whole course of actions
     id: {
         type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+    },
+    // Action course uuid
+    // (because configuring auto increment to act however I want, it's kinda hard)
+    actionCourseUuid: {
+        // String instead of uuid
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    // Actions stage
+    // 1) Frontend validation
+    // 2) Folder creation and validation
+    // 3) Backend validation
+    // 4) Endpoint finishing touches
+    actionStage: {
+        type: DataTypes.SMALLINT,
+        allowNull: false,
     },
     // Action type
     // 'validate_image_size'
@@ -16,8 +33,9 @@ const DebugPropertyImageUpload = db.define("debug-property-image-upload", {
         allowNull: true,
     },
     // Image information
-    image_name: {
-        type: DataTypes.STRING,
+    // Array is not available in MySQL
+    imageNames: {
+        type: DataTypes.JSON,
         allowNull: true,
     },
     // State information
@@ -29,6 +47,11 @@ const DebugPropertyImageUpload = db.define("debug-property-image-upload", {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    // 1) Normal
+    // 2) Success
+    // 3) Warning
+    // 4) Error
+    // 5) Notification
     status: {
         type: DataTypes.INTEGER,
         allowNull: false,
