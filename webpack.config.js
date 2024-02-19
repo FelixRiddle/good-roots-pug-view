@@ -94,6 +94,13 @@ export default {
             ],
             filename: `js/validation/validation.js`
         },
+        // Debug routes
+        routes_debug_user_property_images_upload: {
+            import: [
+                `${publicRoutes}debug/user/property/images/upload.js`
+            ],
+            filename: "js/routes/debug/user/property/images/upload.js"
+        },
         // Routes examples
         routes_examples_map_draggable_marker: {
             import: [

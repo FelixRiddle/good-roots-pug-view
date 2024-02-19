@@ -5,5 +5,52 @@ block content
     
     p Track progress of uploaded images to the server 
     
-    //- TODO: Create a database model to track the progress of a uploaded image
-    
+    //- TODO: Create a database model to track the progress of a uploaded image//- Property list
+    div(class="bg-white shadow rounded-lg")
+        //- Show property rows
+        ul(class="divide-y divide-gray-200")
+            //- Iterate over the debug entries
+            each debugEntry in debugEntries
+                li(
+                    id=`debugEntryRow_${debugEntry.id}`
+                )
+                    //- Identification
+                    div(
+                        id=`${debugEntry.actionCourseUuid}`
+                        hidden
+                    )
+                    
+                    //- Display row
+                    div(
+                        class="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 md:space-y-0 gap-4"
+                    )
+                        //- Property information
+                        div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")
+                            //- Debug entry information
+                            //- Debug entry title
+                            h4(
+                                class="block text-2xl font-extrabold text-indigo-600"
+                                id=`debugEntryView_${debugEntry.id}`
+                                href=`#`
+                                target="_blank"
+                                style="display: block;"
+                            )=debugEntry.title
+                            
+                            //- Description
+                            p(
+                                class="text-sm font-bold"
+                                style="display: block;"
+                            )=debugEntry.message
+                        
+                        //- Edit property
+                        div(class="sm:w-1/4 md:w-2/6 lg:flex-1 flex flex-col gap-2 lg:flex-row")
+                            //- Delete
+                            input(
+                                type="submit"
+                                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800 w-full`
+                                id=`deleteDebugEntry_${debugEntry.id}`
+                                value=`Delete`
+                            )
+
+block scripts
+    script(src="/js/routes/debug/user/property/images/upload.js")

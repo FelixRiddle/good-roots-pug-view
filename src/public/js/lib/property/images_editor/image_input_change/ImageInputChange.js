@@ -208,6 +208,37 @@ export default class ImageInputChange {
     }
     
     // --- Rules functions ---
+    /**
+     * Check on the stop variable and send a message for either case
+     * 
+     * It first checks for debug enabled
+     * 
+     */
+    async sendMessageOnStop(
+        messageTitle,
+        message,
+    ) {
+        // Check for debug thingy
+        if(this.debugEnabled) {
+            if(this.stop) {
+                await this.debugImageUploadAPI.createMessage(
+                    messageTitle,
+                    message,
+                    4,
+                );
+            } else {
+                await this.debugImageUploadAPI.createMessage(
+                    messageTitle,
+                    message,
+                    2,
+                );
+            }
+        }
+    }
+    
+    /**
+     * Images are not zero function
+     */
     async imagesNotZeroFn() {
         // Check that there are files
         const files = this.imagesInput.files;
@@ -218,22 +249,11 @@ export default class ImageInputChange {
             this.stop = true;
         }
         
-        // Check for debug thingy
-        if(this.debugEnabled) {
-            if(this.stop) {
-                await this.debugImageUploadAPI.createMessage(
-                    "More than zero images",
-                    "Validate that there are more than zero images",
-                    4,
-                );
-            } else {
-                await this.debugImageUploadAPI.createMessage(
-                    "More than zero images",
-                    "Validate that there are more than zero images",
-                    2,
-                );
-            }
-        }
+        // Send message on stop
+        this.sendMessageOnStop(
+            "More than zero images",
+            "Validate that there are more than zero images"
+        );
     }
     
     /**
@@ -242,6 +262,12 @@ export default class ImageInputChange {
     async uploadImagesFn() {
         // Get form data from it
         let formData = new FormData(document.getElementById("publish_image"));
+        
+        await this.debugImageUploadAPI.createMessage(
+            "Send image",
+            "Send image to the backend",
+            2,
+        );
         
         // Send images to server
         await this.api.instance.postForm(
@@ -262,6 +288,12 @@ export default class ImageInputChange {
             
             this.stop = true;
         }
+        
+        // Send message on stop
+        this.sendMessageOnStop(
+            "Stop on extra images",
+            "Stop when there are more images than the limit declared by the server"
+        );
     }
     
     /**
@@ -290,12 +322,25 @@ export default class ImageInputChange {
                 this.stop = true;
             }
         }
+        
+        // Send message on stop
+        this.sendMessageOnStop(
+            "Greater file size",
+            "Stop the code, when there are images that have a greater file size than they should"
+        );
     }
     
-    removeImagesWhenFinishedFn() {
+    async removeImagesWhenFinishedFn() {
         // Remove images from the input
         // We will use the names to check which ones do exist
         this.imagesInput.value = [];
+        
+        // Send message on stop
+        await this.debugImageUploadAPI.createMessage(
+            "Remove images",
+            "Remove images from the input when finished",
+            2,
+        );
     }
     
     // --- Enable rules ---
