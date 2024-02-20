@@ -6,6 +6,7 @@ import Category from "../models/Category.js";
 import Price from "../models/Price.js";
 import User from "../models/User.js";
 
+// WARNING: Don't remove!!11!!!!! 😡😡😡
 // Some tables have to be imported just to be defined
 import UserMessages from "../models/UserMessages.js";
 import DebugPropertyImageUpload from "../models/DebugPropertyImageUpload.js";

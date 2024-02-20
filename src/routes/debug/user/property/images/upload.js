@@ -19,7 +19,7 @@ uploadRouter.get("/upload", async (req, res) => {
                 [ 'actionCourseUuid', 'DESC' ]
             ]
         });
-        console.log(`Debug model: `, debugModel);
+        // console.log(`Debug model: `, debugModel);
         
         return res.render("debug/user/property/images/upload", {
             debugEntries: debugModel,

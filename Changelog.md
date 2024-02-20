@@ -9,7 +9,7 @@ Or even simplier
 
 # Changelog
 
-[0.8.0]
+[0.10.0]
 
 Status messages
 
@@ -21,12 +21,12 @@ Messages:
 * Warn when uploading a heavy image
 * Warn for invalid data in formularies
 
-[0.7.1]
+[0.8.0]
 
 This update is set to improve the section of setting an image
 
 - The frontend validates the image size
-- [Development] Adding a section for debug visualization
+- [Development] Added a section for debug visualization
 - [Development] Code is cleaner
 
 [0.7.0]

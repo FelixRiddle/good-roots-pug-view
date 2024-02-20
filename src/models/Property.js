@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../config/db.js";
+import User from "./User.js";
 
 const Property = db.define("property", {
     id: {
@@ -53,5 +54,7 @@ const Property = db.define("property", {
 }, {
     tableName: "property",
 });
+
+Property.belongsTo(User);
 
 export default Property;

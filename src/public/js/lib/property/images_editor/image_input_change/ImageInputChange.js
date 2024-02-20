@@ -68,6 +68,15 @@ export default class ImageInputChange {
     }
     
     /**
+     * Set property id
+     * 
+     * @param {number} id 
+     */
+    setPropertyId(id) {
+        this.propertyId = id;
+    }
+    
+    /**
      * Enable debug
      */
     async enableDebug() {
@@ -303,6 +312,7 @@ export default class ImageInputChange {
      */
     removeHeavyImagesFn() {
         // Remove files that don't fit the size configuration
+        // TODO: This looks ABSTRACTABLE 😤😤😤
         for(const image of this.imagesInput.files) {
             // Get image size
             const bytesSize = image.size;

@@ -1,9 +1,11 @@
 import express from "express";
 
+import { libUserRouter } from "express-authentication";
+
+import authRoutes from "./auth/index.js";
 import userRoutes from "./user/index.js";
 import protectRoute from "../middleware/auth/protectRoute.js";
 import homeRouter from "./home.js";
-import authRoutes from "./auth/index.js";
 import apiRouter from "./api/index.js";
 import examplesRouter from "./examples/index.js";
 import propertyRoutes from "./property/index.js";
@@ -15,18 +17,28 @@ const routes = express.Router();
 
 // Open routes
 routes.use("/api", apiRouter);
-routes.use("/auth", authRoutes);
 routes.use("/property", propertyRoutes);
 
 // Protected routes
 routes.use("/model", protectRoute, modelRouter);
-routes.use("/user", protectRoute, userRoutes);
 
 // Admin routes
 // TODO: Admin protection
 routes.use("/debug", debugRouter);
 routes.use("/examples", examplesRouter);
 
+// --- Auth and user ---
+// We've got these two
+// Auth must not be protected though
+// And we need a base path for these routes
+routes.use("/auth", authRoutes);
+routes.use("/user", protectRoute, userRoutes);
+
+// Auth routes
+// Redundant /auth/auth, anyways it doesn't matter
+routes.use("/auth", libUserRouter);
+
+// --- Public ---
 // Public assets folder
 routes.use(express.static("public"));
 

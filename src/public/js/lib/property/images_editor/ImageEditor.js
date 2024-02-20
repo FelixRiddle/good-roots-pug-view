@@ -171,6 +171,7 @@ export default class ImageEditor {
      */
     async bindOnChange() {
         const inputChange = new ImageInputChange(this.api, this.inputId);
+        inputChange.setPropertyId(this.propertyId);
         
         await inputChange.enableDebug();
         
@@ -184,77 +185,8 @@ export default class ImageEditor {
         await inputChange.enableWithCallback(() => {});
         
         return;
-        // Leaving here for reference or something IDK
-        const imagesInput = document.getElementById(this.inputId);
-        if(imagesInput) {
-            // I had problems once for using 'this' keyword inside an event listener, so I rather
-            // not do that.
-            let thisObject = this;
-            
-            imagesInput.addEventListener("change", async (event) => {
-                console.log("Images changed");
-                
-                console.log(`Property images: `, thisObject.propertyImages.propertyImages);
-                
-                // Test
-                console.log(`Image names: `, this.propertyImages.names());
-                
-                // I need to get the new files only
-                
-                // Remove files that don't fit the size configuration
-                for(const image of imagesInput.files) {
-                    const bytesSize = image.size;
-                    const sizeInMB = (bytesSize / (1024*1024)).toFixed(2);
-                    console.log(`Image: `, image);
-                    
-                    // Check that file sizes are below the maximum allowed
-                    const maxSize = PropertyImagesUtils.maxFileSizeMB();
-                    if(maxSize < sizeInMB) {
-                        console.log(`Max size exceeded!`);
-                        
-                        // Create message
-                        const msgCtrl = new MessageController();
-                        msgCtrl.insertMessage("Max file size exceeded", 4);
-                        
-                        return;
-                    }
-                };
-                
-                // If the size is greater remove the images
-                // TODO: This limit has to work on the backend too, and test it.
-                // TODO: This limit has to work here on the frontend, and test it.
-                if(imagesInput.files.length >= propertyImagesConfiguration.maxImages) {
-                    // Get current images...
-                    // Idk where the 'getImagesNameArray' method went, it seems it was deleted, my bad.
-                    // let currentImages = thisObject.getImagesNameArray();
-                    
-                    return;
-                }
-                
-                // TODO: Check that these are not the previous images
-                // Check whether something was added or removed
-                if(imagesInput.files.length >= this.previousImagesInputLength) {
-                    // Addition
-                    
-                    // Totally unnecessary, don't know why I did, but I leave it there just in case
-                    // let res = await thisObject.preflightRequest(imagesInput.files);
-                    
-                    // Get form data from it
-                    let formData = new FormData(document.getElementById("publish_image"));
-                    
-                    // Send images to server
-                    await thisObject.api.instance.postForm(
-                        `/set_image/${this.propertyId}`,
-                        formData
-                    );
-                }
-                
-                // Success
-                this.onSuccessImagesChange(imagesInput);
-            });
-        } else {
-            console.log(`The element with id 'images' couldn't be found!!!! 😡😡😡`);
-        }
+        // Success
+        this.onSuccessImagesChange(imagesInput);
     }
     
     /**
