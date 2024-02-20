@@ -9,7 +9,7 @@ Or even simplier
 
 # Changelog
 
-[0.10.0]
+[0.x.0]
 
 Status messages
 
@@ -20,6 +20,12 @@ They were somehow working before, but I've completely changed the scheme, now th
 Messages:
 * Warn when uploading a heavy image
 * Warn for invalid data in formularies
+
+[0.8.0]
+
+Separated authentication to another project, so in this version we will bridge those two
+
+- Bridge authentication with the package 'express-authentication'
 
 [0.7.1]
 

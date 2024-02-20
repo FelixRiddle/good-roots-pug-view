@@ -12,6 +12,7 @@ import propertyRoutes from "./property/index.js";
 import categoryRouter from "./category.js";
 import modelRouter from "./model/index.js";
 import debugRouter from "./debug/index.js";
+import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";
 
 const routes = express.Router();
 
@@ -36,7 +37,7 @@ routes.use("/user", protectRoute, userRoutes);
 
 // Auth routes
 // Redundant /auth/auth, anyways it doesn't matter
-routes.use("/auth", libUserRouter);
+routes.use(authBaseRoute, libUserRouter);
 
 // --- Public ---
 // Public assets folder

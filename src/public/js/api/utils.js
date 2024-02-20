@@ -1,0 +1,30 @@
+import axios from "axios";
+import serverUrl from "../web/serverUrl";
+
+/**
+ * Create axios instance on the frontend or backend
+ * 
+ * @param {*} url 
+ * @param {*} endpoint 
+ */
+function createAxiosInstance(url, endpoint) {
+    
+    // Get full app url
+    let fullAppUrl = ``;
+    if(endpoint) {
+        fullAppUrl = `${serverUrl(url)}/${endpoint}`;
+    } else {
+        fullAppUrl = `${serverUrl(url)}`;
+    }
+    
+    // Create axios instance
+    this.instance = axios.create({
+        baseURL: `${fullAppUrl}`,
+        timeout: 2000,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+}
+
+export default createAxiosInstance;
