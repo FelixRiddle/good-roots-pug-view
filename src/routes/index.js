@@ -36,8 +36,7 @@ routes.use("/auth", authRoutes);
 routes.use("/user", protectRoute, userRoutes);
 
 // Auth routes
-// Redundant /auth/auth, anyways it doesn't matter
-routes.use(authBaseRoute, libUserRouter);
+routes.use(authBaseRoute(), libUserRouter);
 
 // --- Public ---
 // Public assets folder

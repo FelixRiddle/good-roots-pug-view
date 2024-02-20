@@ -94,6 +94,13 @@ export default {
             ],
             filename: `js/validation/validation.js`
         },
+        // Authentication routes
+        routes_auth_login: {
+            import: [
+                `${publicRoutes}auth/login.js`
+            ],
+            filename: "js/routes/auth/login.js"
+        },
         // Debug routes
         routes_debug_user_property_images_upload: {
             import: [

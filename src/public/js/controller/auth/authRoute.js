@@ -1,3 +1,3 @@
 export function authBaseRoute() {
-    return "/auth";
+    return "/auth2";
 }

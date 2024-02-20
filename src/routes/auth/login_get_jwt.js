@@ -7,7 +7,7 @@
 import express from "express";
 
 import { generateJwtToken } from "../../helpers/tokens.js";
-import LoginEndpointValidation from "../../api/auth/LoginEndpointValidation.js";
+import { LoginEndpointValidation } from "express-authentication";
 
 const loginGetJwtRouter = express.Router();
 

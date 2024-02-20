@@ -1,5 +1,6 @@
 import axios from "axios";
-import serverUrl from "../web/serverUrl";
+
+import serverUrl from "../web/serverUrl.js";
 
 /**
  * Create axios instance on the frontend or backend

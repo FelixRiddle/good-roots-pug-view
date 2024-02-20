@@ -3,7 +3,8 @@ import express from "express";
 import { generateJwtToken } from "../../helpers/tokens.js";
 import expand from "../../controllers/expand.js";
 import { serverUrl } from "../../controllers/env/env.js";
-import LoginEndpointValidation from "../../api/auth/LoginEndpointValidation.js";
+// import LoginEndpointValidation from "../../api/auth/LoginEndpointValidation.js";
+import { LoginEndpointValidation } from "express-authentication";
 
 const loginRouter = express.Router();
 

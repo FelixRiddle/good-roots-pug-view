@@ -1,4 +1,4 @@
-import createAxiosInstance from "../utils";
+import createAxiosInstance from "../utils.js";
 
 /**
  * Public property api

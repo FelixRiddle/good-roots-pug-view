@@ -31,4 +31,11 @@ block content
                         a.text-gray-500.text-xs(href="/auth/register") Don't have an account? Register
                         a.text-gray-500.text-xs(href="/auth/forgotPassword") Forgot password
                     
-                    input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
+                    input(
+                        id="submitLogin"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit"
+                        value="Login"
+                    )
+
+block scripts
+    script(src="js/routes/auth/login.js") 
