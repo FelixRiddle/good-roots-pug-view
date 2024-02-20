@@ -21,7 +21,7 @@ Messages:
 * Warn when uploading a heavy image
 * Warn for invalid data in formularies
 
-[0.8.0]
+[0.7.1]
 
 This update is set to improve the section of setting an image
 
