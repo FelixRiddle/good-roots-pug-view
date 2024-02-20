@@ -17,6 +17,7 @@ const REMOVE_EXTRA_IMAGES = 4;
 // Executed at the end
 const REMOVE_IMAGES_WHEN_FINISHED = 1;
 const UPLOAD_IMAGES = 3;
+const UPDATE_PROPERTY_IMAGES = 5;
 
 // Action stage
 // 1) Frontend validation
@@ -74,6 +75,13 @@ export default class ImageInputChange {
      */
     setPropertyId(id) {
         this.propertyId = id;
+    }
+    
+    /**
+     * Set property images api
+     */
+    setPropertyImages(api) {
+        this.propertyImages = api;
     }
     
     /**
@@ -192,6 +200,7 @@ export default class ImageInputChange {
     async onFinish() {
         // Latest of all
         let removeImages = false;
+        let updatePropertyImages = false;
         
         // Execute every rule
         for(let rule of this.endRules) {
@@ -205,6 +214,10 @@ export default class ImageInputChange {
                     removeImages = true;
                     break;
                 }
+                case UPDATE_PROPERTY_IMAGES: {
+                    updatePropertyImages = true;
+                    break;
+                }
             }
         }
         
@@ -213,6 +226,11 @@ export default class ImageInputChange {
             console.log("Remove images when finished");
             // Remove images from the input
             this.removeImagesWhenFinishedFn();
+        }
+        
+        if(updatePropertyImages) {
+            // Update images view
+            this.updatePropertyImagesFn();
         }
     }
     
@@ -353,16 +371,17 @@ export default class ImageInputChange {
         );
     }
     
+    async updatePropertyImagesFn() {
+        // Update images view
+        this.propertyImages.updatePropertyImages();
+    }
+    
     // --- Enable rules ---
     /**
      * Check that images length is not zero
      */
     imagesNotZero() {
         this.startRules.push(IMAGES_NOT_ZERO);
-    }
-    
-    uploadImages() {
-        this.endRules.push(UPLOAD_IMAGES);
     }
     
     removeExtraImages() {
@@ -375,5 +394,13 @@ export default class ImageInputChange {
     
     removeImagesWhenFinished() {
         this.endRules.push(REMOVE_IMAGES_WHEN_FINISHED);
+    }
+    
+    uploadImages() {
+        this.endRules.push(UPLOAD_IMAGES);
+    }
+    
+    updatePropertyImages() {
+        this.endRules.push(UPDATE_PROPERTY_IMAGES);
     }
 }

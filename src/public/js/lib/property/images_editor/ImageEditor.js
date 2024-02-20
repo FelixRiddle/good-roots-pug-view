@@ -172,6 +172,7 @@ export default class ImageEditor {
     async bindOnChange() {
         const inputChange = new ImageInputChange(this.api, this.inputId);
         inputChange.setPropertyId(this.propertyId);
+        inputChange.setPropertyImages(this.propertyImages);
         
         await inputChange.enableDebug();
         
@@ -181,6 +182,7 @@ export default class ImageEditor {
         inputChange.removeExtraImages();
         inputChange.removeHeavyImages();
         inputChange.removeImagesWhenFinished();
+        inputChange.updatePropertyImages();
         
         await inputChange.enableWithCallback(() => {});
         
