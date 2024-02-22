@@ -17,8 +17,12 @@ const AUTH_ACTION_DELETE = 4;
  * 
  * For authentication my standards are:
  * * Submit button id is: 'authFormSubmit'
+ * 
+ * Formulary inputs:
+ * * Name field id: 'name'
  * * Email field id is: 'email'
  * * Password field id is: 'password'
+ * * Confirm password field id is: 'confirmPassword'
  * 
  * The id is the same name of the field in the object data
  */
@@ -170,5 +174,32 @@ export default class AuthMarkupController {
         this.authAction = AUTH_ACTION_DELETE;
         
         return this;
+    }
+    
+    // --- Presets ---
+    /**
+     * Login preset
+     * 
+     * Assumes you follow my standard form
+     */
+    async loginPreset() {
+        this.setActionLogin()
+            .appendFormFieldId("email")
+            .appendFormFieldId("password");
+        
+        await this.bindOnSubmitClick();
+    }
+    
+    /**
+     * Register preset
+     */
+    async registerPreset() {
+        this.setActionRegister()
+            .appendFormFieldId("name")
+            .appendFormFieldId("email")
+            .appendFormFieldId("password")
+            .appendFormFieldId("confirmPassword");
+        
+        await this.bindOnSubmitClick();
     }
 }

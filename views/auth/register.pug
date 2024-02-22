@@ -10,7 +10,7 @@ block content
         
         .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
-                form.space-y-5(method="POST" action="/auth/register")
+                form.space-y-5
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="name") Your Name 
                         input#name.w-full.px-3.py-4.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Your Name" type="text" name="name" value=user ? user.name : "")
@@ -28,7 +28,11 @@ block content
                         a.text-gray-500.text-xs(href="/auth/login") Already have an account? Log in
                         a.text-gray-500.text-xs(href="/auth/forgotPassword") Forgot password
                     
-                    input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Create account")
+                    input(
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit"
+                        id="authFormSubmit"
+                        value="Create account"
+                        )
 
 block scripts
     script(src="/js/routes/auth/register.js")

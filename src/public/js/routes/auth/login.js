@@ -1,11 +1,7 @@
-// 8 Lines, what previously took like 60
 import AuthMarkupController from "../../api/auth/frontendMarkupController/AuthMarkupController.js";
 
+// Takes the login form and uploads data to the server
 (async() => {
-    const authMarkupCtrl = new AuthMarkupController()
-        .setActionLogin()
-        .appendFormFieldId("email")
-        .appendFormFieldId("password");
-    
-    await authMarkupCtrl.bindOnSubmitClick();
+    const authMarkupCtrl = new AuthMarkupController();
+    await authMarkupCtrl.loginPreset();
 })();
