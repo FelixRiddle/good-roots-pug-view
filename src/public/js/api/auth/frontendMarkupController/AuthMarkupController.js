@@ -32,9 +32,12 @@ export default class AuthMarkupController {
      * Append form field id
      * 
      * @param {string} id 
+     * @returns {Object}
      */
     appendFormFieldId(id) {
         this.formFieldsId.push(id);
+        
+        return this;
     }
     
     /**
@@ -67,7 +70,7 @@ export default class AuthMarkupController {
     async executeAuthAction() {
             
         // TODO: Frontend validation
-        const userData = getLoginUserData();
+        const userData = this.getFormData();
         
         const api = new FrontendAuthAPI(userData);
         let response = undefined;
@@ -116,17 +119,23 @@ export default class AuthMarkupController {
             return;
         }
         
+        console.log(`Bind ok!`);
+        
         // On submit click
         const thisObj = this;
         submitInput.addEventListener("click", async (e) => {
             e.preventDefault();
             
             // Perform the selected auth action
-            const response = thisObj.executeAuthAction();
+            const response = await thisObj.executeAuthAction();
             console.log(`Response: `, response);
             
+            // For every action the user is redirected to home
+            // For now is okay, but later on we want context on where the user was before authenticating
             window.location.href = `${serverUrl()}/home`;
         });
+        
+        return this;
     }
     
     // --- Set actions ---
@@ -135,14 +144,20 @@ export default class AuthMarkupController {
      */
     setActionLogin() {
         this.authAction = AUTH_ACTION_LOGIN;
+        
+        return this;
     }
     
     setActionRegister() {
         this.authAction = AUTH_ACTION_REGISTER;
+        
+        return this;
     }
     
     setActionLogout() {
         this.authAction = AUTH_ACTION_LOGOUT;
+        
+        return this;
     }
     
     /**
@@ -153,5 +168,7 @@ export default class AuthMarkupController {
      */
     setActionDelete() {
         this.authAction = AUTH_ACTION_DELETE;
+        
+        return this;
     }
 }
