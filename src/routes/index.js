@@ -36,7 +36,9 @@ routes.use("/auth", authRoutes);
 routes.use("/user", protectRoute, userRoutes);
 
 // Auth routes
-routes.use(authBaseRoute(), libUserRouter);
+const AUTH_BASE_ROUTE = authBaseRoute();
+console.log(`Auth base route: ${AUTH_BASE_ROUTE}`)
+routes.use(AUTH_BASE_ROUTE, libUserRouter());
 
 // --- Public ---
 // Public assets folder

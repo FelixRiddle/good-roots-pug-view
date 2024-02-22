@@ -201,34 +201,51 @@ export default {
         }
     },
     module: {
-        rules: [{
-            // Load css files
-            test: /\.css$/,
-            use: "css-loader"
-        }, {
-            test: /\.s[ac]ss$/i,
-            use: [
-                "style-loader",
-                "css-loader",
-                "sass-loader"
-            ]
-        }, {
-            test: /\.js$/,
-            include: [
-                path.resolve(__dirname, "src/public")
-            ],
-            use: {
-                loader: "babel-loader",
-                options: {
-                    presets: [
-                        "@babel/preset-env"
-                    ]
+        rules: [
+            {
+                // Load css files
+                test: /\.css$/,
+                use: "css-loader"
+            }, {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader"
+                ]
+            }, {
+                // This was here before
+                test: /\.js$/,
+                // test: /\.(?:js|mjs|cjs)$/,
+                // This wasn't here before
+                exclude: /node_modules/,
+                include: [
+                    path.resolve(__dirname, "src/public")
+                ],
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        // This wasn't here before
+                        // The documentation says that these would crash the build process
+                        // better leave it here
+                        // https://webpack.js.org/loaders/babel-loader/
+                        // "exclude": [
+                        //   // \\ for Windows, / for macOS and Linux
+                        //   /node_modules[\\/]core-js/,
+                        //   /node_modules[\\/]webpack[\\/]buildin/,
+                        // ],
+                        presets: [
+                            "@babel/preset-env",
+                            // This wasn't here before
+                            // { targets: "defaults" }
+                        ]
+                    }
                 }
+            }, {
+                test: /\.(png|jpg|jpeg|gif)$/i,
+                type: 'asset/resource'
             }
-        }, {
-            test: /\.(png|jpg|jpeg|gif)$/i,
-            type: 'asset/resource'
-        }]
+        ]
     },
     output: {
         // filename: "[name].js",

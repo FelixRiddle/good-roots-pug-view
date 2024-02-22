@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-// AuthAPI
-import TestAuthAPI from "../../../src/api/auth/AuthAPI.js";
+// import AuthAPI from "../../../src/api/auth/AuthAPI.js";
 import { confirmUserEmail } from "./authUtils.js";
+import { AuthAPI } from "express-authentication";
 
 describe("auth/email", () => {
     // Setup dotenv
@@ -20,7 +20,7 @@ describe("auth/email", () => {
     };
     
     const url = serverUrl();
-    const api = new TestAuthAPI(userData, url);
+    const api = new AuthAPI(userData, url);
     
     it('Confirm email', async function() {
         await api.registerUser();
