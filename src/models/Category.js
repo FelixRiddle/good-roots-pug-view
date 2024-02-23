@@ -1,9 +1,11 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-// Setup dotenv
-dotenv.config({
-    path: ".env"
-});
+// // Setup dotenv
+// dotenv.config({
+//     path: ".env"
+// });
+
+// console.log(`[Category] Environment setup`);
 
 import { DataTypes } from "sequelize";
 

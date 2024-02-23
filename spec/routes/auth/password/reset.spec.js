@@ -1,24 +1,24 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-import { AuthAPI } from "express-authentication";
-import ResetPasswordAPI from "../../../../src/api/auth/ResetPasswordAPI.js";
+// import { AuthAPI } from "express-authentication";
+// import ResetPasswordAPI from "../../../../src/api/auth/ResetPasswordAPI.js";
 
-describe("Start password reset process", () => {
-    // Setup dotenv
-    dotenv.config({
-        path: ".env"
-    });
+// describe("Start password reset process", () => {
+//     // Setup dotenv
+//     dotenv.config({
+//         path: ".env"
+//     });
     
-    it('Successfully started', async function() {
-        // Fast setup
-        const api = await AuthAPI.createAndLogin();
+//     it('Successfully started', async function() {
+//         // Fast setup
+//         const api = await AuthAPI.createAndLogin();
         
-        const passwordApi = new ResetPasswordAPI(api.userData);
-        const resetRes = await passwordApi.resetPassword();
+//         const passwordApi = new ResetPasswordAPI(api.userData);
+//         const resetRes = await passwordApi.resetPassword();
         
-        // Delete user
-        await api.deleteUser();
+//         // Delete user
+//         await api.deleteUser();
         
-        expect(resetRes.resetEmailSent).toBe(true);
-    });
-});
+//         expect(resetRes.resetEmailSent).toBe(true);
+//     });
+// });

@@ -1,3 +1,5 @@
+console.log(`[First line of code]`);
+
 // First of all the environment variables
 import { setupAll } from "./src/controllers/env/setDefaultEnvVariables.js";
 

@@ -1,12 +1,13 @@
-import db from "../config/db.js";
+import { MySQLDatabaseConnection, User } from "express-authentication";
 
 import Category from "../models/Category.js";
 import Price from "../models/Price.js";
-import User from "../models/User.js";
 
 import users from "../seed/users.js";
 import prices from "../seed/prices.js";
 import categories from "../seed/categories.js";
+
+const db = MySQLDatabaseConnection;
 
 // Main function
 async function main(args) {

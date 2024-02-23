@@ -1,15 +1,15 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-// Setup dotenv
-dotenv.config({
-    path: ".env"
-});
+// // Setup dotenv
+// dotenv.config({
+//     path: ".env"
+// });
+
+// console.log(`[Property] Environment setup`);
 
 import { DataTypes } from "sequelize";
 
 import { MSQLDC_FetchENV, User } from "express-authentication";
-
-// console.log(`[On Import declaration] Property model`);
 
 const Property = MSQLDC_FetchENV().define("property", {
     id: {

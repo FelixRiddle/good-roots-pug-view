@@ -9,7 +9,7 @@ export function setupProtocol() {
     }
 }
 
-function printMysqlEnvironmentVariables() {
+export function printMysqlEnvironmentVariables() {
     
     // Mysql information
     const MYSQL_NAME = process.env.DATABASE_NAME ?? process.env.MYSQL_DATABASE_NAME;
