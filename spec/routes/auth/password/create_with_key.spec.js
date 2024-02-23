@@ -1,9 +1,7 @@
 import dotenv from "dotenv";
 import generator from 'generate-password';
 
-import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
-import ResetPasswordAPI from "../../../../src/api/auth/ResetPasswordAPI.js";
-import ResetPasswordPrivateKey from "../../../../src/controllers/env/private/ResetPasswordPrivateKey.js";
+import { AuthAPI, ResetPasswordAPI, ResetPasswordPrivateKey, confirmUserEmailWithPrivateKey } from "express-authentication";
 import { serverUrl } from "../../../../src/controllers/env/env.js";
 
 describe("Create with key", () => {

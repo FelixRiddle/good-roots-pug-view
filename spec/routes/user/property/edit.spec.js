@@ -6,7 +6,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../../src/controllers/env/env.js";
-import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
+import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
 // For data validation it uses the same as create endpoint so there's no need to test that

@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-import AuthAPI from "../../../../src/api/auth/AuthAPI.js";
+import { AuthAPI } from "express-authentication";
 import ResetPasswordAPI from "../../../../src/api/auth/ResetPasswordAPI.js";
 
 describe("Start password reset process", () => {

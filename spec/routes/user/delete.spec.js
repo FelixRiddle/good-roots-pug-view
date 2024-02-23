@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-import TestAuthAPI from "../../../src/api/auth/AuthAPI.js";
-import { confirmUserEmail } from "../auth/authUtils.js";
+import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
 
 describe("Delete user", () => {
     // Setup dotenv
@@ -19,12 +18,12 @@ describe("Delete user", () => {
     };
     
     const url = serverUrl();
-    const api = new TestAuthAPI(userData, url);
+    const api = new AuthAPI(userData, url);
     
     it('Delete user', async function() {
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         await api.loginGetJwt();
         

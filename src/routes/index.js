@@ -2,9 +2,8 @@ import express from "express";
 
 import { libUserRouter } from "express-authentication";
 
-import authRoutes from "./auth/index.js";
 import userRoutes from "./user/index.js";
-import protectRoute from "../middleware/auth/protectRoute.js";
+import { protectRoute } from "express-authentication";
 import homeRouter from "./home.js";
 import apiRouter from "./api/index.js";
 import examplesRouter from "./examples/index.js";
@@ -32,7 +31,6 @@ routes.use("/examples", examplesRouter);
 // We've got these two
 // Auth must not be protected though
 // And we need a base path for these routes
-routes.use("/auth", authRoutes);
 routes.use("/user", protectRoute, userRoutes);
 
 // Auth routes

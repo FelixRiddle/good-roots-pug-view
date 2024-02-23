@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-import TestAuthAPI from "../../../src/api/auth/AuthAPI.js";
-import { confirmUserEmail } from "./authUtils.js";
+import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
 
 describe("User register", () => {
     // Setup dotenv
@@ -21,12 +20,12 @@ describe("User register", () => {
             confirmPassword: "asd12345"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         const registerRes = await api.registerUser();
         
         // Confirm user email
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         // Login user to be able to delete it
         await api.loginGetJwt();
@@ -49,7 +48,7 @@ describe("User register", () => {
             confirmPassword: "asd"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
@@ -70,7 +69,7 @@ describe("User register", () => {
             confirmPassword: "Woh0dgvEByn6skV1BpUvx7X7XLio0HdaHtrMpacGBTCFImpjHUTb5fERCWkvV5A2A"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
@@ -93,7 +92,7 @@ describe("User register", () => {
             confirmPassword: "asdf1234"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
@@ -122,7 +121,7 @@ describe("User register", () => {
             confirmPassword: "asdf1234"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
@@ -142,7 +141,7 @@ describe("User register", () => {
             confirmPassword: "asdf1234"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();
@@ -163,7 +162,7 @@ describe("User register", () => {
             confirmPassword: "asdf1234"
         };
         
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         // The user will not be able to register so we can skip deletion
         const registerRes = await api.registerUser();

@@ -1,9 +1,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-// import AuthAPI from "../../../src/api/auth/AuthAPI.js";
-import { confirmUserEmail } from "./authUtils.js";
-import { AuthAPI } from "express-authentication";
+import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
 
 describe("auth/email", () => {
     // Setup dotenv
@@ -25,7 +23,7 @@ describe("auth/email", () => {
     it('Confirm email', async function() {
         await api.registerUser();
         
-        const confirmEmailRes = await confirmUserEmail(userData.email);
+        const confirmEmailRes = await confirmUserEmailWithPrivateKey(userData.email);
         
         await api.loginGetJwt();
         

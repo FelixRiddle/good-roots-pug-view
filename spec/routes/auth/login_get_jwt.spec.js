@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../src/controllers/env/env.js";
-import TestAuthAPI from "../../../src/api/auth/AuthAPI.js";
-import { confirmUserEmail } from "./authUtils.js";
+import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
 
 describe("auth/login_get_jwt", () => {
     // Setup dotenv
@@ -20,11 +19,11 @@ describe("auth/login_get_jwt", () => {
             password: "asd12345",
             confirmPassword: "asd12345"
         };
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         const loginRes = await api.loginGetJwt();
         
@@ -44,11 +43,11 @@ describe("auth/login_get_jwt", () => {
             password: userPassword,
             confirmPassword: userPassword
         };
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         // Change password
         api.userData.password = "asdf123456";
@@ -73,11 +72,11 @@ describe("auth/login_get_jwt", () => {
             password: userPassword,
             confirmPassword: userPassword
         };
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         api.userData.password = "asd";
         const loginRes = await api.loginGetJwt();
@@ -99,11 +98,11 @@ describe("auth/login_get_jwt", () => {
             password: userPassword,
             confirmPassword: userPassword
         };
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         api.userData.password = "sK4z5HQeMT5wQzyrqkwkKi1fTyc7eJe0sBjPpHM83pE3PRce4utfPlOpA6h4pEGm9";
         const loginRes = await api.loginGetJwt();
@@ -127,11 +126,11 @@ describe("auth/login_get_jwt", () => {
             password: userPassword,
             confirmPassword: userPassword
         };
-        const api = new TestAuthAPI(userData, url);
+        const api = new AuthAPI(userData, url);
         
         await api.registerUser();
         
-        await confirmUserEmail(userData.email);
+        await confirmUserEmailWithPrivateKey(userData.email);
         
         api.userData.email = "aaaaa@com";
         const loginRes = await api.loginGetJwt();
