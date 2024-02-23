@@ -6,7 +6,8 @@ import createRouter from "./create.js";
 
 const passwordRouter = express.Router();
 
-passwordRouter.use(createWithKeyRouter);
+// Replaced for 'express-authentication'
+// passwordRouter.use(createWithKeyRouter);
 passwordRouter.use(createRouter);
 passwordRouter.use(resetRouter);
 

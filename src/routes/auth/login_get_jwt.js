@@ -11,6 +11,7 @@ import { LoginEndpointValidation } from "express-authentication";
 
 const loginGetJwtRouter = express.Router();
 
+// Replaced for 'express-authentication'
 loginGetJwtRouter.post("/login_get_jwt", async(req, res) => {
     console.log(`POST /auth/login_get_jwt`);
     

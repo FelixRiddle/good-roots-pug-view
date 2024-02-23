@@ -1,17 +1,22 @@
+// NPM Packages
 import express from "express";
 
-import { libUserRouter } from "express-authentication";
+// My other packages
+import { libUserRouter, protectRoute } from "express-authentication";
 
-import userRoutes from "./user/index.js";
-import { protectRoute } from "express-authentication";
-import homeRouter from "./home.js";
-import apiRouter from "./api/index.js";
-import examplesRouter from "./examples/index.js";
-import propertyRoutes from "./property/index.js";
-import categoryRouter from "./category.js";
-import modelRouter from "./model/index.js";
-import debugRouter from "./debug/index.js";
+// Libs
 import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";
+
+// Routes
+import apiRouter from "./api/index.js";
+import authRoutes from "./auth/index.js";
+import categoryRouter from "./category.js";
+import debugRouter from "./debug/index.js";
+import examplesRouter from "./examples/index.js";
+import homeRouter from "./home.js";
+import modelRouter from "./model/index.js";
+import propertyRoutes from "./property/index.js";
+import userRoutes from "./user/index.js";
 
 const routes = express.Router();
 
@@ -33,7 +38,11 @@ routes.use("/examples", examplesRouter);
 // And we need a base path for these routes
 routes.use("/user", protectRoute, userRoutes);
 
-// Auth routes
+// Frontend authentication routes
+routes.use("/auth", authRoutes);
+
+// Backend authentication routes
+// Using 'express-authentication'
 const AUTH_BASE_ROUTE = authBaseRoute();
 console.log(`Auth base route: ${AUTH_BASE_ROUTE}`)
 routes.use(AUTH_BASE_ROUTE, libUserRouter());

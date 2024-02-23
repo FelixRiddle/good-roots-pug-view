@@ -11,10 +11,12 @@ const authRoutes = express.Router();
 
 // Insert other routers
 authRoutes.use(emailRouter);
-authRoutes.use(loginGetJwtRouter);
 authRoutes.use(loginRouter);
 authRoutes.use(logoutRouter);
 authRoutes.use(registerRouter);
 authRoutes.use("/password", passwordRouter);
+
+// Replaced for 'express-authentication'
+// authRoutes.use(loginGetJwtRouter);
 
 export default authRoutes;
