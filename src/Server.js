@@ -2,10 +2,9 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import express from 'express';
 
-import { getUser } from "express-authentication";
+import { getUser, MSQLDC_FetchENV } from "express-authentication";
 
 // This script also sets up the environment variables in .env
-import db from './config/db.js';
 import routes from './routes/index.js';
 import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
 import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationEmailPrivateKey.js';
@@ -165,9 +164,25 @@ export default class Server {
         
         // Connect to db
         try {
-            await db.authenticate();
+            // Fetch env variables on creation
+            // The method fetches them with the import statement
+            // (Had to waste a lot of time because of that)
+            // But the reason I fetched env variables on import before, is simply because it worked.
+            // Now outta nowhere it doesn't work anymore, I don't know why.
+            const fetchEnvOnCreation = true;
+            if(fetchEnvOnCreation) {
+                const mysqlConn = MSQLDC_FetchENV();
+                
+                await mysqlConn.authenticate();
+                
+                mysqlConn.sync();
+            } else {
+                await MySQLDatabaseConnection.authenticate();
+                
+                MySQLDatabaseConnection.sync();
+            }
             
-            db.sync();
+            console.log(`Connection Ok`);
             
             console.log("Successfully connected to db");
         } catch(err) {

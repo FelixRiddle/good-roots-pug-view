@@ -1,8 +1,16 @@
+import dotenv from "dotenv";
+
+// Setup dotenv
+dotenv.config({
+    path: ".env"
+});
+
 import { DataTypes } from "sequelize";
-import db from "../config/db.js";
+
+import { MSQLDC_FetchENV } from "express-authentication";
 import Property from "./Property.js";
 
-const Price = db.define("price", {
+const Price = MSQLDC_FetchENV().define("price", {
     name: {
         type: DataTypes.STRING(128),
         allowNull: false,

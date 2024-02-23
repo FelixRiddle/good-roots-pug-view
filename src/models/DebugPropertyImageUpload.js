@@ -1,8 +1,15 @@
+import dotenv from "dotenv";
+
+// Setup dotenv
+dotenv.config({
+    path: ".env"
+});
+
 import { DataTypes } from "sequelize";
 
-import db from "../config/db.js";
+import { MSQLDC_FetchENV } from "express-authentication";
 
-const DebugPropertyImageUpload = db.define("debug-property-image-upload", {
+const DebugPropertyImageUpload = MSQLDC_FetchENV().define("debug-property-image-upload", {
     // This is for every entry, I need a bigger set, which will be the whole course of actions
     id: {
         type: DataTypes.BIGINT,

@@ -1,9 +1,15 @@
+import dotenv from "dotenv";
+
+// Setup dotenv
+dotenv.config({
+    path: ".env"
+});
+
 import { DataTypes } from "sequelize";
 
-import db from "../config/db.js";
-import User from "./User.js";
+import { MSQLDC_FetchENV, User } from "express-authentication";
 
-const UserMessages = db.define("user-messages", {
+const UserMessages = MSQLDC_FetchENV().define("user-messages", {
     id: {
         type: DataTypes.BIGINT,
         allowNull: false,

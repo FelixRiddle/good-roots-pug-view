@@ -1,8 +1,17 @@
-import { DataTypes } from "sequelize";
-import db from "../config/db.js";
-import User from "./User.js";
+import dotenv from "dotenv";
 
-const Property = db.define("property", {
+// Setup dotenv
+dotenv.config({
+    path: ".env"
+});
+
+import { DataTypes } from "sequelize";
+
+import { MSQLDC_FetchENV, User } from "express-authentication";
+
+// console.log(`[On Import declaration] Property model`);
+
+const Property = MSQLDC_FetchENV().define("property", {
     id: {
         type: DataTypes.BIGINT,
         allowNull: false,
