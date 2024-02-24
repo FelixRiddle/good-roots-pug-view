@@ -30,23 +30,34 @@ SERVER_PORT=3000
 # Defaults to https(it's set inside the app if not given)
 SERVER_PROTOCOL=https
 
-# MySQL database
-# The database should never be visible from the outside(From internet)
-# It should be accessed through specific endpoints in the backend
-DB_NAME=good_roots_tutorial_node_mvc
-DB_USERNAME=username
-DB_PASSWORD=password
-DB_HOST=localhost
-DB_PORT=3306
+BACKDOOR_SERVER_ACCESS_URL=http://localhost:38002
 
 # Allowed origins
 ORIGIN=http://localhost:3000
 
-# I don't know if these two are public or private
-# I think they're public because it's used in a public script in this example:
-# https://developers.arcgis.com/esri-leaflet/maps/
-ARCGIS_KEY=INSERT_KEY
-ARCGIS_DEFAULT_KEY=INSERT_KEY
+# --- Databases ---
+# General username and password for all databases(Recommended)
+DATABASE_USERNAME=username
+DATABASE_PASSWORD=password
+
+# General Database name and Collection/Table name
+DATABASE_NAME=bienesraices_node_mvc
+DATABASE_COLLECTION_NAME=user
+
+# --- DBSpecific ---
+# MySQL database
+# The database should never be visible from the outside(From internet)
+# It should be accessed through specific endpoints in the backend
+MYSQL_DATABASE_NAME=per-auth
+MYSQL_USERNAME=username
+MYSQL_PASSWORD=password
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+
+# MongoDB
+MONGO_HOST=localhost
+MONGO_PORT=27017
+
 
 ### Authentication, Keys and Sensible stuff ###
 # Note: Never share any of these!!
