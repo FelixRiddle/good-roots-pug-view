@@ -1,21 +1,10 @@
+import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 
-import { serverUrl } from "../../../../src/controllers/env/env.js";
 import { AuthAPI, envServerUrl } from "express-authentication";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
-describe("Create property", () => {
-    
-    // // Run asynchronous work before the tests start
-    // beforeEach(async function() {
-    //     // Register, and login
-    //     await api.createLoginGetInstance();
-    // });
-    
-    // afterEach(async () => {
-    //     await api.deleteUser();
-    // });
-    
+describe("Create property: ", () => {
     it('Successful property creation', async function() {
         // Setup dotenv
         dotenv.config({
@@ -24,8 +13,8 @@ describe("Create property", () => {
         
         // Create user data
         const userData = {
-            name: "Create property",
-            email: "create_property_tests@email.com",
+            name: "Alistar",
+            email: `${uuidv4()}@email.com`,
             password: "asd12345",
             confirmPassword: "asd12345"
         };
@@ -37,10 +26,16 @@ describe("Create property", () => {
         // Create user and login
         await api.registerUser();
         await api.confirmUserEmailWithPrivateKey(userData.email);
-        await api.loginGetJwt();
-        console.log(`Auth api OK`);
+        
+        // Login result
+        // We need to get its token
+        const loginResult = await api.loginGetJwt();
+        
+        const token = loginResult.token;
         
         const propertyApi = new PropertyAPI(api.instance);
+        // Set instance
+        propertyApi.setInstance(envServerUrl(), token);
         
         // Create some property
         const property = {

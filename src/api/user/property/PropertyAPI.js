@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /**
  * Property API
  */
@@ -8,6 +10,40 @@ export default class PropertyAPI {
      */
     constructor(instance) {
         this.instance = instance;
+    }
+    
+    /**
+     * Create instance
+     * 
+     * @param {string} serverUrl The server url
+     * @param {string} jwtToken JWT Authentication token(optional)
+     */
+    setInstance(serverUrl, jwtToken) {
+        // Location is not defined in nodejs
+        const isUndefined = typeof(location) === 'undefined';
+        // Create headers
+        let headers = {
+            "Content-Type": "application/json",
+            "Cookie": `_token=${jwtToken}`,
+        };
+        
+        if(!isUndefined) {
+            this.instance = axios.create({
+                withCredentials: true,
+                baseURL: `${location.origin}`,
+                timeout: 2000,
+                headers,
+            });
+        } else if(!serverUrl) {
+            throw Error("Server url is required when the AuthenticationAPI is used in NodeJS");
+        } else {
+            this.instance = axios.create({
+                withCredentials: true,
+                baseURL: `${serverUrl}`,
+                timeout: 2000,
+                headers,
+            });
+        }
     }
     
     /**
