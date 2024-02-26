@@ -1,11 +1,9 @@
 import { ArgumentParser } from "argparse";
 
-import packageJson from "../../package.json" assert { type: 'json' };
-
 import seeder from "./seeder.js";
 import tables from "./tables.js";
-
-const version = packageJson.version;
+import { setupAll } from "../controllers/env/setDefaultEnvVariables.js";
+import executeServerCommands from "./server.js";
 
 const parser = new ArgumentParser({
     description: "Argparse example"
@@ -50,16 +48,27 @@ parser.add_argument("--resetTables", {
     action: "store_true"
 });
 
+parser.add_argument("--serve", {
+    help: "Start the server",
+    action: "store_true"
+});
+
 // Parse arguments
-let args = parser.parse_args();
+const args = parser.parse_args();
 
 // Execute everything asynchronously
 (async () => {
+    
+    // Set environment variables
+    setupAll();
+    
     // Tables
     await tables(args);
     
     // Seeder
     await seeder(args);
     
-    process.exit(0);
+    await executeServerCommands(args);
+    
+    // process.exit(0);
 })();
