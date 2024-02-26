@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 
-import { AuthAPI, envServerUrl } from "express-authentication";
+import { AuthAPI, UserAPI, envServerUrl } from "express-authentication";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
 describe("Create property: ", () => {
@@ -14,7 +14,7 @@ describe("Create property: ", () => {
         // Create user data
         const userData = {
             name: "Alistar",
-            email: `${uuidv4()}@email.com`,
+            email: `alistar_${uuidv4()}@email.com`,
             password: "asd12345",
             confirmPassword: "asd12345"
         };
@@ -58,6 +58,10 @@ describe("Create property: ", () => {
         
         // Now delete every user property
         await propertyApi.deleteAll();
+        
+        // Create user api and delete user
+        const userApi = UserAPI.fromAuthenticatedAPI(api);
+        await userApi.delete();
         
         expect(propertyCreatedResult && propertyCreatedResult.propertyCreated).toBe(true);
     });
