@@ -1,4 +1,8 @@
-import { MySQLDatabaseConnection, User } from "express-authentication";
+// It works like this
+import ExpressAuthentication from "express-authentication";
+const { User } = ExpressAuthentication;
+
+import { MySQLDatabaseConnection } from "express-authentication";
 
 import Category from "../models/Category.js";
 import Price from "../models/Price.js";

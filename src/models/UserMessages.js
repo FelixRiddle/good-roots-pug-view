@@ -1,15 +1,11 @@
-// import dotenv from "dotenv";
 
-// // Setup dotenv
-// dotenv.config({
-//     path: ".env"
-// });
-
-// console.log(`[UserMessages] Environment setup`);
+// It works like this
+import ExpressAuthentication from "express-authentication";
+const { User } = ExpressAuthentication;
 
 import { DataTypes } from "sequelize";
 
-import { MSQLDC_FetchENV, User } from "express-authentication";
+import { MSQLDC_FetchENV } from "express-authentication";
 
 const UserMessages = MSQLDC_FetchENV().define("user-messages", {
     id: {

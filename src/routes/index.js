@@ -1,8 +1,9 @@
 // NPM Packages
 import express from "express";
 
-// My other packages
-import { libUserRouter, protectRoute } from "express-authentication";
+// It works like this
+import ExpressAuthentication from "express-authentication";
+const { libUserRouter, protectRoute } = ExpressAuthentication;
 
 // Libs
 import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";

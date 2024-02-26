@@ -1,7 +1,10 @@
 import express from "express";
 
 import mapRouter from "./map/index.js";
-import { protectRoute } from "express-authentication";
+
+// It works like this
+import ExpressAuthentication from "express-authentication";
+const { protectRoute } = ExpressAuthentication;
 
 const locationRouter = express.Router();
 

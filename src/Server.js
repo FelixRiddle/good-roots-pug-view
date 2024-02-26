@@ -2,7 +2,8 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import express from 'express';
 
-import { getUser, MSQLDC_FetchENV } from "express-authentication";
+import ExpressAuthentication from "express-authentication";
+const { getUser, MSQLDC_FetchENV } = ExpressAuthentication;
 
 // This script also sets up the environment variables in .env
 import routes from './routes/index.js';

@@ -4,7 +4,9 @@ import PropertyImages from "good-roots-assets/src/PropertyImages.js";
 import { MySQLDatabaseConnection } from "express-authentication";
 
 // Table definitions
-import { User } from "express-authentication";
+import ExpressAuthentication from "express-authentication";
+const { User } = ExpressAuthentication;
+
 import UserMessages from "../models/UserMessages.js";
 import DebugPropertyImageUpload from "../models/DebugPropertyImageUpload.js";
 import Category from "../models/Category.js";
