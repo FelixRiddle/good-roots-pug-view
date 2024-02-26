@@ -1,0 +1,11 @@
+
+//- Idea: make each view of properties [Visibility toggleable] and save the state
+section(class="py-5")
+    h2(class="text-center text-4xl font-extrabold pt-10")=page 
+    
+    //- pre= JSON.stringify(properties, undefined, 4)
+    
+    div(class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14")
+        if properties
+            each property in properties
+                include ./grid/square/squareView
