@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 
 import { serverUrl } from "../../../../src/controllers/env/env.js";
-import { AuthAPI, confirmUserEmailWithPrivateKey } from "express-authentication";
+import { AuthAPI, envServerUrl } from "express-authentication";
 import PropertyAPI from "../../../../src/api/user/property/PropertyAPI.js";
 
-describe("Get all", () => {
+describe("Get all: ", () => {
     // Setup dotenv
     dotenv.config({
         path: ".env"
@@ -32,6 +32,17 @@ describe("Get all", () => {
     });
     
     it('Get all test', async function() {
+        // The api is at 'auth2'
+        const url = `${envServerUrl()}/auth2`;
+        
+        const userPassword = "demacia_123";
+        const userData = {
+            name: "Garen",
+            email: `garen_${uuidv4()}@demacia.com`,
+            password: userPassword,
+            confirmPassword: userPassword
+        };
+        
         const propertyApi = new PropertyAPI(api.instance);
         
         // Create some property
