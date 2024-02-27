@@ -1,7 +1,10 @@
+import {
+    PropertyModel
+} from "../../mappings/models/index.js";
+
 import { serverUrl } from "../../controllers/env/env.js";
 import propertyFolder from "../../lib/user/userFolder/property/propertyFolder.js";
 import userFolder from "../../lib/user/userFolder/userFolder.js";
-import Property from "../../models/Property.js";
 
 const DEBUG = true;
 
@@ -47,9 +50,8 @@ export default async function userFolderMiddleware(req, res, next) {
         
         // Validate that the property exists
         // To prevent a potential exploit
-        const property = await Property.findByPk(id);
+        const property = await PropertyModel().findByPk(id);
         console.log(`Id: ${id}`);
-        console.log(`Property: `, property);
         if(!property) {
             console.log(`Property not found!`);
             return res.redirect(`${serverUrl()}/user/property/admin`);

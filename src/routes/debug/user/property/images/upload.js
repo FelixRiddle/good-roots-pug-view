@@ -1,5 +1,6 @@
 import express from "express";
-import DebugPropertyImageUpload from "../../../../../models/DebugPropertyImageUpload.js";
+
+import { DebugPropertyImageUpload } from "app-models";
 
 const uploadRouter = express.Router();
 

@@ -1,7 +1,6 @@
 import express from "express";
 
 import userFolderMiddleware from "../../../../middleware/user/userFolderMiddleware.js";
-import { relativePropertyImagesNorm } from "../../../../lib/user/userFolder/property/propertyFolder.js";
 import PropertyFolder from "../../../../user/userFolder/property/PropertyFolder.js";
 
 const getAllRouter = express.Router();

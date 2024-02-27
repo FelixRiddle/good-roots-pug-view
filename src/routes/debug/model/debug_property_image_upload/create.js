@@ -1,5 +1,7 @@
 import express from "express";
-import DebugPropertyImageUpload from "../../../../models/DebugPropertyImageUpload.js";
+
+import { DebugPropertyImageUploadModel } from "../../../../mappings/models/index.js";
+
 import Message from "../../../../public/js/messages/controller/Message.js";
 
 const createRouter = express.Router();
@@ -19,7 +21,7 @@ createRouter.post("/create", async (req, res) => {
         const imageInfo = req.body.imageInfo;
         const { message, status, actionCourseUuid, actionStage } = imageInfo;
         
-        const propImage = await DebugPropertyImageUpload.create({
+        const propImage = await DebugPropertyImageUploadModel().create({
             action: imageInfo.action,
             imageNames: imageInfo.imageNames,
             title: imageInfo.title,
@@ -28,6 +30,8 @@ createRouter.post("/create", async (req, res) => {
             actionCourseUuid,
             actionStage
         });
+        // propImage.save();
+        console.log(`Prop image debug saved`);
         
         return res.send({
             messages: [

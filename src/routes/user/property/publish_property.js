@@ -1,8 +1,11 @@
 import express from "express";
 import fs from "node:fs";
 
+import {
+    Property,
+} from "app-models";
+
 import userFolderMiddleware from "../../../middleware/user/userFolderMiddleware.js";
-import Property from "../../../models/Property.js";
 import { relativePropertyFolder } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const publishPropertyRouter = express.Router();
@@ -12,7 +15,8 @@ publishPropertyRouter.post("/publish_property/:id", userFolderMiddleware, async 
         const { id } = req.params;
         
         // Validate that the property exists
-        const property = await Property.findByPk(id);
+        const propertyModel = new Property();
+        const property = await propertyModel.findByPk(id);
         
         if(!property) {
             console.log(`Property doesn't exists!!!11`);

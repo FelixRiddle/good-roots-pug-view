@@ -1,8 +1,6 @@
 import express from "express";
 
-import Category from "../models/Category.js";
-import Price from "../models/Price.js";
-import Property from "../models/Property.js";
+import { Category, Price, Property } from "app-models";
 
 const categoryRouter = express.Router();
 
@@ -23,7 +21,7 @@ categoryRouter.get("/category/:id", async (req, res) => {
                 categoryId: id,
             },
             include: [
-                { model: Price, as: 'price' }
+                { model: new Price(), as: 'price' }
             ]
         });
         

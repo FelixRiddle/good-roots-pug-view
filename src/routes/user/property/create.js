@@ -1,10 +1,12 @@
 import express from "express";
 
-import Property from "../../../models/Property.js";
-import Price from "../../../models/Price.js";
-import Category from "../../../models/Category.js";
-import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
+import {
+    Category,
+    Price,
+    Property,
+} from "app-models";
 
+import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
 
 const createPropertyRouter = express.Router();
@@ -17,8 +19,8 @@ createPropertyRouter.get(`/create`, async (req, res) => {
         categories,
         prices,
     ] = await Promise.all([
-        Category.findAll(),
-        Price.findAll(),
+        new Category().findAll(),
+        new Price().findAll(),
     ]);
     
     return res.render("user/property/create", {
@@ -51,7 +53,8 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
         const { id: userId } = req.user;
         
         // Store data
-        const property = await Property.create({
+        const propertyModel = new Property();
+        const property = await propertyModel.create({
             // id(The uuid is generated automatically by the database)
             title,
             description,

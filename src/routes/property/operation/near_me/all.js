@@ -1,5 +1,6 @@
 import express from "express";
-import Property from "../../../../models/Property";
+
+import { Property } from "app-models";
 
 const allRoutes = express.Router();
 
@@ -20,7 +21,8 @@ allRoutes.post("/all", async (req, res) => {
             )
         )`;
         
-        const properties = await Property.findAll({
+        const propModel = new Property();
+        const properties = await propModel.findAll({
             attributes: [
                 'id',
                 [sequelize.literal(haversine), 'distance'],

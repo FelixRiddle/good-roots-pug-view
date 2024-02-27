@@ -1,25 +1,30 @@
 import express from "express";
 
-import Property from "../../../models/Property.js";
-import Price from "../../../models/Price.js";
-import Category from "../../../models/Category.js";
+import {
+    Category,
+    Price,
+    Property,
+} from "app-models";
 import { relativePropertyImagesNorm } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const getAllRoutes = express.Router();
 
 getAllRoutes.get("/get_all", async (req, res) => {
     try {
-        const properties = await Property.findAll({
+        const propModel = new Property();
+        const priceModel = new Price();
+        const categoryModel = new Category();
+        const properties = await propModel.findAll({
             where: {
                 published: true,
             },
             include: [{
                 raw: true,
-                model: Price,
+                model: priceModel,
                 as: "price"
             }, {
                 raw: true,
-                model: Category,
+                model: categoryModel,
                 as: "category"
             }]
         });
@@ -35,8 +40,6 @@ getAllRoutes.get("/get_all", async (req, res) => {
             // It's a sequelize object, so insert it into data values
             property.dataValues.images = propertyImages;
         }
-        
-        // console.log(`Properties(with images): `, properties);
         
         return res.send({
             properties,

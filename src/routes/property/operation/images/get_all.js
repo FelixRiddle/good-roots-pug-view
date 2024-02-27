@@ -1,7 +1,5 @@
 import express from "express";
 
-import { relativePropertyImages } from "../../../../lib/user/userFolder/property/propertyFolder.js";
-
 const getAllRoutes = express.Router();
 
 getAllRoutes.get("/get_all/:id", async (req, res) => {

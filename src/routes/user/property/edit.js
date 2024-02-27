@@ -1,8 +1,11 @@
 import express from "express";
 
-import Price from "../../../models/Price.js";
-import Category from "../../../models/Category.js";
-import Property from "../../../models/Property.js";
+import {
+    Category,
+    Price,
+    Property,
+} from "app-models";
+
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
 import { serverUrl } from "../../../controllers/env/env.js";
@@ -15,7 +18,8 @@ editRouter.get("/edit/:id", async (req, res) => {
         const { id } = req.params;
         
         // Check that property exists
-        const propertyController = await Property.findByPk(id);
+        const propertyModel = new Property();
+        const propertyController = await propertyModel.findByPk(id);
         const property = propertyController.get({plain:true});
         
         // Get price and category
@@ -23,8 +27,8 @@ editRouter.get("/edit/:id", async (req, res) => {
             categories,
             prices,
         ] = await Promise.all([
-            Category.findAll(),
-            Price.findAll(),
+            new Category().findAll(),
+            new Price().findAll(),
         ]);
         
         if(!property) {

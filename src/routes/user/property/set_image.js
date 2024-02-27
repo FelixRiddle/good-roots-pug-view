@@ -1,6 +1,9 @@
 import express from "express";
 
-import Property from "../../../models/Property.js";
+import {
+    Property,
+} from "app-models";
+
 import expand from "../../../controllers/expand.js";
 
 const setImageRouter = express.Router();
@@ -18,7 +21,8 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         console.log(`Property id: ${id}`);
         
         // Validate that the property exists
-        const propertyController = await Property.findByPk(id);
+        const propertyModel = new Property();
+        const propertyController = await propertyModel.findByPk(id);
         
         if(!propertyController) {
             console.log(`The requested property doesn't exists!`);

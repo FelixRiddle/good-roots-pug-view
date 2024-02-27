@@ -1,8 +1,11 @@
 import express from "express";
 
-import Property from "../../models/Property.js";
-import Category from "../../models/Category.js";
-import Price from "../../models/Price.js";
+import {
+    Property,
+    Category,
+    Price,
+} from "app-models";
+
 import { serverUrl } from "../../controllers/env/env.js";
 
 const viewRoute = express.Router();

@@ -1,6 +1,9 @@
 import express from "express";
 
-import Property from "../../../../models/Property.js";
+import {
+    Property,
+} from "app-models";
+
 import uploadProperty from "../../../../lib/user/userFolder/property/uploadPropertyMiddleware.js";
 import userFolderMiddleware from "../../../../middleware/user/userFolderMiddleware.js";
 import { serverUrl } from "../../../../controllers/env/env.js";
@@ -30,7 +33,8 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
         const { id } = req.params;
         
         // Validate that the property exists
-        const property = await Property.findByPk(id);
+        const propertyModel = new Property();
+        const property = await propertyModel.findByPk(id);
         if(!property) {
             console.log(`Property doesn't exists!!!11`);
             return res.send({

@@ -1,11 +1,11 @@
 // It works like this
-import ExpressAuthentication from "express-authentication";
-const { User } = ExpressAuthentication;
-
-import { MySQLDatabaseConnection } from "express-authentication";
-
-import Category from "../models/Category.js";
-import Price from "../models/Price.js";
+import {
+    MySQLDatabaseConnection,
+    
+    Category,
+    Price,
+    User,
+} from "app-models";
 
 import users from "../seed/users.js";
 import prices from "../seed/prices.js";
