@@ -16,6 +16,7 @@ import debugRouter from "./debug/index.js";
 import examplesRouter from "./examples/index.js";
 import homeRouter from "./home.js";
 import modelRouter from "./model/index.js";
+import notFoundRouter from "./not_found.js";
 import propertyRoutes from "./property/index.js";
 import userRoutes from "./user/index.js";
 
@@ -32,6 +33,7 @@ routes.use("/model", protectRoute, modelRouter);
 // TODO: Admin protection
 routes.use("/debug", debugRouter);
 routes.use("/examples", examplesRouter);
+routes.use(notFoundRouter);
 
 // --- Auth and user ---
 // We've got these two
