@@ -1,34 +1,15 @@
 
 //- Idea: make each view of properties [Visibility toggleable] and save the state
 section(class="py-5")
-    h2(class="text-center text-4xl font-extrabold pt-10") List 
+    h2(class="text-center text-4xl font-extrabold pt-10") Properties grid view 
     
+    //- Show data
     //- pre= JSON.stringify(properties, undefined, 4)
     
     div(class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14")
+        
         if properties
             each property in properties
                 include ./grid/square/squareView
-                //- div(class="bg-white shadow rounded-lg")
-                
-                //-     img(class="object-cover h-72 w-full" id=`grid_property_image_${property.id}` alt=`House ${property.title}`)
-                    
-                //-     div(class="p-5 space-y-2")
-                //-         //- Property data
-                //-         h3(class="text-2xl")= property.title
-                        
-                //-         //- pre= JSON.stringify(property, undefined, 4)
-                        
-                //-         p(class="text-sm text-gray-600") House type  
-                //-             span(class="text-gray-800 font-bold")= property["category.name"]
-                        
-                //-         p(class="text-sm text-gray-600") Rooms 
-                //-             span(class="text-gray-800 font-bold")= property.rooms
-                        
-                //-         p(class="text-sm text-gray-600") Bathrooms 
-                //-             span(class="text-gray-800 font-bold")= property.bathrooms
-                        
-                //-         p(class="text-sm text-gray-600") Price 
-                //-             span(class="text-gray-800 font-bold")= property["price.name"]
-                        
-                //-         a(href=`/property/view/${property.id}` class="bg-green-600 w-full text-center block font-bold text-white p-2 uppercase rounded" target="_blank") Go to property
+        else 
+            p No properties found

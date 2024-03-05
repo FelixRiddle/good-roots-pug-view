@@ -19,6 +19,11 @@ div(class="bg-white shadow rounded-lg")
             span(class="text-gray-800 font-bold")= property.bathrooms
         
         p(class="text-sm text-gray-600") Price 
-            span(class="text-gray-800 font-bold")= property["price.name"]
+            if property["price.name"]
+                span(class="text-gray-800 font-bold")= property["price.name"]
+            else if property.price && property.price.name
+                span(class="text-gray-800 font-bold")= property.price.name
+            else
+                span(hidden)
         
         a(href=`/property/view/${property.id}` class="bg-green-600 w-full text-center block font-bold text-white p-2 uppercase rounded" target="_blank") Go to property
