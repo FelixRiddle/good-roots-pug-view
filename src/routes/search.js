@@ -55,13 +55,17 @@ searchRouter.post("/search", async (req, res) => {
             raw: true,
         });
         
-        return res.send({
+        return res.render("search", {
+            page: "Search results",
             properties,
             categories,
             ...expanded,
         });
     } catch(err) {
         console.error(err);
+        return res.send({
+            
+        });
     }
 });
 
