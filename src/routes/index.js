@@ -18,6 +18,7 @@ import homeRouter from "./home.js";
 import modelRouter from "./model/index.js";
 import notFoundRouter from "./not_found.js";
 import propertyRoutes from "./property/index.js";
+import searchRouter from "./search.js";
 import userRoutes from "./user/index.js";
 
 const routes = express.Router();
@@ -25,6 +26,7 @@ const routes = express.Router();
 // Open routes
 routes.use("/api", apiRouter);
 routes.use("/property", propertyRoutes);
+routes.use(searchRouter);
 
 // Protected routes
 routes.use("/model", protectRoute, modelRouter);

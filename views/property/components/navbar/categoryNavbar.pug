@@ -1,5 +1,22 @@
 //- Category navbar
 div(class="bg-indigo-700 p-5 hidden lg:block rounded")
     div(class="container mx-auto flex justify-between")
-        each catt in categories
-            a(href=`/category/${catt.id}` class="text-sm font-bold uppercase text-white")= catt.name
+        nav(class="flex gap-4 items-center")
+            each catt in categories
+                a(href=`/category/${catt.id}` class="text-sm font-bold uppercase text-white")= catt.name
+        
+        form(action="/search" method="POST" class="flex gap-3 items-center")
+            label(for="term" class="text-sm uppercase font-bold text-white") Search
+            input(
+                type="text"
+                id="term"
+                class="p-2 rounded-lg shadow text-sm"
+                placeholder="Search properties"
+                name="term"
+            )
+            
+            input(
+                type="submit"
+                class="bg-indigo-800 hover:bg-indigo-400 text-white uppercase font-bold p-2 cursor-pointer text-sm"
+                value="Search"
+            )
