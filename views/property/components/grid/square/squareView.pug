@@ -1,7 +1,9 @@
 //- Square view
 div(class="bg-white shadow rounded-lg")
     
-    img(class="object-cover h-72 w-full" id=`grid_property_image_${property.id}` alt=`House ${property.title}`)
+        //- id=`${property.id}_image`
+    //- img(class="object-cover h-72 w-full" id=`grid_property_image_${property.id}` alt=`House ${property.title}`)
+    img(class="object-cover h-72 w-full" id=`${property.id}_image` alt=`House ${property.title}`)
     
     div(class="p-5 space-y-2")
         //- Property data

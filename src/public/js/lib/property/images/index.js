@@ -1,5 +1,5 @@
-import ImagesAPI from "../ImagesAPI.js";
-import PropertyImages from "../PropertyImages.js";
+import ImagesAPI from "./ImagesAPI.js";
+import PropertyImages from "./PropertyImages.js";
 
 /**
  * Get all property images url

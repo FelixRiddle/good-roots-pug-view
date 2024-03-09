@@ -1,5 +1,5 @@
-import ImagesAPI from "../ImagesAPI.js";
-import PropertyImages from "../PropertyImages.js";
+import ImagesAPI from "../images/ImagesAPI.js";
+import PropertyImages from "../images/PropertyImages.js";
 
 /**
  * Carousel view

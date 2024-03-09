@@ -1,4 +1,4 @@
-import ImageEditor from "./../../../lib/property/images_editor/ImageEditor.js";
+import ImageEditor from "./../../../lib/property/images/images_editor/ImageEditor.js";
 
 let buttonElement = document.getElementById("publish");
 if(buttonElement) {

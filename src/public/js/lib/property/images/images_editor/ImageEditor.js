@@ -1,9 +1,9 @@
 // import Status from "../../../../status/Status.js";
-import "../../../../css/components/property/ImageEditor.scss";
-import PropertyImagesUtils from "../../../config/PropertyImagesUtils.js";
-import propertyImagesConfiguration from "../../../config/propertyImagesConfig.js";
-import Message from "../../../messages/controller/Message.js";
-import MessageController from "../../../messages/controller/MessagesController.js";
+import "../../../../../css/components/property/ImageEditor.scss";
+// import PropertyImagesUtils from "../../../config/PropertyImagesUtils.js";
+// import propertyImagesConfiguration from "../../../config/propertyImagesConfig.js";
+// import Message from "../../../messages/controller/Message.js";
+// import MessageController from "../../../messages/controller/MessagesController.js";
 import ImagesAPI from "../ImagesAPI.js";
 import PropertyImages from "../PropertyImages.js";
 import RemoveIcon from "../RemoveIcon.js";

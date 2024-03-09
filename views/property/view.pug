@@ -72,6 +72,11 @@ block content
                 div(class="p-5")
                     p(class="text-gray-600 font-bold text-xs") Direction 
                         span(class="text-gray-800 block text-lg")= property.street
+            
+            //- Give the user a warning
+            if !user
+                p You need an account to contact the owner 
+                a(href="/auth/register") Make an account
 
 block scripts
     //- Leaflet

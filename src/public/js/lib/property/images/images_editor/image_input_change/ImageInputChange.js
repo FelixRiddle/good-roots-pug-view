@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import DebugPropertyImageUploadAPI from "../../../../../../api/debug/DebugPropertyImageUploadAPI.js";
-import PropertyImagesUtils from "../../../../config/PropertyImagesUtils.js";
-import propertyImagesConfiguration from "../../../../config/propertyImagesConfig.js";
-import MessageController from "../../../../messages/controller/MessagesController.js";
+import DebugPropertyImageUploadAPI from "../../../../../../../api/debug/DebugPropertyImageUploadAPI.js";
+import PropertyImagesUtils from "../../../../../config/PropertyImagesUtils.js";
+import propertyImagesConfiguration from "../../../../../config/propertyImagesConfig.js";
+import MessageController from "../../../../../messages/controller/MessagesController.js";
 import ImagesAPI from "../../ImagesAPI.js";
 
 // Executed at the start
