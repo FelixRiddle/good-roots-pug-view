@@ -77,6 +77,11 @@ block content
             if !user
                 p You need an account to contact the owner 
                 a(href="/auth/register") Make an account
+            else 
+                if !isSeller
+                    p Contact owner
+                else
+                    p Your property 
 
 block scripts
     //- Leaflet

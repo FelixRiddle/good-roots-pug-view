@@ -3,7 +3,7 @@ import cors from "cors";
 import express from 'express';
 
 import ExpressAuthentication from "express-authentication";
-const { getUser } = ExpressAuthentication;
+const { publicMiddleware } = ExpressAuthentication;
 import { mysqlConn } from 'app-models';
 
 // This script also sets up the environment variables in .env
@@ -64,7 +64,7 @@ export default class Server {
      * Mount routes
      */
     mountRoutes() {
-        this.app.use(getUser, routes);
+        this.app.use(publicMiddleware.publicGetUser, routes);
     }
     
     /**

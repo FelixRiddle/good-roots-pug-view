@@ -21,9 +21,12 @@ export default class ImagesAPI {
      * @param {PropertyImages} propertyImages Property images manager
      */
     constructor(propertyId, propertyImages) {
+        const url = `${window.location.origin}/user/property/images`;
+        console.log(`Url: `, url);
+        
         // Create axios instance
         this.instance = axios.create({
-            baseURL: `${window.location.origin}/user/property/images`,
+            baseURL: url,
             timeout: 2000,
             headers: {'Content-Type': 'application/json'}
         });
@@ -46,7 +49,9 @@ export default class ImagesAPI {
      * When the page loads fetch all images
      */
     async fetchAll() {
-        let res = await this.instance.get(`/get_all/${this.propertyId}`)
+        const endpoint = `/get_all/${this.propertyId}`;
+        console.log(`Endpoint: `, endpoint);
+        let res = await this.instance.get(endpoint)
             .then((res) => {
                 console.log(`Fetch property images result: `, res.data);
                 return res;

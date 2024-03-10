@@ -33,8 +33,17 @@ viewRoute.get("/view/:id", async (req, res) => {
             return res.redirect(page404);
         }
         
+        // Check if the user is the seller
+        const userId = req.user?.id;
+        console.log(`User id: ${userId}`);
+        console.log(`Property user: ${property.userId}`);
+        
+        const isSeller = userId === property.userId;
+        console.log(`The person in the seller: ${isSeller}`);
+        
         return res.render("property/view", {
             property,
+            isSeller,
             ...expand(req)
         });
     } catch(err) {

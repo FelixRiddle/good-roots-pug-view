@@ -3,7 +3,7 @@ import express from "express";
 
 // It works like this
 import ExpressAuthentication from "express-authentication";
-const { libUserRouter, protectRoute } = ExpressAuthentication;
+const { libUserRouter, protectRoute, publicMiddleware } = ExpressAuthentication;
 
 // Libs
 import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";
@@ -29,7 +29,7 @@ routes.use("/property", propertyRoutes);
 routes.use(searchRouter);
 
 // Protected routes
-routes.use("/model", protectRoute, modelRouter);
+routes.use("/model", publicMiddleware.authenticatedUserProtection, modelRouter);
 
 // Admin routes
 // TODO: Admin protection
@@ -41,7 +41,7 @@ routes.use(notFoundRouter);
 // We've got these two
 // Auth must not be protected though
 // And we need a base path for these routes
-routes.use("/user", protectRoute, userRoutes);
+routes.use("/user", publicMiddleware.authenticatedUserProtection, userRoutes);
 
 // Frontend authentication routes
 routes.use("/auth", authRoutes);

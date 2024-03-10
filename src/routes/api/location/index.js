@@ -4,10 +4,10 @@ import mapRouter from "./map/index.js";
 
 // It works like this
 import ExpressAuthentication from "express-authentication";
-const { protectRoute } = ExpressAuthentication;
+const { publicMiddleware } = ExpressAuthentication;
 
 const locationRouter = express.Router();
 
-locationRouter.use("/map", protectRoute, mapRouter);
+locationRouter.use("/map", publicMiddleware.authenticatedUserProtection, mapRouter);
 
 export default locationRouter;
