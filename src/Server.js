@@ -12,6 +12,8 @@ import { createPublicUserFolder } from './lib/user/userFolder/userFolder.js';
 import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationEmailPrivateKey.js';
 import ResetPasswordPrivateKey from './controllers/env/private/ResetPasswordPrivateKey.js';
 
+import SERVER_URL_MAPPINGS from "./mappings/env/SERVER_URL_MAPPINGS.js";
+
 /**
  * Server
  */
@@ -98,7 +100,7 @@ export default class Server {
             // Array of allowed domains
             // Note that subdomains are disallowed by default, so you must set the star
             // to allow every subdomain.
-            let allowedDomains = [
+            const allowedDomains = [
                 "unpkg.com",
                 "*.unpkg.com",
                 "openstreetmap.org",
@@ -107,7 +109,11 @@ export default class Server {
                 "*.cloudflare.com",
                 "cdnjs.cloudflare.com",
                 "geocode-api.arcgis.com",
-                "cdn.jsdelivr.net"
+                "cdn.jsdelivr.net",
+                SERVER_URL_MAPPINGS.GOOD_ROOTS,
+                SERVER_URL_MAPPINGS.AUTHENTICATION,
+                SERVER_URL_MAPPINGS.BACKDOOR_SERVER_ACCESS,
+                SERVER_URL_MAPPINGS.REAL_ESTATE,
             ];
             let domains = "";
             for(let domain of allowedDomains) {
@@ -149,11 +155,13 @@ export default class Server {
         this.app.use(express.json())
         
         // Cors whitelist
-        let whitelist = [process.env.ORIGIN];
-        
-        // Add another one
-        let new_origin = process.env.ORIGIN_1;
-        if(new_origin) whitelist.push(new_origin);
+        let whitelist = [
+            SERVER_URL_MAPPINGS.GOOD_ROOTS,
+            SERVER_URL_MAPPINGS.AUTHENTICATION,
+            SERVER_URL_MAPPINGS.BACKDOOR_SERVER_ACCESS,
+            SERVER_URL_MAPPINGS.REAL_ESTATE,
+        ];
+        console.log(`Whitelist: `, whitelist);
         
         this.app.use(cors({
             origin: [

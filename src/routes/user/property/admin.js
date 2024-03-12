@@ -81,7 +81,7 @@ const admin = async(req, res) => {
             // console.log(`This just means that the user doesn't have any properties`);
         }
         
-        let expanded = expand(req);
+        const expanded = expand(req);
         return res.render("user/property/admin", {
             page: "My Properties",
             properties,

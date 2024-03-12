@@ -46,11 +46,11 @@ routes.use("/user", publicMiddleware.authenticatedUserProtection, userRoutes);
 // Frontend authentication routes
 routes.use("/auth", authRoutes);
 
-// Backend authentication routes
-// Using 'express-authentication'
-const AUTH_BASE_ROUTE = authBaseRoute();
-console.log(`Auth base route: ${AUTH_BASE_ROUTE}`)
-routes.use(AUTH_BASE_ROUTE, libUserRouter());
+// // Backend authentication routes
+// // Using 'express-authentication'
+// const AUTH_BASE_ROUTE = authBaseRoute();
+// console.log(`Auth base route: ${AUTH_BASE_ROUTE}`)
+// routes.use(AUTH_BASE_ROUTE, libUserRouter());
 
 // --- Public ---
 // Public assets folder
