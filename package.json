@@ -1,7 +1,7 @@
 {
-  "name": "good-roots",
+  "name": "good-roots-pug-view",
   "version": "0.7.1",
-  "description": "Real state app",
+  "description": "Good roots stack, pug view, this is because the course uses it, not because I want to",
   "main": "index.js",
   "type": "module",
   "scripts": {
