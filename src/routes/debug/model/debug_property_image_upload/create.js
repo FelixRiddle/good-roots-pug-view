@@ -40,7 +40,11 @@ createRouter.post("/create", async (req, res) => {
         });
     } catch(err) {
         console.log(err);
-        return;
+        return res.send({
+            messages: [
+                new Message("Unknown error.", 4)
+            ]
+        });
     }
 });
 
