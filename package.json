@@ -32,7 +32,7 @@
     "express-authentication": "github:FelixRiddle/express-authentication",
     "express-validator": "^7.0.1",
     "felixriddle.checkpoint": "^2.0.3",
-    "felixriddle.good-roots-ts-api": "file:../felixriddle.good-roots-ts-api",
+    "felixriddle.good-roots-ts-api": "^1.0.22",
     "generate-password": "^1.7.1",
     "good-roots-assets": "github:FelixRiddle/good-roots-assets",
     "jsonwebtoken": "^9.0.2",
