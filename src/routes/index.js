@@ -3,7 +3,10 @@ import express from "express";
 
 // It works like this
 import ExpressAuthentication from "express-authentication";
-const { libUserRouter, protectRoute, publicMiddleware } = ExpressAuthentication;
+const {
+    // libUserRouter, protectRoute,
+    publicMiddleware
+} = ExpressAuthentication;
 
 // Libs
 import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";

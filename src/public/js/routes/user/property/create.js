@@ -125,7 +125,7 @@ function hookRequestOnButtonClick() {
                     "Content-Type": "application/json"
                 }
             });
-        
+            
             const res = await instance.post(`/user/property/create`, {
                 property,
             }).then((res) => {
