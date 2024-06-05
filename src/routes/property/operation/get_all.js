@@ -1,30 +1,28 @@
 import express from "express";
 
-import {
-    Category,
-    Price,
-    Property,
-} from "app-models";
 import { relativePropertyImagesNorm } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const getAllRoutes = express.Router();
 
 getAllRoutes.get("/get_all", async (req, res) => {
     try {
-        const propModel = new Property();
-        const priceModel = new Price();
-        const categoryModel = new Category();
-        const properties = await propModel.findAll({
+        const {
+            Category,
+            Price,
+            Property
+        } = req.models;
+        
+        const properties = await Property.findAll({
             where: {
                 published: true,
             },
             include: [{
                 raw: true,
-                model: priceModel,
+                model: Price,
                 as: "price"
             }, {
                 raw: true,
-                model: categoryModel,
+                model: Category,
                 as: "category"
             }]
         });

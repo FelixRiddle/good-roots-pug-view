@@ -1,6 +1,5 @@
 import express from "express";
 
-import { PropertyModel, CategoryModel, PriceModel } from "../../mappings/models/index.js";
 import expand from "../../controllers/expand.js";
 import { serverUrl } from "../../controllers/env/env.js";
 
@@ -13,15 +12,21 @@ viewRoute.get("/view/:id", async (req, res) => {
     try {
         const { id } = req.params;
         
+        const {
+            Category,
+            Property,
+            Price
+        } = req.models;
+        
         // Fetch property
-        const property = await PropertyModel().findByPk(id, {
+        const property = await Property.findByPk(id, {
             include: [{
                 raw: true,
-                model: CategoryModel(),
+                model: Category,
                 as: "category"
             }, {
                 raw: true,
-                model: PriceModel(),
+                model: Price,
                 as: "price"
             }]
         });

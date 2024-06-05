@@ -2,19 +2,15 @@
 
 Good roots stack, pug view, this is because the course uses it, not because I want to.
 
-'If you challenge thyself, you can reach greater heights' - Me
-
 The project is a real estate app, in which you can register, login, publish your house, add images, etc.
 
 # Course project
 
 Project made along the course of [Node.js - Bootcamp Desarrollo Web inc. MVC y REST APIs](https://www.udemy.com/course/nodejs-bootcamp-desarrollo-web-mvc-y-rest-apis/).
 
-Done in english because the default language of programming is english.
-
 # Commands
 
-Check [docs/Commands/Commands.md]
+Check [docs/Commands/Commands.md](Commands)
 
 # Notes
 

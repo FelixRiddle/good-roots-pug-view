@@ -6,12 +6,6 @@ getAllRoutes.get("/get_all/:id", async (req, res) => {
     try {
         const { id } = req.params;
         
-        // let relPropImgs = relativePropertyImages(req.user.id, id);
-        
-        // return res.send({
-        //     images: relPropImgs,
-        // });
-        
         return res.send({
             messages: [{
                 message: "Endpoint not finished",

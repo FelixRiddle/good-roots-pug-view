@@ -1,11 +1,11 @@
 import express from "express";
 
-import { DebugPropertyImageUpload } from "app-models";
-
 const uploadRouter = express.Router();
 
 uploadRouter.get("/upload", async (req, res) => {
     try {
+        
+        const DebugPropertyImageUpload = req.models.DebugPropertyImageUpload;
         
         // Get recent entries
         // Some courses take more than 8+ entries

@@ -1,11 +1,5 @@
 import express from "express";
 
-import {
-    Category,
-    Price,
-    Property,
-} from "app-models";
-
 import expand from "../../../controllers/expand.js";
 import { relativePropertyImages } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
@@ -31,12 +25,15 @@ const admin = async(req, res) => {
         const limit = 10;
         const skip = ((page * limit) - limit);
         
+        const {
+            Category,
+            Price,
+            Property,
+        } = req.models;
+        
         // Fetch properties from the database that are owned by this user
-        const propModel = new Property();
-        const categoryModel = new Category();
-        const priceModel = new Price();
         const [propertiesRes, total] = await Promise.all([
-            propModel.findAll({
+            Property.findAll({
                 limit,
                 offset: skip,
                 where: {
@@ -45,17 +42,17 @@ const admin = async(req, res) => {
                 include: [
                     {
                         raw: true,
-                        model: categoryModel,
+                        model: Category,
                         as: 'category'
                     }, {
                         raw: true,
-                        model: priceModel,
+                        model: Price,
                         as: "price"
                     }
                 ]
             }),
             // Get the quantity of user properties
-            propModel.count({
+            Property.count({
                 where: {
                     userId,
                 },

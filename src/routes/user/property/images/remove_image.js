@@ -12,6 +12,7 @@ removeImageRouter.post("/remove_image/:id", userFolderMiddleware, async (req, re
     try {
         const { id } = req.params;
         
+        // FIXME: This may be exploited if the image name is a whole path
         const imagePublicPath = req.body.imageName;
         
         // The image name comes with its paths and everything

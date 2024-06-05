@@ -1,11 +1,5 @@
 import express from "express";
 
-import {
-    Category,
-    Price,
-    Property,
-} from "app-models";
-
 import validatePropertyData from "../../../middleware/property/validatePropertyData.js";
 import expand from "../../../controllers/expand.js";
 
@@ -13,22 +7,30 @@ const createPropertyRouter = express.Router();
 
 // Routes
 createPropertyRouter.get(`/create`, async (req, res) => {
-    
-    // Get price and category
-    const [
-        categories,
-        prices,
-    ] = await Promise.all([
-        new Category().findAll(),
-        new Price().findAll(),
-    ]);
-    
-    return res.render("user/property/create", {
-        page: "Create property",
-        categories,
-        prices,
-        ...expand(req),
-    });
+    try {
+        const {
+            Category,
+            Price,
+        } = req.models;
+        
+        // Get price and category
+        const [
+            categories,
+            prices,
+        ] = await Promise.all([
+            Category.findAll(),
+            Price.findAll(),
+        ]);
+        
+        return res.render("user/property/create", {
+            page: "Create property",
+            categories,
+            prices,
+            ...expand(req),
+        });
+    } catch(err) {
+        console.error(err);
+    }
 });
 
 // FIX: This has no validation???
@@ -49,12 +51,15 @@ createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
             categoryId,
         } = req.body.property;
         
+        const {
+            Property,
+        } = req.models;
+        
         // Get user 'id' and rename it to 'userId'
         const { id: userId } = req.user;
         
         // Store data
-        const propertyModel = new Property();
-        const property = await propertyModel.create({
+        const property = await Property.create({
             // id(The uuid is generated automatically by the database)
             title,
             description,

@@ -1,10 +1,6 @@
 import express from "express";
 import fs from "node:fs";
 
-import {
-    Property,
-} from "app-models";
-
 import { relativePropertyFolder } from "../../../lib/user/userFolder/property/propertyFolder.js";
 
 const deleteRouter = express.Router();
@@ -13,8 +9,10 @@ deleteRouter.post("/delete/:id", async (req, res) => {
     try {
         const { id } = req.params;
         
+        const Property = req.models.Property;
+        
         // Check that property exists
-        const propertyController = await new Property().findByPk(id);
+        const propertyController = await Property.findByPk(id);
         const property = propertyController.get({plain:true});
         if(!property) {
             console.log(`Property doesn't exists!`);

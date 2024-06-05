@@ -1,7 +1,5 @@
 import express from "express";
 
-import { } from "felixriddle.good-roots-ts-api";
-
 const loginRouter = express.Router();
 
 loginRouter.post("/login", async (req, res) => {

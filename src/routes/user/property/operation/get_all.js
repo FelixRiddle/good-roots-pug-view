@@ -1,12 +1,6 @@
 import express from "express";
 import fs from "node:fs";
 
-import {
-    Category,
-    Price,
-    Property,
-} from "app-models";
-
 import { relativePropertyFolder, relativePropertyImages } from "../../../../lib/user/userFolder/property/propertyFolder.js";
 import userFolder from "../../../../lib/user/userFolder/userFolder.js";
 
@@ -17,22 +11,25 @@ getAllRoutes.get(`/get_all`, async(req, res) => {
         const { id: userId } = req.user;
         console.log(`User ID: ${userId}`);
         
+        const {
+            Category,
+            Price,
+            Property,
+        } = req.models;
+        
         // Fetch properties from the database that are owned by this user
-        const propModel = new Property();
-        const categoryModel = new Category();
-        const priceModel = new Price();
-        const propertiesRes = await propModel.findAll({
+        const propertiesRes = await Property.findAll({
             where: {
                 userId,
             },
             include: [
                 {
                     raw: true,
-                    model: categoryModel,
+                    model: Category,
                     as: 'category'
                 }, {
                     raw: true,
-                    model: priceModel,
+                    model: Price,
                     as: "price"
                 }
             ]

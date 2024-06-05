@@ -1,21 +1,22 @@
 import express from "express";
 
-import AppModels from "app-models";
-const {
-    Category,
-    Price,
-    Property
-} = AppModels;
-
 import expand from "../controllers/expand.js"
 
 const homeRouter = express.Router();
 
+/**
+ * Render home
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const renderHome = async (req, res) => {
     console.log(`GET /home`);
     
     try {
         const expanded = expand(req);
+        const models = req.models;
         
         // Try to fetch properties
         try {
@@ -23,9 +24,9 @@ const renderHome = async (req, res) => {
             const [
                 categoryModel, priceModel, propertyModel
             ] = [
-                new Category(),
-                new Price(),
-                new Property(),
+                models.Category,
+                models.Price,
+                models.Property,
             ];
             
             const [categories, prices, properties] = await Promise.all([

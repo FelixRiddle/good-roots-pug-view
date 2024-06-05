@@ -1,7 +1,6 @@
 import express from "express";
 import { Sequelize } from "sequelize";
 
-import { CategoryModel, PriceModel, PropertyModel } from "../mappings/models/index.js";
 import expand from "../controllers/expand.js";
 
 const searchRouter = express.Router();
@@ -10,17 +9,15 @@ searchRouter.post("/search", async (req, res) => {
     try {
         const { term } = req.body;
         
-        // console.log(`Body: `, req.body);
-        // console.log(`Term: `, term);
-        
         if(!term.trim()) {
             return res.redirect("/back");
         }
         
+        const Property = req.models.Property;
+        const Price = req.models.Price;
+        
         // Fetch properties
-        const propertyModel = PropertyModel();
-        const priceModel = PriceModel();
-        const properties = await propertyModel.findAll({
+        const properties = await Property.findAll({
             where: {
                 title: {
                     [Sequelize.Op.like]: '%' + term + '%'
@@ -30,7 +27,7 @@ searchRouter.post("/search", async (req, res) => {
                 }
             },
             include: [
-                { model: priceModel, as: 'price' }
+                { model: Price, as: 'price' }
             ],
             raw: true,
         });
@@ -50,8 +47,8 @@ searchRouter.post("/search", async (req, res) => {
         }
         
         // We only fetch after the previous check, to not waste resources
-        const catModel = CategoryModel();
-        const categories = await catModel.findAll({
+        const Category = req.models.Category;
+        const categories = await Category.findAll({
             raw: true,
         });
         

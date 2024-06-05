@@ -1,8 +1,5 @@
 import express from "express";
 
-// import { Category, Price, Property } from "app-models";
-// F, I forgot ecs doesn't let you import without the file extension
-import { CategoryModel, PriceModel, PropertyModel } from "../mappings/models/index.js";
 import expand from "../controllers/expand.js"
 
 const categoryRouter = express.Router();
@@ -12,9 +9,11 @@ categoryRouter.get("/category/:id", async (req, res) => {
         const { id } = req.params;
         console.log(`Id: ${id}`);
         
+        const models = req.models;
+        const Category = models.Category;
+        
         // Get these
-        const catModel = CategoryModel();
-        const category = await catModel.findByPk(id);
+        const category = await Category.findByPk(id);
         if(!category) {
             return res.redirect("/404");
         }

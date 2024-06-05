@@ -3,7 +3,6 @@ import cors from "cors";
 import express from 'express';
 
 import ExpressAuthentication from "express-authentication";
-const { publicMiddleware } = ExpressAuthentication;
 import { mysqlConn } from 'felixriddle.ts-app-models';
 
 // This script also sets up the environment variables in .env
@@ -13,6 +12,10 @@ import ConfirmationEmailPrivateKey from './controllers/env/private/ConfirmationE
 import ResetPasswordPrivateKey from './controllers/env/private/ResetPasswordPrivateKey.js';
 
 import SERVER_URL_MAPPINGS from "./mappings/env/SERVER_URL_MAPPINGS.js";
+
+import useGeneralModels from "./middleware/database/useGeneralModels.js";
+
+const { publicMiddleware } = ExpressAuthentication;
 
 /**
  * Server
@@ -66,6 +69,10 @@ export default class Server {
      * Mount routes
      */
     mountRoutes() {
+        // Use a single instance of sequelize for every connection
+        this.app.use(useGeneralModels());
+        
+        // The public middleware uses requests instead of connecting directly through the models
         this.app.use(publicMiddleware.publicGetUser, routes);
     }
     
