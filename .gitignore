@@ -9,6 +9,8 @@ public/main.js
 
 .cache/
 
+dependency-graph.svg
+
 # Package lock backup
 package-lock.json.backup
 

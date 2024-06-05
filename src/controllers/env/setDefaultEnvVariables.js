@@ -35,8 +35,6 @@ export function setupAll() {
         path: ".env"
     });
     
-    console.log(`Environment(.env) set up!`);
-    
     setupProtocol();
 }
 

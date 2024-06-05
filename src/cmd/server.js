@@ -1,6 +1,9 @@
 import { testSetup } from "../test/testSetup.js";
 import Server from "../Server.js";
 
+/**
+ * Start server
+ */
 export async function startServer() {
     testSetup();
     

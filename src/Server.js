@@ -4,7 +4,7 @@ import express from 'express';
 
 import ExpressAuthentication from "express-authentication";
 const { publicMiddleware } = ExpressAuthentication;
-import { mysqlConn } from 'app-models';
+import { mysqlConn } from 'felixriddle.ts-app-models';
 
 // This script also sets up the environment variables in .env
 import routes from './routes/index.js';
@@ -161,7 +161,6 @@ export default class Server {
             SERVER_URL_MAPPINGS.BACKDOOR_SERVER_ACCESS,
             SERVER_URL_MAPPINGS.REAL_ESTATE,
         ];
-        console.log(`Whitelist: `, whitelist);
         
         this.app.use(cors({
             origin: [
@@ -183,12 +182,9 @@ export default class Server {
             
             await conn.authenticate();
             
-            conn.sync();
-            
-            console.log(`Connection Ok`);
-            
-            console.log("Successfully connected to db");
+            await conn.sync();
         } catch(err) {
+            console.log(`Error when trying to connect to mysql database: `);
             console.error(err);
         }
         
