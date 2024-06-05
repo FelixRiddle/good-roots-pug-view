@@ -1,9 +1,10 @@
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 import express from 'express';
+import session from 'express-session';
+import MySQLStore from "express-mysql-session";
 
 import ExpressAuthentication from "express-authentication";
-import { mysqlConn } from 'felixriddle.ts-app-models';
 
 // This script also sets up the environment variables in .env
 import routes from './routes/index.js';
@@ -16,6 +17,7 @@ import SERVER_URL_MAPPINGS from "./mappings/env/SERVER_URL_MAPPINGS.js";
 import useGeneralModels from "./middleware/database/useGeneralModels.js";
 
 const { publicMiddleware } = ExpressAuthentication;
+const MySQLSession = MySQLStore(session);
 
 /**
  * Server
@@ -178,22 +180,31 @@ export default class Server {
         // Enable cookie parser
         this.app.use(cookieParser());
         
-        // Connect to db
-        try {
-            // Fetch env variables on creation
-            // The method fetches them with the import statement
-            // (Had to waste a lot of time because of that)
-            // But the reason I fetched env variables on import before, is simply because it worked.
-            // Now outta nowhere it doesn't work anymore, I don't know why.
-            const conn = mysqlConn();
-            
-            await conn.authenticate();
-            
-            await conn.sync();
-        } catch(err) {
-            console.log(`Error when trying to connect to mysql database: `);
-            console.error(err);
-        }
+        const sessionStore = new MySQLSession({
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
+            user: process.env.MYSQL_USERNAME,
+            password:  process.env.MYSQL_PASSWORD,
+            database: process.env.DATABASE_NAME,
+            schema: {
+                tableName: "sessions",
+                columnNames: {
+                    session_id: "session_id",
+                    expires: "expires",
+                    data: "data"
+                }
+            }
+        });
+        
+        // User sessions with coookies
+        // TODO: Session may cause issues with cookie parser if the secret is not the same
+        this.app.use(session({
+            key: 'session_cookie_name',
+            secret: process.env.JWT_SECRET_KEY,
+            store: sessionStore,
+            resave: false,
+            saveUninitialized: false
+        }));
         
         this.usePugView();
     }
