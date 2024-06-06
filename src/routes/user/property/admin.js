@@ -11,6 +11,8 @@ const admin = async(req, res) => {
         const { page } = req.query;
         const pageExpression = /^[0-9]$/;
         
+        console.log(`[GET] /user/property/admin?page=${page}`);
+        
         // Check that validation passes
         if(!pageExpression.test(page)) {
             // Show the first page then

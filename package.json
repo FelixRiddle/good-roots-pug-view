@@ -35,7 +35,7 @@
     "express-session": "^1.18.0",
     "express-validator": "^7.0.1",
     "felixriddle.checkpoint": "^2.0.3",
-    "felixriddle.good-roots-ts-api": "^1.0.22",
+    "felixriddle.good-roots-ts-api": "^1.0.25",
     "felixriddle.risotto": "^1.0.7",
     "felixriddle.ts-app-models": "^1.0.6",
     "generate-password": "^1.7.1",

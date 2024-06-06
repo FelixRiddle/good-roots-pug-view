@@ -8,9 +8,6 @@ const {
     publicMiddleware
 } = ExpressAuthentication;
 
-// Libs
-import { authBaseRoute } from "../public/js/controller/auth/authRoute.js";
-
 // Routes
 import apiRouter from "./api/index.js";
 import authRoutes from "./auth/index.js";
@@ -23,6 +20,7 @@ import notFoundRouter from "./not_found.js";
 import propertyRoutes from "./property/index.js";
 import searchRouter from "./search.js";
 import userRoutes from "./user/index.js";
+// import authenticatedUserProtection from "../middleware/auth/authenticatedUserProtection.js";
 
 const routes = express.Router();
 

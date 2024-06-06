@@ -180,31 +180,30 @@ export default class Server {
         // Enable cookie parser
         this.app.use(cookieParser());
         
-        const sessionStore = new MySQLSession({
-            host: process.env.DB_HOST,
-            port: process.env.DB_PORT,
-            user: process.env.MYSQL_USERNAME,
-            password:  process.env.MYSQL_PASSWORD,
-            database: process.env.DATABASE_NAME,
-            schema: {
-                tableName: "sessions",
-                columnNames: {
-                    session_id: "session_id",
-                    expires: "expires",
-                    data: "data"
-                }
-            }
-        });
+        // const sessionStore = new MySQLSession({
+        //     host: process.env.DB_HOST,
+        //     port: process.env.DB_PORT,
+        //     user: process.env.MYSQL_USERNAME,
+        //     password:  process.env.MYSQL_PASSWORD,
+        //     database: process.env.DATABASE_NAME,
+        //     schema: {
+        //         tableName: "sessions",
+        //         columnNames: {
+        //             session_id: "session_id",
+        //             expires: "expires",
+        //             data: "data"
+        //         }
+        //     }
+        // });
         
-        // User sessions with coookies
-        // TODO: Session may cause issues with cookie parser if the secret is not the same
-        this.app.use(session({
-            key: 'session_cookie_name',
-            secret: process.env.JWT_SECRET_KEY,
-            store: sessionStore,
-            resave: false,
-            saveUninitialized: false
-        }));
+        // // User sessions with coookies
+        // // Session may cause issues with cookie parser if the secret is not the same
+        // this.app.use(session({
+        //     secret: process.env.JWT_SECRET_KEY,
+        //     store: sessionStore,
+        //     resave: false,
+        //     saveUninitialized: false
+        // }));
         
         this.usePugView();
     }

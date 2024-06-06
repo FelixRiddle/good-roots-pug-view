@@ -18,7 +18,7 @@ export default function expand(req) {
     // Make it falsy, to easily check if it exists
     let user = undefined;
     if(userController) {
-        console.log(`User controller: `, userController);
+        // console.log(`User controller: `, userController);
         user = userController.get({ plain: true });
     }
     
