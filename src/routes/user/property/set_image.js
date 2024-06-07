@@ -9,11 +9,12 @@ const setImageRouter = express.Router();
 // We have to remove the hyphens from it.
 setImageRouter.get("/set_image/:id", async (req, res) => {
     try {
-        console.log(`At set_image`);
+        console.log(`[GET] /user/property/set_image/${req.params.id}`);
         
         const { id } = req.params;
-        let user = req.user.dataValues;
+        const user = req.user;
         
+        console.log(`User: `, req.user);
         console.log(`Property id: ${id}`);
         
         const Property = req.models.Property;
@@ -31,7 +32,7 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         if(user) {
             if(user.id.toString() !== propertyController.userId.toString()) {
                 console.log(`The user doesn't own this property going back...`);
-                console.log(`User: `, req.user.name);
+                console.log(`User: `, user.name);
                 return res.redirect("user/property/admin");
             }
         } else {

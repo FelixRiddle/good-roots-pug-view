@@ -126,6 +126,7 @@ function hookRequestOnButtonClick() {
                 }
             });
             
+            console.log(`Post property data`);
             const res = await instance.post(`/user/property/create`, {
                 property,
             }).then((res) => {
@@ -133,9 +134,13 @@ function hookRequestOnButtonClick() {
             })
                 .catch((err) => console.error(err));
             
+            console.log(`Response: `, res);
             const nextUrl = res.nextUrl;
             
+            console.log(`Next url: `, nextUrl);
+            
             const url = `${siteUrl}${nextUrl}`;
+            console.log(`Full url: `, url);
             
             window.location.href = url;
         } catch(err) {
