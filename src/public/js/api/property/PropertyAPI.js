@@ -14,7 +14,7 @@ export default class PropertyAPI {
      * @param {string} serverUrl The server url
      */
     constructor(serverUrl) {
-        createAxiosInstance(serverUrl, "property");
+        this.instance = createAxiosInstance(serverUrl, "property");
     }
     
     /**

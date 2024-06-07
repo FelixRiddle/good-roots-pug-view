@@ -67,6 +67,7 @@ const renderHome = async (req, res) => {
         }
     } catch(err) {
         console.error(err);
+        
         // If you can't even render home what do you even do?
         // Maybe just render home with no data
         return res.render("home");

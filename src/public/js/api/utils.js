@@ -19,13 +19,15 @@ function createAxiosInstance(url, endpoint) {
     }
     
     // Create axios instance
-    this.instance = axios.create({
+    const instance = axios.create({
         baseURL: `${fullAppUrl}`,
         timeout: 2000,
         headers: {
             "Content-Type": "application/json"
         }
     });
+    
+    return instance;
 }
 
 export default createAxiosInstance;

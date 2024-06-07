@@ -74,7 +74,8 @@ export default class Server {
         // Use a single instance of sequelize for every connection
         this.app.use(useGeneralModels());
         
-        // The public middleware uses requests instead of connecting directly through the models
+        // FIXME: This is used to send user data to the frontend, but I think the frontend should check
+        // local storage and change on that basis.
         this.app.use(publicMiddleware.publicGetUser, routes);
     }
     

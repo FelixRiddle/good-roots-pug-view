@@ -1,0 +1,45 @@
+block session
+    //- Navigation bar
+    nav(class="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white hidden")
+        //- Navigation bar
+        
+        //- Status messages
+        include ../../statusMessages
+        
+        //- TODO: I think it would be better if a script stores data in local storage and then shows or hides this navbar
+        //- if there's a user in local storage.
+        //- Second attempt to show the navbar
+        div(
+            id="navbar:session:authenticatedNavbar"
+            hidden=true
+        )
+            include sessionNavbar
+        
+        //- If the navbar is show, hide this one
+        a(
+            id="navbar:session:login"
+            class="bg-indigo-800 py-2 px-10 rounded-lg"
+            href=`/auth/login`
+        ) Log in
+        
+        //- //- User
+        //- //- Until I update every endpoint this will be the norm
+        //- if user
+        //-     include sessionNavbar
+        //- else
+        //-     //- Second attempt to show the navbar
+        //-     div(
+        //-         id="navbar:session:authenticatedNavbar"
+        //-         hidden=true
+        //-     )
+        //-         include sessionNavbar
+            
+        //-     //- If the navbar is show, hide this one
+        //-     a(
+        //-         id="navbar:session:login"
+        //-         class="bg-indigo-800 py-2 px-10 rounded-lg"
+        //-         href=`/auth/login`
+        //-     ) Log in
+
+block scripts
+    script(src=`/js/navbar/index.js`)

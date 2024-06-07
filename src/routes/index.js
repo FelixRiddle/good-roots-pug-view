@@ -20,7 +20,6 @@ import notFoundRouter from "./not_found.js";
 import propertyRoutes from "./property/index.js";
 import searchRouter from "./search.js";
 import userRoutes from "./user/index.js";
-// import authenticatedUserProtection from "../middleware/auth/authenticatedUserProtection.js";
 
 const routes = express.Router();
 
