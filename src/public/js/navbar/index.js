@@ -23,11 +23,10 @@ function getCookies(){
  * Check if the user is logged in
  */
 export function isLoggedIn() {
-    // Get user token from local storage
-    // const userToken = localStorage.getItem("_token");
-    
+    // Get cookies
     const cookies = getCookies();
-    console.log(`Cookies: `, cookies);
+    
+    const userToken = cookies["_token"];
     
     return userToken && true;
 }

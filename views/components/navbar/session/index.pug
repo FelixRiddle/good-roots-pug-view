@@ -22,24 +22,9 @@ block session
             href=`/auth/login`
         ) Log in
         
-        //- //- User
-        //- //- Until I update every endpoint this will be the norm
-        //- if user
-        //-     include sessionNavbar
-        //- else
-        //-     //- Second attempt to show the navbar
-        //-     div(
-        //-         id="navbar:session:authenticatedNavbar"
-        //-         hidden=true
-        //-     )
-        //-         include sessionNavbar
-            
-        //-     //- If the navbar is show, hide this one
-        //-     a(
-        //-         id="navbar:session:login"
-        //-         class="bg-indigo-800 py-2 px-10 rounded-lg"
-        //-         href=`/auth/login`
-        //-     ) Log in
+        //- Blocks get overwritten by pages
+        script(src=`/js/navbar/index.js`)
 
-block scripts
-    script(src=`/js/navbar/index.js`)
+//- Blocks get overwritten by pages
+//- block scripts
+//-     script(src=`/js/navbar/index.js`)
