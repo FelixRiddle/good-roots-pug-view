@@ -25,10 +25,17 @@ export default async function userFolderMiddleware(req, res, next) {
         // Start creating the debug property upload messages from here
         // First message, attempting to upload a property
         
+        // Find user
+        const userData = req.user;
+        const User = req.models.User;
+        const user = await User.findOne({
+            where: {
+                id: userData.id
+            },
+            raw: true,
+        });
         
-        // Create user folder first
-        // Get user plain information
-        const user = req.user.get({plain: true});
+        // Check if the user exists
         if(!user) {
             console.log(`User doesn't exists!`);
             return res.redirect(`${serverUrl()}/user/property/admin`);
