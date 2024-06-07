@@ -1,12 +1,7 @@
 // NPM Packages
 import express from "express";
 
-// It works like this
-import ExpressAuthentication from "express-authentication";
-const {
-    // libUserRouter, protectRoute,
-    publicMiddleware
-} = ExpressAuthentication;
+import ExpressAuthentication from "felixriddle.express-authentication";
 
 // Routes
 import apiRouter from "./api/index.js";
@@ -21,6 +16,9 @@ import propertyRoutes from "./property/index.js";
 import searchRouter from "./search.js";
 import userRoutes from "./user/index.js";
 
+const { publicMiddleware } = ExpressAuthentication;
+const { authenticatedUserProtection } = publicMiddleware;
+
 const routes = express.Router();
 
 // Open routes
@@ -29,7 +27,7 @@ routes.use("/property", propertyRoutes);
 routes.use(searchRouter);
 
 // Protected routes
-routes.use("/model", publicMiddleware.authenticatedUserProtection, modelRouter);
+routes.use("/model", authenticatedUserProtection, modelRouter);
 
 // Admin routes
 // TODO: Admin protection
@@ -41,7 +39,7 @@ routes.use(notFoundRouter);
 // We've got these two
 // Auth must not be protected though
 // And we need a base path for these routes
-routes.use("/user", publicMiddleware.authenticatedUserProtection, userRoutes);
+routes.use("/user", authenticatedUserProtection, userRoutes);
 
 // Frontend authentication routes
 routes.use("/auth", authRoutes);

@@ -3,8 +3,7 @@ import cors from "cors";
 import express from 'express';
 import session from 'express-session';
 import MySQLStore from "express-mysql-session";
-
-import ExpressAuthentication from "express-authentication";
+import ExpressAuthentication from 'felixriddle.express-authentication';
 
 // This script also sets up the environment variables in .env
 import routes from './routes/index.js';
@@ -17,6 +16,7 @@ import SERVER_URL_MAPPINGS from "./mappings/env/SERVER_URL_MAPPINGS.js";
 import useGeneralModels from "./middleware/database/useGeneralModels.js";
 
 const { publicMiddleware } = ExpressAuthentication;
+
 const MySQLSession = MySQLStore(session);
 
 /**
