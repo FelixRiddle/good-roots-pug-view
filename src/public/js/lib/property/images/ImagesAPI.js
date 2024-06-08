@@ -93,9 +93,6 @@ export default class ImagesAPI {
                 return;
             });
         
-        // console.log(`Response status: `, res.status);
-        // console.log(`Response data: `, res.data);
-        
         // Update collisions
         this.collisions = res.data.collisions;
         
@@ -121,8 +118,6 @@ export default class ImagesAPI {
             .catch((err) => {
                 console.error(`Error when posting the image name: `, err);
             });
-        
-        // console.log(`Response: `, res.data);
     }
     
     /**
