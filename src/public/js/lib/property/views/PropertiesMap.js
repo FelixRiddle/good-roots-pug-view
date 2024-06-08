@@ -1,5 +1,10 @@
 import PropertyAPI from "../../../api/property/PropertyAPI.js";
 
+/**
+ * Properties map
+ * 
+ * This class creates markers for location of many properties.
+ */
 export default class PropertiesMap {
     map = null;
     filter = {

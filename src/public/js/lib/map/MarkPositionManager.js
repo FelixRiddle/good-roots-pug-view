@@ -39,7 +39,7 @@ export default class MarkPositionManager {
      */
     createMap(elementId) {
         // Create map
-        const map = L.map(elementId).setView([37.7684594, -122.4438397], 13);
+        const map = L.map(elementId).setView([37.7750224, -122.4536641], 13);
         
         // Add tile layer
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -75,7 +75,7 @@ export default class MarkPositionManager {
      */
     createMarker() {
         // Create a marker
-        let marker = L.marker([51.5, -0.09], {
+        let marker = L.marker([37.7750224, -122.4536641], {
             draggable: true,
             autoPan: true,
         }).addTo(this.map);
