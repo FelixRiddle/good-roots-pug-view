@@ -57,7 +57,7 @@ function hookRequestOnButtonClick() {
     let submitBtn = document.getElementById("createProperty");
     if(!submitBtn) {
         // An error has occurred
-        console.log(`Couldn't find submit button!`);
+        console.error(`Couldn't find submit button!`);
         return;
     }
     
@@ -67,8 +67,6 @@ function hookRequestOnButtonClick() {
         // Post on create
         try {
             event.preventDefault();
-            
-            console.log(`The user clicked the button.`);
             
             // Every input element name
             let inputElementsNames = [
@@ -86,9 +84,7 @@ function hookRequestOnButtonClick() {
             
             // Take the form and fetch every value from the names
             let property = formFetchAllValues(inputElementsNames);
-            if(property) {
-                console.log(`Fetch form values Ok`);
-            } else {
+            if(!property) {
                 console.log(`Couldn't fetch form values!`);
                 
                 // Get outta here
@@ -106,18 +102,14 @@ function hookRequestOnButtonClick() {
             property.latitude = parseFloat(property.latitude);
             property.longitude = parseFloat(property.longitude);
             
-            console.log(`Property: `, property);
-            
             // Check that validation passes
             let result = validateProperty(property);
             if(result.length > 0) {
                 console.log(`Validation didn't pass`);
                 return result;
             }
-            console.log(`Validation passed`);
             
             // Create axios instance
-            console.log(`Root location: ${siteUrl}`);
             const instance = axios.create({
                 baseUrl: siteUrl,
                 timeout: 1000,
@@ -126,7 +118,7 @@ function hookRequestOnButtonClick() {
                 }
             });
             
-            console.log(`Post property data`);
+            // console.log(`Post property data`);
             const res = await instance.post(`/user/property/create`, {
                 property,
             }).then((res) => {
@@ -134,13 +126,8 @@ function hookRequestOnButtonClick() {
             })
                 .catch((err) => console.error(err));
             
-            console.log(`Response: `, res);
             const nextUrl = res.nextUrl;
-            
-            console.log(`Next url: `, nextUrl);
-            
             const url = `${siteUrl}${nextUrl}`;
-            console.log(`Full url: `, url);
             
             window.location.href = url;
         } catch(err) {

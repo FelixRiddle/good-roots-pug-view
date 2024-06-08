@@ -56,12 +56,10 @@ export default async function userFolderMiddleware(req, res, next) {
         // Validate that the property exists
         // To prevent a potential exploit
         const property = await Property.findByPk(id);
-        console.log(`Id: ${id}`);
         if(!property) {
             console.log(`Property not found!`);
             return res.redirect(`${serverUrl()}/user/property/admin`);
         }
-        console.log(`Property does exist, pass`);
         
         // Validate that the property belongs to the one who made the request
         const userId = user.id.toString();
@@ -73,12 +71,9 @@ export default async function userFolderMiddleware(req, res, next) {
             console.log(`${userId} != ${propOwnerId}`);
             return res.redirect(`${serverUrl()}/user/property/admin`);
         }
-        console.log(`User owns the property`);
         
         // Create and get property folder
         propertyFolder(user.id, id);
-        
-        console.log(`Created property folder`);
         
         return next();
     } catch(err) {
