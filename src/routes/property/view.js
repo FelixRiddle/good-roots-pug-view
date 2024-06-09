@@ -2,6 +2,7 @@ import express from "express";
 
 import expand from "../../controllers/expand.js";
 import { serverUrl } from "../../controllers/env/env.js";
+import { isSeller as isUserSeller } from "../../lib/user/index.js";
 
 const viewRoute = express.Router();
 
@@ -10,6 +11,7 @@ const viewRoute = express.Router();
  */
 viewRoute.get("/view/:id", async (req, res) => {
     try {
+        console.log(`[GET] /property/view/${req.params.id}`);
         const { id } = req.params;
         
         const {
@@ -38,18 +40,20 @@ viewRoute.get("/view/:id", async (req, res) => {
             return res.redirect(page404);
         }
         
-        // Check if the user is the seller
-        const userId = req.user?.id;
-        console.log(`User id: ${userId}`);
-        console.log(`Property user: ${property.userId}`);
+        // The user may not exist
+        const user = req.user;
         
-        const isSeller = userId === property.userId;
-        console.log(`The person in the seller: ${isSeller}`);
+        // Check if the user is the seller
+        let isSeller = false;
+        if(user) {
+            const isSeller = isUserSeller(user, property);
+            console.log(`The person in the seller: ${isSeller}`);
+        }
         
         return res.render("property/view", {
             property,
             isSeller,
-            ...expand(req)
+            user
         });
     } catch(err) {
         const home = `${serverUrl()}/home`;

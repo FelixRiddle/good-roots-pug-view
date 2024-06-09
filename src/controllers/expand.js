@@ -14,6 +14,7 @@
 export default function expand(req) {
     // Get user
     const userObject = req.user;
+    console.log(`User object: `, userObject);
     
     // Make it falsy, to easily check if it exists
     let user = undefined;
