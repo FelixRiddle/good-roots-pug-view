@@ -59,9 +59,10 @@ export function relativePropertyImages(userId, id) {
     
     let imagesURI = [];
     for(let image of images) {
+        // If the image name has weird characters or spaces, this fixes it.
         let encodedImageName = encodeURIComponent(image.name);
         
-        // Because express doesn't add the 'public' part to it, we have to remove it
+        // Remove '/public'
         let imagePath = image.path.substring(7, image.path.length);
         
         let imageURI = `${imagePath}/${encodedImageName}`;
@@ -83,16 +84,17 @@ export function relativePropertyImages(userId, id) {
  * @returns {array} Array of property images relative path from public directory
  */
 export function relativePropertyImagesNorm(userId, id) {
-    let images = fs.readdirSync(relativePropertyFolder(userId, id), { withFileTypes: true });
+    const images = fs.readdirSync(relativePropertyFolder(userId, id), { withFileTypes: true });
     
     let imagesURI = [];
-    for(let image of images) {
-        let encodedImageName = encodeURIComponent(image.name);
+    for(const image of images) {
+        // If the image name has weird characters or spaces, this fixes it.
+        const encodedImageName = encodeURIComponent(image.name);
         
-        // Because express doesn't add the 'public' part to it, we have to remove it
-        let imagePath = image.path.substring(7, image.path.length);
+        // Remove '/public'
+        const imagePath = image.path.substring(7, image.path.length);
         
-        let imageURI = `public/${imagePath}/${encodedImageName}`;
+        const imageURI = `public/${imagePath}/${encodedImageName}`;
         
         imagesURI.push(imageURI);
     }

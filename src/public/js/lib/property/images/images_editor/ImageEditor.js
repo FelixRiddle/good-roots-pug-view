@@ -155,7 +155,6 @@ export default class ImageEditor {
                 
                 // Show remove action icon
                 this.removeImageIcons[index].hide();
-                // this.hideRemoveAction(index);
             }
         }
     }

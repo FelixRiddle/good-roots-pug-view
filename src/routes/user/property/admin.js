@@ -83,8 +83,8 @@ const admin = async(req, res) => {
         } catch(err) {
             // console.log(`Error:`)
             // console.error(err);
-            // console.log(`The property folder for the user may not exist!`);
-            // console.log(`This just means that the user doesn't have any properties`);
+            console.log(`The property folder for the user may not exist!`);
+            console.log(`This just means that the user doesn't have any properties`);
         }
         
         const expanded = expand(req);

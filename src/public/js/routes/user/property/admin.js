@@ -57,7 +57,7 @@ function updateProperty(property) {
     let propertyElement = document.getElementById(`${property.id}_image`);
     if(propertyElement) {
         // Set image source location
-        propertyElement.src = `${location.origin}/${propertyImages[0]}`
+        propertyElement.src = `${location.origin}/${propertyImages[0]}`;
     }
     
     // The title is an <a> element

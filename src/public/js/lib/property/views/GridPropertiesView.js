@@ -21,12 +21,14 @@ export default class GridPropertiesView {
      * Update property images
      */
     updatePropertyImages() {
+        console.log(`Setting property images`);
         for(const property of this.properties) {
             // Element id
             const elId = `grid_property_image_${property.id}`;
             
             // Get element
             const el = document.getElementById(elId);
+            // console.log(`Property: `, property);
             if(el) {
                 // Set the first image as its main
                 el.src = property.images[0];

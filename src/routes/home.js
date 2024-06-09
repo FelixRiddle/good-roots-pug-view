@@ -1,6 +1,7 @@
 import express from "express";
 
 import expand from "../controllers/expand.js"
+import { relativePropertyImages } from "../lib/user/userFolder/property/propertyFolder.js";
 
 const homeRouter = express.Router();
 
