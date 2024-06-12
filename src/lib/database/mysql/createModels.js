@@ -10,7 +10,7 @@ export default function createModels() {
     models.Category = models.category();
     models.Price = models.price();
     models.Property = models.property();
-    models.User = models.user();
+    models.User = models.user;
     models.DebugPropertyImageUpload = models.debugPropertyImageUpload();
     models.UserMessages = models.userMessages();
     

@@ -1,9 +1,7 @@
 # Priority TODO
 
-[2024-03-11]
-- [ ] Fix authentication routes
-- [ ] Fix property routes
-- [ ] Publish good-roots-ts-api to npm for easier handling
+[2024-06-10]
+- [ ] Property view without a user logged in doesn't shows property image.
 
 [2024-02-26]
 - [ ] Seed properties

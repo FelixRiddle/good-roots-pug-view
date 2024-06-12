@@ -1,6 +1,7 @@
 import express from "express";
 
 import expand from "../../../controllers/expand.js";
+import { serverUrl } from "../../../controllers/env/env.js";
 
 const setImageRouter = express.Router();
 
@@ -58,7 +59,11 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         console.log(err);
         console.log(`Error: `, err);
         console.log(`Couldn't render /set_image`);
-        return res.redirect("user/property/admin");
+        
+        const url = `${serverUrl()}/user/property/admin`;
+        console.log(`Redirecting to ${url}`);
+        
+        return res.redirect(url);
     }
 });
 
