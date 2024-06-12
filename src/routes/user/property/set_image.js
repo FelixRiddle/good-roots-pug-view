@@ -15,9 +15,6 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
         const { id } = req.params;
         const user = req.user;
         
-        console.log(`User: `, req.user);
-        console.log(`Property id: ${id}`);
-        
         const Property = req.models.Property;
         
         // Validate that the property exists
@@ -27,11 +24,15 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             console.log(`The requested property doesn't exists!`);
             return res.redirect("user/property/admin");
         }
-        console.log(`Property exists`);
+        
+        // Remove sequelize stuff and leave just the data
+        const property = propertyController.get({ plain: true });
         
         // Validate that the property belongs to the own who made the request
         if(user) {
-            if(user.id.toString() !== propertyController.userId.toString()) {
+            const userId = user.id.toString();
+            const propertyUserId = property.userId.toString();
+            if(userId !== propertyUserId) {
                 console.log(`The user doesn't own this property going back...`);
                 console.log(`User: `, user.name);
                 return res.redirect("user/property/admin");
@@ -40,15 +41,10 @@ setImageRouter.get("/set_image/:id", async (req, res) => {
             console.log(`Req user doesn't exists`);
             return res.redirect("user/property/admin");
         }
-        console.log(`User owns property`)
-        
-        // Remove sequelize stuff and leave just the data
-        let property = propertyController.get({ plain: true });
         
         // Ok, render the page to set the image
         let nextUrl = `user/property/set_image`;
-        console.log(`All validations ok`);
-        console.log(`Rendering: ${nextUrl}`);
+        
         return res.render(
             nextUrl, {
             page: `Set images for ${property.title}`,
