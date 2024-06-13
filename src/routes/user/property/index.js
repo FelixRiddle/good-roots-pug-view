@@ -1,3 +1,12 @@
+/**
+ * This is for user properties
+ * 
+ * This is not meant for anything else, for example:
+ * * Send message to property
+ * This should be done in another endpoint, which requires a logged in user.
+ * 
+ * But the messages can be retrieved for this user.
+ */
 import express from "express";
 
 // Routers
