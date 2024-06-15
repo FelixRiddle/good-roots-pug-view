@@ -1,6 +1,5 @@
 import express from "express";
 
-import expand from "../../controllers/expand.js";
 import { serverUrl } from "../../controllers/env/env.js";
 import { isSeller as isUserSeller } from "../../lib/user/index.js";
 
@@ -42,6 +41,7 @@ viewRoute.get("/view/:id", async (req, res) => {
         
         // The user may not exist
         const user = req.user;
+        console.log(`User: `, user);
         
         // Check if the user is the seller
         let isSeller = false;

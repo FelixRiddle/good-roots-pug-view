@@ -21,6 +21,15 @@ const { authenticatedUserProtection } = publicMiddleware;
 
 const routes = express.Router();
 
+// TODO: Later on put the main three apps here by installing them as a package
+// * Authentication:
+// express-authentication
+// * Real estate:
+// express-real-estate
+// * Backdoor access:
+// backdoor-server-access(Only development)
+routes.use("/app", () => { });
+
 // Open routes
 routes.use("/api", apiRouter);
 routes.use("/property", propertyRoutes);

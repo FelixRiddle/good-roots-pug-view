@@ -15,7 +15,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
                 messages: [{
                     message: "Message is too short",
                     error: true,
-                }]
+                }],
+                messageSent: false,
             });
         }
         
@@ -29,13 +30,15 @@ propertyMesssagesRouter.post("/", async (req, res) => {
                 messages: [{
                     message: "Property doesn't exists",
                     error: true,
-                }]
+                }],
+                messageSent: false,
             });
         }
         
         const { user } = req.user;
         const userId = user.id;
         
+        // Store message
         await PropertySellerMessage.create({
             message,
             propertyId,
@@ -46,7 +49,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             messages: [{
                 message: "Message sent",
                 error: false,
-            }]
+            }],
+            messageSent: true,
         });
     } catch(err) {
         console.error(err);
@@ -54,7 +58,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             messages: [{
                 message: "Couldn't upload the message, unkown error",
                 error: true,
-            }]
+            }],
+            messageSent: false,
         });
     }
 })

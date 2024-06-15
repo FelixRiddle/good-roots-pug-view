@@ -21,6 +21,8 @@ const MySQLSession = MySQLStore(session);
 
 /**
  * Server
+ * 
+ * TODO: Use 'risotto' package.
  */
 export default class Server {
     constructor() {
