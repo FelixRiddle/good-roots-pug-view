@@ -14,6 +14,7 @@ export default function createModels() {
     models.DebugPropertyImageUpload = models.debugPropertyImageUpload;
     models.UserMessages = models.userMessages;
     models.PropertySellerMessage = models.propertySellerMessage;
+    models.GeneralPropertyInformation = models.generalPropertyInformation;
     
     return models;
 }

@@ -1,11 +1,7 @@
 import express from "express";
 
 import mapRouter from "./map/index.js";
-
-import ExpressAuthentication from "felixriddle.express-authentication";
-
-const { publicMiddleware } = ExpressAuthentication;
-const { authenticatedUserProtection } = publicMiddleware;
+import authenticatedUserProtection from "../../../middleware/auth/authenticatedUserProtection.js";
 
 const locationRouter = express.Router();
 

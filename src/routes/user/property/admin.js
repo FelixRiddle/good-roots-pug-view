@@ -2,6 +2,7 @@ import express from "express";
 
 import expand from "../../../controllers/expand.js";
 import { relativePropertyImages } from "../../../lib/user/userFolder/property/propertyFolder.js";
+import GeneralPropertyInformation from "../../../lib/model/GeneralPropertyInformation.js";
 
 const adminRoutes = express.Router();
 
@@ -38,6 +39,7 @@ const admin = async(req, res) => {
             Category,
             Price,
             Property,
+            PropertySellerMessages,
         } = req.models;
         
         // Fetch properties from the database that are owned by this user
@@ -57,7 +59,7 @@ const admin = async(req, res) => {
                         raw: true,
                         model: Price,
                         as: "price"
-                    }
+                    },
                 ]
             }),
             // Get the quantity of user properties
@@ -67,6 +69,19 @@ const admin = async(req, res) => {
                 },
             })
         ]);
+        
+        // Append how many messages each property has received
+        for(const prop of propertiesRes) {
+            console.log(`Property: `, prop);
+            const propertyId = prop.id;
+            
+            const genInfoProp = new GeneralPropertyInformation(req.models, propertyId);
+            const messagesCount = genInfoProp.countPrivateMessages();
+            
+            console.log(`Id: ${propertyId}, messages count: ${messagesCount}`);
+            
+            prop.messagesCount = messagesCount;
+        }
         
         // Thanks sensei for this incredible response
         // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true

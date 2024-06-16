@@ -1,7 +1,7 @@
-import { Marker } from "leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
-import rootLocation from "../../global/location.js";
 import axios from "axios";
+
+import rootLocation from "../../global/location.js";
 
 /**
  * Class to mark a single position in a map
@@ -146,17 +146,19 @@ export default class MarkPositionManager {
      * This is done in the backend, because leaflet plugin didn't work for me D:.
      */
     async onMarkerChangePosition() {
-        let coordinates = this.marker.getLatLng();
+        console.log(`Marker changed position`);
+        const coordinates = this.marker.getLatLng();
+        console.log(`Coordinates: `, coordinates);
         
         // Get location information
-        let client = axios.create({
-            baseUrl: rootLocation(),
-            timeout: 2000,
+        const client = axios.create({
+            baseUrl: location.origin,
+            // timeout: 2000,
             headers: {
                 "Content-Type": "application/json",
             }
         });
-        let response = await client.post("/api/location/map/geocoding/reverse", coordinates)
+        const response = await client.post("/api/location/map/geocoding/reverse", coordinates)
             .then((res) => res)
             .catch((err) => {
                 console.log(`Error when reverse geocoding the coordinates.`);
@@ -166,7 +168,11 @@ export default class MarkPositionManager {
         this.locationInfo = response.data[0];
         
         // Update marker name
-        this.setMarkerPopupInfo(`${this.locationInfo.streetName} ${this.locationInfo.streetNumber}`);
+        const locationInfo = this.locationInfo;
+        console.log(`Location info: `, locationInfo);
+        if(locationInfo) {
+            this.setMarkerPopupInfo(`${this.locationInfo.streetName} ${this.locationInfo.streetNumber}`);
+        }
         
         // User defined callback
         if(this.positionChangeCallback) {

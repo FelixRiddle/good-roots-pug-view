@@ -3,8 +3,10 @@ import NodeGeocoder from "node-geocoder";
 
 const reverseRouter = express.Router();
 
-reverseRouter.use("/reverse", async (req, res) => {
+reverseRouter.post("/reverse", async (req, res) => {
     try {
+        console.log(`[POST] /api/location/map/geocoding/reverse`);
+        
         // Validate that the required fields exist
         if(req.body.lat === undefined || req.body.lng === undefined) {
             return res.send({

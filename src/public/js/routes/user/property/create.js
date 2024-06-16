@@ -15,6 +15,11 @@ let markerPosition = new MarkPositionManager();
  * @param {Object} newPosition The new position, contains tons of information
  */
 let positionChangeCallback = (newPosition) => {
+    if(!newPosition) {
+        console.warn("New position is undefined!");
+        return;
+    }
+    
     // We have to set street, latitude and longitude.
     // Street
     let streetName = `${newPosition.streetName} ${newPosition.streetNumber}`;
