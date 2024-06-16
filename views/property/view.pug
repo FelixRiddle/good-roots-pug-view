@@ -71,44 +71,7 @@ block content
                     p(class="text-gray-600 font-bold text-xs") Direction 
                         span(class="text-gray-800 block text-lg")= property.street
                     
-                    //- Give the user a warning
-                    if !isSeller
-                        h3(
-                            class="text-2xl text-center my-10 font-extrabold text-gray-900"
-                        ) Vendedor
-                        
-                        if user
-                            //- Contact seller
-                            form(method="POST" id="contact:seller")
-                                //- Store property id too
-                                input(type="hidden" name="contact:seller:propertyId" value=property.id)
-                                
-                                //- Message field
-                                div(class="space-y-5")
-                                    label(for="message") Message 
-                                    textarea(
-                                        name="message"
-                                        id="contact:seller:message"
-                                        class="w-full p-1 border border-gray-300 rounded-lg shadow placeholder-gray-400"
-                                        placeholder="Your message"
-                                    )
-                                
-                                //- Submit
-                                input(
-                                    type="submit"
-                                    id="contact:seller:submit"
-                                    value="Send message"
-                                    class="bg-indigo-600 text-white font-bold uppercase text-sm w-full p-2 cursor-pointer"
-                                )
-                        else
-                            //- TODO: The user can contact the seller providing a phone number, an email or some communication method.
-                            div(class="flex flex-col items-center justify-center gap-2")
-                                p You need an account to contact the owner 
-                                a(href="/auth/register") Make an account
-                    else
-                        h3(
-                            class="text-2xl text-center my-10 font-extrabold text-gray-900"
-                        ) Your property
+                    include ./components/contact
 
 block scripts
     //- Leaflet

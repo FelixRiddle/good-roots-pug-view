@@ -2,12 +2,19 @@ import express from "express";
 
 const propertyMesssagesRouter = express.Router();
 
+/**
+ * User sends a message to a property owner - The route
+ */
 propertyMesssagesRouter.post("/", async (req, res) => {
     try {
+        console.log(`[POST] /user/property_messages`);
+        
         const {
             propertyId,
             message,
         } = req.body;
+        
+        console.log(`Body: `, req.body);
         
         // First validate message length
         if(message.length <= 3) {
@@ -34,6 +41,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
                 messageSent: false,
             });
         }
+        
+        console.log(`Validation passed`);
         
         // User info
         const { user } = req.user;
