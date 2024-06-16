@@ -37,20 +37,10 @@ export default async function authenticatedUserProtection(req, res, next) {
         const userApi = await UserAPI.fromJWT(token);
         const user = await userApi.getUserData();
         
+        req.user = user;
+        
         // Validate that the user exists
         // The token should be decoded and the user validated before even validating the signature
-        
-        // Store user on the request
-        if(user && user.email) {
-            req.user = user;
-        } else {
-            return res.send({
-                messages: [{
-                    error: true,
-                    message: "User doesn't exists"
-                }]
-            });
-        }
         
         return next();
     } catch(err) {

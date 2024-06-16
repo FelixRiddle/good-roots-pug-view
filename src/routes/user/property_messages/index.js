@@ -14,8 +14,6 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             message,
         } = req.body;
         
-        console.log(`Body: `, req.body);
-        
         // First validate message length
         if(message.length <= 3) {
             return res.status(400).send({
@@ -42,10 +40,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             });
         }
         
-        console.log(`Validation passed`);
-        
         // User info
-        const { user } = req.user;
+        const user = req.user;
         const userId = user.id;
         
         // Message object
@@ -55,10 +51,8 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             userId,
         };
         
-        console.log(`Message object: `, messageObject);
-        
         // Store message
-        await PropertySellerMessage.create();
+        await PropertySellerMessage.create(messageObject);
         
         return res.send({
             messages: [{
