@@ -1,7 +1,5 @@
 import { UserAPI } from "felixriddle.good-roots-ts-api";
 
-const PROTECT_ROUTE_DEBUG = true;
-
 /**
  * Authenticated user protection
  * 
@@ -24,10 +22,6 @@ export default async function authenticatedUserProtection(req, res, next) {
         
         // If there's no token, send the user to the login page
         if(!token) {
-            if(PROTECT_ROUTE_DEBUG) {
-                console.log(`No token found`);
-            }
-            
             return res.send({
                 messages: [{
                     error: true,
@@ -36,23 +30,20 @@ export default async function authenticatedUserProtection(req, res, next) {
             });
         }
         
+        // TODO: This could be improved if this app is treated as a package and installed in an app
+        // and we can validate jwt directly
+        
         // Fetch the user
         const userApi = await UserAPI.fromJWT(token);
-        
-        const userData = await userApi.getUserData();
-        console.log(`User data: `, userData);
+        const user = await userApi.getUserData();
         
         // Validate that the user exists
         // The token should be decoded and the user validated before even validating the signature
         
         // Store user on the request
-        if(userData && userData.email) {
-            req.user = userData;
+        if(user && user.email) {
+            req.user = user;
         } else {
-            if(PROTECT_ROUTE_DEBUG) {
-                console.log(`User not existent`);
-            }
-            
             return res.send({
                 messages: [{
                     error: true,
@@ -63,10 +54,8 @@ export default async function authenticatedUserProtection(req, res, next) {
         
         return next();
     } catch(err) {
-        if(PROTECT_ROUTE_DEBUG) {
-            console.log(`Protect route middleware error`);
-            console.error(err);
-        }
+        console.log(`Protect route middleware error`);
+        console.error(err);
         
         return res.send({
             messages: [{

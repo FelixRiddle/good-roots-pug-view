@@ -35,15 +35,21 @@ propertyMesssagesRouter.post("/", async (req, res) => {
             });
         }
         
+        // User info
         const { user } = req.user;
         const userId = user.id;
         
-        // Store message
-        await PropertySellerMessage.create({
+        // Message object
+        const messageObject = {
             message,
             propertyId,
             userId,
-        });
+        };
+        
+        console.log(`Message object: `, messageObject);
+        
+        // Store message
+        await PropertySellerMessage.create();
         
         return res.send({
             messages: [{
