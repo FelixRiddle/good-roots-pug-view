@@ -4,8 +4,7 @@
  */
 export default class GeneralPropertyInformation {
     constructor(models, propertyId) {
-        this.GeneralPropertyInformation = models.GeneralPropertyInformation;
-        this.PropertySellerMessages = models.PropertySellerMessages;
+        this.models = models;
         
         this.propertyId = propertyId;
     }
@@ -17,7 +16,7 @@ export default class GeneralPropertyInformation {
         const propertyId = this.propertyId;
         
         // Find out to what general information it belongs
-        let generalPropertyInformation = await this.GeneralPropertyInformation.findOne({
+        let generalPropertyInformation = await this.models.generalPropertyInformation.findOne({
             where: {
                 propertyId,
             }
@@ -25,14 +24,14 @@ export default class GeneralPropertyInformation {
         
         // If it doesn't exist, create it
         if(!generalPropertyInformation) {
-            generalPropertyInformation = await this.GeneralPropertyInformation.create({
+            generalPropertyInformation = await this.models.generalPropertyInformation.create({
                 propertyId,
             });
         }
         const genInfoId = generalPropertyInformation.id;
         
         console.log(`Property id: `, propertyId);
-        const messagesCount = await this.PropertySellerMessages.count({
+        const messagesCount = await this.models.propertySellerMessage.count({
             where: {
                 generalPropertyInformationId: genInfoId,
             }

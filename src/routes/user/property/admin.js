@@ -6,7 +6,7 @@ import GeneralPropertyInformation from "../../../lib/model/GeneralPropertyInform
 
 const adminRoutes = express.Router();
 
-const admin = async(req, res) => {
+const admin = async (req, res) => {
     try {
         // Query parameters
         let { page } = req.query;
@@ -42,6 +42,8 @@ const admin = async(req, res) => {
             PropertySellerMessages,
         } = req.models;
         
+        console.log(`Models: `, req.models);
+        
         // Fetch properties from the database that are owned by this user
         const [propertiesRes, total] = await Promise.all([
             Property.findAll({
@@ -72,13 +74,13 @@ const admin = async(req, res) => {
         
         // Append how many messages each property has received
         for(const prop of propertiesRes) {
-            console.log(`Property: `, prop);
             const propertyId = prop.id;
             
-            const genInfoProp = new GeneralPropertyInformation(req.models, propertyId);
-            const messagesCount = genInfoProp.countPrivateMessages();
-            
-            console.log(`Id: ${propertyId}, messages count: ${messagesCount}`);
+            const genInfoProp = new GeneralPropertyInformation(
+                req.models,
+                propertyId
+            );
+            const messagesCount = await genInfoProp.countPrivateMessages();
             
             prop.messagesCount = messagesCount;
         }
