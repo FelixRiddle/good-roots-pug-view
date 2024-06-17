@@ -7,10 +7,19 @@ import PropertyImages from "../images/PropertyImages.js";
 export default class CarouselView {
     current = 0;
     
+    // Options
+    isPublicProperty = false;
+    
     /**
      * Carousel view
+     * 
+     * Uses public api because often times you will use this carousel from a user perspective
      */
-    constructor() {
+    constructor(options = {
+        isPublicProperty: false,
+    }) {
+        this.isPublicProperty = options.isPublicProperty;
+        
         // Images container
         const imgsParent = document.getElementById("horizontalView");
         this.imagesParent = imgsParent;
@@ -20,14 +29,11 @@ export default class CarouselView {
         const propertyId = paths[paths.length - 1];
         this.propertyId = propertyId;
         
-        // Images API
-        this.api = new ImagesAPI(propertyId);
-        
         // Property images
-        this.propertyImages = new PropertyImages(this.api);
+        const imgApi = new PropertyImages(propertyId);
+        imgApi.setPublic();
         
-        // Set it back to the api, wondering if this is ok?
-        this.api.setPropertyImagesObject(this.propertyImages);
+        this.propertyImages = imgApi;
         
         // Set update callback
         const thisObj = this;

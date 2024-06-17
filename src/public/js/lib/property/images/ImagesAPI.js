@@ -2,6 +2,34 @@ import axios from "axios";
 import PropertyImages from "./PropertyImages.js";
 
 /**
+ * Get url
+ */
+function backendUrl(isPublic) {
+    if(isPublic) {
+        return `${window.location.origin}/property/images`;
+    }
+        
+    return `${window.location.origin}/user/property/images`;
+}
+
+/**
+ * Create axios instance
+ */
+function createAxiosInstance(isPublic = false) {
+    const url = backendUrl(isPublic);
+    console.log(`Url: `, url);
+    
+    // Create axios instance
+    const instance = axios.create({
+        baseURL: url,
+        timeout: 2000,
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    return instance;
+}
+
+/**
  * Images API
  * 
  * Images API is an endpoint abstraction to manage property images.
@@ -20,29 +48,36 @@ export default class ImagesAPI {
      * @param {number} propertyId This property id
      * @param {PropertyImages} propertyImages Property images manager
      */
-    constructor(propertyId, propertyImages) {
-        const url = `${window.location.origin}/user/property/images`;
-        console.log(`Url: `, url);
-        
-        // Create axios instance
-        this.instance = axios.create({
-            baseURL: url,
-            timeout: 2000,
-            headers: {'Content-Type': 'application/json'}
-        });
+    constructor(
+        propertyId,
+        // propertyImages,
+        options = {
+            isPublicProperty: false,
+        }
+    ) {
+        this.instance = createAxiosInstance(options.isPublicProperty)
         this.propertyId = propertyId;
         
-        this.propImgs = propertyImages;
+        // this.propImgs = propertyImages;
     }
     
     /**
-     * Set property images object
+     * Use public endpoint
      * 
-     * @param {PropertyImages} propertyImages Property images manager
+     * - Can't access unpublished property images
      */
-    setPropertyImagesObject(propertyImages) {
-        this.propImgs = propertyImages;
+    setPublic() {
+        this.instance = createAxiosInstance(true);
     }
+    
+    // /**
+    //  * Set property images object
+    //  * 
+    //  * @param {PropertyImages} propertyImages Property images manager
+    //  */
+    // setPropertyImagesObject(propertyImages) {
+    //     this.propImgs = propertyImages;
+    // }
     
     // --- API Calls ---
     /**
@@ -51,7 +86,7 @@ export default class ImagesAPI {
     async fetchAll() {
         const endpoint = `/get_all/${this.propertyId}`;
         console.log(`Endpoint: `, endpoint);
-        let res = await this.instance.get(endpoint)
+        const res = await this.instance.get(endpoint)
             .then((res) => {
                 console.log(`Fetch property images result: `, res.data);
                 return res;
@@ -66,6 +101,7 @@ export default class ImagesAPI {
      * Send preflight request to server about the images
      * 
      * @param {Array} images Array of image files
+     * @deprecated Not used even once
      */
     async preflightRequest(images) {
         if(!images) {

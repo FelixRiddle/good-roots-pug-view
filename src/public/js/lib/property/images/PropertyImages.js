@@ -9,10 +9,18 @@ export default class PropertyImages {
     
     /**
      * 
-     * @param {ImagesAPI} imagesAPI 
      */
-    constructor(imagesAPI) {
-        this.api = imagesAPI;
+    constructor(propertyId) {
+        this.api = new ImagesAPI(propertyId);
+    }
+    
+    /**
+     * Use public endpoints?
+     * 
+     * - Can't see unpublished property images
+     */
+    setPublic() {
+        this.api.setPublic();
     }
     
     // --- Operations ---

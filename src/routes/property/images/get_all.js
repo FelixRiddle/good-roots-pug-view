@@ -1,6 +1,5 @@
 import express from "express";
-
-import PropertyFolder from "../../../../user/userFolder/property/PropertyFolder.js";
+import PropertyFolder from "../../../user/userFolder/property/PropertyFolder.js";
 
 const getAllRouter = express.Router();
 
@@ -23,10 +22,11 @@ getAllRouter.get("/get_all/:id", async (req, res) => {
                     message: "Property is not public",
                     error: true,
                 }]
-            })
+            });
         }
         
-        const userId = req.user.id;
+        // We get the user from the property
+        const userId = property.userId;
         
         const propertyFolder = new PropertyFolder(userId, propertyId);
         
