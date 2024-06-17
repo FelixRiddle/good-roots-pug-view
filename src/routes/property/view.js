@@ -41,13 +41,11 @@ viewRoute.get("/view/:id", async (req, res) => {
         
         // The user may not exist
         const user = req.user;
-        console.log(`User: `, user);
         
         // Check if the user is the seller
         let isSeller = false;
         if(user) {
-            const isSeller = isUserSeller(user, property);
-            console.log(`The person in the seller: ${isSeller}`);
+            isSeller = isUserSeller(user, property);
         }
         
         return res.render("property/view", {

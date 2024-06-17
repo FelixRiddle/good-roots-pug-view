@@ -4,15 +4,24 @@
  */
 export default class GeneralPropertyInformation {
     constructor(models, propertyId) {
+        
+        if(!models) {
+            throw new Error(`Models are required!`);
+        }
+        
+        if(!propertyId) {
+            throw new Error(`Property id is required!`);
+        }
+        
         this.models = models;
         
         this.propertyId = propertyId;
     }
     
     /**
-     * Count private messages sent to the owner of this property
+     * Get or create general property information
      */
-    async countPrivateMessages() {
+    async get() {
         const propertyId = this.propertyId;
         
         // Find out to what general information it belongs
@@ -28,9 +37,17 @@ export default class GeneralPropertyInformation {
                 propertyId,
             });
         }
+        
+        return generalPropertyInformation;
+    }
+    
+    /**
+     * Count private messages sent to the owner of this property
+     */
+    async countPrivateMessages() {
+        const generalPropertyInformation = await this.get();
         const genInfoId = generalPropertyInformation.id;
         
-        console.log(`Property id: `, propertyId);
         const messagesCount = await this.models.propertySellerMessage.count({
             where: {
                 generalPropertyInformationId: genInfoId,

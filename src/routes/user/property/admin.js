@@ -12,9 +12,6 @@ const admin = async (req, res) => {
         let { page } = req.query;
         const isNumberExpression = /^[0-9]$/;
         
-        console.log(`Page: `, page);
-        console.log(`Page is number: `, isNumberExpression.test(page));
-        
         if(page) {
             // Check that validation passes
             if(!isNumberExpression.test(page)) {

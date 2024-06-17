@@ -1,4 +1,5 @@
 import express from "express";
+import GeneralPropertyInformation from "../../../lib/model/GeneralPropertyInformation.js";
 
 const propertyMesssagesRouter = express.Router();
 
@@ -44,11 +45,18 @@ propertyMesssagesRouter.post("/", async (req, res) => {
         const user = req.user;
         const userId = user.id;
         
+        // Create general property information record
+        // Get also creates if it doesn't exist
+        const generalPropertyInfo = new GeneralPropertyInformation(req.models, propertyId);
+        const generalPropertyInformation = await generalPropertyInfo.get();
+        const generalId = generalPropertyInformation.id;
+        
         // Message object
         const messageObject = {
             message,
             propertyId,
             userId,
+            generalPropertyInformationId: generalId,
         };
         
         // Store message
