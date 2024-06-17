@@ -39,10 +39,7 @@ const admin = async (req, res) => {
             Category,
             Price,
             Property,
-            PropertySellerMessages,
         } = req.models;
-        
-        console.log(`Models: `, req.models);
         
         // Fetch properties from the database that are owned by this user
         const [propertiesRes, total] = await Promise.all([
@@ -72,8 +69,12 @@ const admin = async (req, res) => {
             })
         ]);
         
+        // Thanks sensei for this incredible response
+        // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
+        const properties = propertiesRes.map(x => x.get({ plain: true }));
+        
         // Append how many messages each property has received
-        for(const prop of propertiesRes) {
+        for(const prop of properties) {
             const propertyId = prop.id;
             
             const genInfoProp = new GeneralPropertyInformation(
@@ -84,10 +85,6 @@ const admin = async (req, res) => {
             
             prop.messagesCount = messagesCount;
         }
-        
-        // Thanks sensei for this incredible response
-        // https://stackoverflow.com/questions/64546830/sequelize-how-to-eager-load-with-associations-raw-true
-        const properties = propertiesRes.map(x => x.get({ plain: true }));
         
         try {
             // Get property images
