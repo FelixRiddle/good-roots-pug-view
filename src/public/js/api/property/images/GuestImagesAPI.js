@@ -24,7 +24,6 @@ export default class GuestImagesAPI {
     async fetchAll() {
         let res = await this.instance.get(`/operation/get_all/${this.propertyId}`)
             .then((res) => {
-                console.log(`Fetch property images result: `, res.data);
                 return res;
             }).catch((err) => {
                 console.log(`Error when fetching image names from the backend: `, err);

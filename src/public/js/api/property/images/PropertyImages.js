@@ -5,13 +5,43 @@ import ImagesAPI from "./ImagesAPI.js";
  * 
  */
 export default class PropertyImages {
-    propertyImages = [];
+    #propertyImages = [];
     
     /**
      * 
      */
     constructor(propertyId) {
-        this.api = new ImagesAPI(propertyId);
+        this.imagesApi = new ImagesAPI(propertyId);
+    }
+    
+    // --- Set get property images ---
+    /**
+     * Set property images
+     */
+    setPropertyImages(images) {
+        if(!images) {
+            throw new Error("Tried to set undefined to property images");
+        }
+        
+        this.#propertyImages = images;
+    }
+    
+    /**
+     * Get images
+     * 
+     * @returns 
+     */
+    getImages() {
+        return this.#propertyImages;
+    }
+    
+    /**
+     * Count images
+     * 
+     * @returns 
+     */
+    count() {
+        return this.#propertyImages.length;
     }
     
     /**
@@ -20,7 +50,7 @@ export default class PropertyImages {
      * - Can't see unpublished property images
      */
     setPublic() {
-        this.api.setPublic();
+        this.imagesApi.setPublic();
     }
     
     // --- Operations ---
@@ -28,14 +58,7 @@ export default class PropertyImages {
      * Are there more than one property
      */
     exists() {
-       return this.propertyImages.length > 0;
-    }
-    
-    /**
-     * Get all
-     */
-    getAll() {
-        return this.propertyImages;
+       return this.#propertyImages.length > 0;
     }
     
     /**
@@ -96,7 +119,7 @@ export default class PropertyImages {
      * @param {number} index Property image index
      */
     at(index) {
-        return this.propertyImages[index];
+        return this.#propertyImages[index];
     }
     
     // --- Special ---
@@ -122,27 +145,21 @@ export default class PropertyImages {
     /**
      * Update property images
      */
-    updatePropertyImages() {
-        // Fetch property images, if they exist
-        let propertyImages = Promise.resolve(this.api.fetchAll());
-        let thisClass = this;
-        propertyImages.then((images) => {
-            thisClass.propertyImages = images;
-            
-            thisClass.callUpdatePropertyCB();
-        });
-    }
-    
-    /**
-     * Update but async
-     */
-    async updatePropertyImagesAsync() {
-        // Fetch property images, if they exist
-        const propertyImages = await this.api.fetchAll();
-        this.propertyImages = propertyImages;
+    async updatePropertyImages() {
+        const propertyImagesApi = this;
         
-        this.callUpdatePropertyCB();
-        
-        return propertyImages;
+        // Fetch property images, if they exist
+        await this.imagesApi.fetchAll()
+            .then((images) => {
+                if(images) {
+                    propertyImagesApi.setPropertyImages(images);
+                }
+                
+                propertyImagesApi.callUpdatePropertyCB();
+            })
+            .catch((err) => {
+                console.warn(`Couldn't fetch images, error: `);
+                console.error(err);
+            });
     }
 }

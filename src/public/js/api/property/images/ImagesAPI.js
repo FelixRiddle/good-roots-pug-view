@@ -17,7 +17,6 @@ function backendUrl(isPublic) {
  */
 function createAxiosInstance(isPublic = false) {
     const url = backendUrl(isPublic);
-    console.log(`Url: `, url);
     
     // Create axios instance
     const instance = axios.create({
@@ -70,25 +69,14 @@ export default class ImagesAPI {
         this.instance = createAxiosInstance(true);
     }
     
-    // /**
-    //  * Set property images object
-    //  * 
-    //  * @param {PropertyImages} propertyImages Property images manager
-    //  */
-    // setPropertyImagesObject(propertyImages) {
-    //     this.propImgs = propertyImages;
-    // }
-    
     // --- API Calls ---
     /**
      * When the page loads fetch all images
      */
     async fetchAll() {
         const endpoint = `/get_all/${this.propertyId}`;
-        console.log(`Endpoint: `, endpoint);
         const res = await this.instance.get(endpoint)
             .then((res) => {
-                console.log(`Fetch property images result: `, res.data);
                 return res;
             }).catch((err) => {
                 console.log(`Error when fetching image names from the backend: `, err);

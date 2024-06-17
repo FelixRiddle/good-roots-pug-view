@@ -12,7 +12,6 @@ removeImageRouter.post("/remove_image/:id", userFolderMiddleware, async (req, re
     try {
         const { id } = req.params;
         
-        // FIXME: This may be exploited if the image name is a whole path
         const imagePublicPath = req.body.imageName;
         
         // The image name comes with its paths and everything
@@ -25,7 +24,7 @@ removeImageRouter.post("/remove_image/:id", userFolderMiddleware, async (req, re
         try {
             imageName = decodeURI(encodedImageName);
         } catch(err) {
-            console.log(`Couldn't decode the image name!!111!! 😡😡😨😰`);
+            console.warn(`Couldn't decode the image name!!111!! 😡😡😨😰`);
             console.error(err);
             
             return res.send({

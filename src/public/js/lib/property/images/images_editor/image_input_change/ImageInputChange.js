@@ -4,7 +4,7 @@ import DebugPropertyImageUploadAPI from "../../../../../../../api/debug/DebugPro
 import PropertyImagesUtils from "../../../../../config/PropertyImagesUtils.js";
 import propertyImagesConfiguration from "../../../../../config/propertyImagesConfig.js";
 import MessageController from "../../../../../messages/controller/MessagesController.js";
-import ImagesAPI from "../../ImagesAPI.js";
+import ImagesAPI from '../../../../../api/property/images/ImagesAPI.js';
 
 // Executed at the start
 const IMAGES_NOT_ZERO = 0;
@@ -61,9 +61,8 @@ export default class ImageInputChange {
         const imagesInput = document.getElementById(inputId);
         if(!imagesInput) {
             throw Error("The image input element doesn't exists!");
-        } else {
-            console.log("Image input element found!");
         }
+        
         this.api = api;
         this.imagesInput = imagesInput;
     }
@@ -88,11 +87,8 @@ export default class ImageInputChange {
      * Enable debug
      */
     async enableDebug() {
-        console.log(`[Image input change] Enabled debug`);
-        
         // Debug
         this.debugImageUploadAPI = new DebugPropertyImageUploadAPI();
-        console.log(`Uuid type: ${typeof(COURSE_UUID)}`);
         
         // Identification information
         this.debugImageUploadAPI.setActionStage(ACTION_STAGE);
@@ -118,15 +114,13 @@ export default class ImageInputChange {
     async enableWithCallback(cb) {
         const thisObj = this;
         this.imagesInput.addEventListener("change", async (event) => {
-            console.log(`Image has changed!`);
-            
             // Start rules
             if(thisObj.startRules.length > 0) {
                 await thisObj.onStart();
                 
                 // Some rules may want to stop the code from running
                 if(thisObj.stop) {
-                    console.log("(Start)Stopping code");
+                    // console.log("(Start)Stopping code");
                     return;
                 }
             }
@@ -137,7 +131,7 @@ export default class ImageInputChange {
                 
                 // Some rules may want to stop the code from running
                 if(thisObj.stop) {
-                    console.log("(Middle)Stopping code");
+                    // console.log("(Middle)Stopping code");
                     return;
                 }
             }
@@ -148,7 +142,7 @@ export default class ImageInputChange {
                 
                 // Some rules may want to stop the code from running
                 if(thisObj.stop) {
-                    console.log("(End)Stopping code");
+                    // console.log("(End)Stopping code");
                     return;
                 }
             }
@@ -164,7 +158,6 @@ export default class ImageInputChange {
         for(let rule of this.startRules) {
             switch(rule) {
                 case IMAGES_NOT_ZERO: {
-                    console.log("Images not zero");
                     // Remove images from the input
                     await this.imagesNotZeroFn();
                     break;
@@ -185,7 +178,6 @@ export default class ImageInputChange {
         for(let rule of this.rules) {
             switch(rule) {
                 case REMOVE_HEAVY_IMAGES: {
-                    console.log("Remove heavy images");
                     // Remove images from the input
                     this.removeHeavyImagesFn();
                     break;
@@ -206,7 +198,6 @@ export default class ImageInputChange {
         for(let rule of this.endRules) {
             switch(rule) {
                 case UPLOAD_IMAGES: {
-                    console.log("Upload images");
                     await this.uploadImagesFn();
                     break;
                 }
@@ -223,7 +214,7 @@ export default class ImageInputChange {
         
         // At the end
         if(removeImages) {
-            console.log("Remove images when finished");
+            // console.log("Remove images when finished");
             // Remove images from the input
             this.removeImagesWhenFinishedFn();
         }
@@ -269,10 +260,7 @@ export default class ImageInputChange {
     async imagesNotZeroFn() {
         // Check that there are files
         const files = this.imagesInput.files;
-        console.log(`Images: `, files.length);
         if(files.length === 0) {
-            console.log("No images, stop");
-            
             this.stop = true;
         }
         
@@ -301,7 +289,6 @@ export default class ImageInputChange {
             `/set_image/${this.propertyId}`,
             formData
         );
-        console.log("Image uploaded");
     }
     
     removeExtraImagesFn() {
@@ -335,13 +322,10 @@ export default class ImageInputChange {
             // Get image size
             const bytesSize = image.size;
             const sizeInMB = (bytesSize / (1024*1024)).toFixed(2);
-            console.log(`Image: `, image);
             
             // Check that file sizes are below the maximum allowed
             const maxSize = PropertyImagesUtils.maxFileSizeMB();
             if(maxSize < sizeInMB) {
-                console.log(`Max size exceeded!`);
-                
                 // Create message
                 const msgCtrl = new MessageController();
                 msgCtrl.insertMessage(`Max file size exceeded, file name of the heavy file: ${this.image.name}`, 4);

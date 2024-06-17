@@ -1,9 +1,9 @@
 import "../../../../../css/components/property/ImageEditor.scss";
-
-import ImagesAPI from "../ImagesAPI.js";
-import PropertyImages from "../PropertyImages.js";
-import RemoveIcon from "../RemoveIcon.js";
+import RemoveIcon from "./RemoveIcon.js";
+import PublishButton from "./PublishButton.js";
 import ImageInputChange from "./image_input_change/ImageInputChange.js";
+import ImagesAPI from "../../../../api/property/images/ImagesAPI.js";
+import PropertyImages from "../../../../api/property/images/PropertyImages.js";
 
 /**
  * Image editor
@@ -38,20 +38,18 @@ export default class ImageEditor {
         const propertyId = paths[paths.length - 1];
         this.propertyId = propertyId;
         
-        // Images API
-        this.api = new ImagesAPI(propertyId);
+        const imagesApi = new ImagesAPI(propertyId);
         
         // Property images
-        this.propertyImages = new PropertyImages(this.api);
+        this.propertyImages = new PropertyImages(propertyId);
         
-        // Set it back to the api, wondering if this is ok?
-        this.api.setPropertyImagesObject(this.propertyImages);
+        // Images API
+        this.imagesApi = imagesApi;
         
         // Set update callback
         const thisObj = this;
         this.propertyImages.setUpdatePropertyCallback(() => {
             thisObj.updateImageViews();
-            console.log(`Images updated!`);
             
             // Update disabled
             const btn = document.getElementById("publish");
@@ -65,35 +63,8 @@ export default class ImageEditor {
         this.startAddImageViews();
         
         // Publish property action
-        this.bindPublishProperty();
-    }
-    
-    // Start operations
-    
-    /**
-     * On publish property button click, send request to server to publish it
-     * 
-     * Hmmm, this looks..., ABSTRACTABLE 😤😤
-     */
-    bindPublishProperty() {
-        const btn = document.getElementById("publish");
-        if(btn) {
-            const thisObj = this;
-            btn.addEventListener("click", async (e) => {
-                e.preventDefault();
-                
-                // Make request
-                await thisObj.api.setPropertyPublished(true);
-                
-                // Redirect to admin page
-                location.href = `${location.origin}/user/property/admin`;
-            });
-            
-            // Disabled is the opposite of whether there's an image or not
-            btn.disabled = !this.propertyImages.exists();
-        } else {
-            console.log(`Publish button not found!`);
-        }
+        const publishButton = new PublishButton(imagesApi, this.propertyImages);
+        publishButton.bindPublishProperty();
     }
     
     /**
@@ -117,7 +88,7 @@ export default class ImageEditor {
             const THIS = this;
             removeIcon.setClickCallback(async (e) => {
                 // Remove image
-                await THIS.api.removeImage(i);
+                await THIS.imagesApi.removeImage(i);
                 
                 // Update images
                 THIS.propertyImages.updatePropertyImages();
@@ -135,12 +106,13 @@ export default class ImageEditor {
      * Updates whether an img element is shown or not, and its src attribute.
      */
     updateImageViews() {
-        const propLength = this.propertyImages.propertyImages.length;
+        // const propLength = this.propertyImages.propertyImages.length;
+        const imagesLength = this.propertyImages.count();
         let index = 0;
         
         for(let imgView of this.imagesView) {
             // Update location and visibility
-            if(propLength > 0 && index < propLength) {
+            if(imagesLength > 0 && index < imagesLength) {
                 let srcLocation = `${location.origin}/${this.propertyImages.at(index)}`;
                 imgView.src = srcLocation;
                 imgView.hidden = false;
@@ -165,7 +137,7 @@ export default class ImageEditor {
      * uploaded or it collides with another image
      */
     async bindOnChange() {
-        const inputChange = new ImageInputChange(this.api, this.inputId);
+        const inputChange = new ImageInputChange(this.imagesApi, this.inputId);
         inputChange.setPropertyId(this.propertyId);
         inputChange.setPropertyImages(this.propertyImages);
         

@@ -1,9 +1,4 @@
-import ImageEditor from "./../../../lib/property/images/images_editor/ImageEditor.js";
-
-let buttonElement = document.getElementById("publish");
-if(buttonElement) {
-    // buttonElement.addEventListener("")
-}
+import ImageEditor from "../../../lib/property/images/images_editor/ImageEditor.js";
 
 // Formulary
 let formulary = document.getElementById("publish_image");

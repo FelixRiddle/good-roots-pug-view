@@ -1,5 +1,5 @@
-import ImagesAPI from "../images/ImagesAPI.js";
-import PropertyImages from "../images/PropertyImages.js";
+import ImagesAPI from "../../../api/property/images/ImagesAPI.js";
+import PropertyImages from "../../../api/property/images/PropertyImages.js";
 
 /**
  * Carousel view
@@ -39,7 +39,6 @@ export default class CarouselView {
         const thisObj = this;
         // Images will be updated only once
         this.propertyImages.setUpdatePropertyCallback(() => {
-            console.log(`Images updated!`);
             
             // Create image views
             thisObj.createImageViews();
@@ -66,7 +65,7 @@ export default class CarouselView {
      */
     createImageViews() {
         // Create image views
-        const propertyImages = this.propertyImages.getAll();
+        const propertyImages = this.propertyImages.getImages();
         let index = 0;
         for(const imgLocation of propertyImages) {
             const imgEl = document.createElement("img");
@@ -114,9 +113,10 @@ export default class CarouselView {
         const carouselLeftButton = document.getElementById("carouselLeftButton");
         const carouselRightButton = document.getElementById("carouselRightButton");
         
-        const images = this.propertyImages.getAll();
-        const imagesLength = images.length;
+        // Get property images
+        const imagesLength = this.propertyImages.count();
         
+        // Left button of the carousel
         const thisObj = this;
         if(carouselLeftButton) {
             carouselLeftButton.addEventListener("click", (e) => {
@@ -130,6 +130,7 @@ export default class CarouselView {
             });
         }
         
+        // Right button of the carousel
         if(carouselRightButton) {
             carouselRightButton.addEventListener("click", (e) => {
                 if(thisObj.current === imagesLength - 1) {

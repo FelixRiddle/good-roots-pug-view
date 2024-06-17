@@ -33,7 +33,6 @@ createRouter.post("/create", async (req, res) => {
             actionStage
         });
         propImage.save();
-        console.log(`Prop image debug saved`);
         
         return res.send({
             messages: [

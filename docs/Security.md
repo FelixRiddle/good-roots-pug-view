@@ -1,5 +1,18 @@
 # Security things TODO
 
+## Important
+
+- [ ] Fix CSP Policies to be more strict
+    - [ ] Eval should be banned from CSP, but it conflicts with leaflet
+- [ ] All POST endpoints input are sanitized
+- [x] Property images are protected
+
+Only public property images can be seen
+
+They can still see an image if they know the name but it's too insignificant to fix.
+
+## Miscellaneous
+
 - [ ] Is admin on user model
 - [ ] Roles(it's cool, but too complex)
 - [ ] Very high rate limit, something like 20000 requests per user
@@ -13,12 +26,6 @@ Images should be the most rate limited.
 The user's ID could be used here.
 
 Using user id to create folders that contain images.
-
-- [ ] Fix CSP Policies to be more strict
-
-# Security tests
-
-- [ ] An authenticated person can't edit someone else's property
 
 # Only admin routes
 

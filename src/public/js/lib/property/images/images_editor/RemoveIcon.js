@@ -2,6 +2,8 @@ const REMOVE_ICON = `${location.origin}/image/icons/cross/1/32.png`;
 
 /**
  * Abstraction over remove icon
+ * 
+ * Remove icon is a feature of the image editor
  */
 export default class RemoveIcon {
     /**

@@ -8,15 +8,19 @@ const setImageRouter = express.Router();
 
 setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array("images"), async (req, res) => {
     let url = `${serverUrl()}/user/property/admin`;
-    console.log(`Set image endpoint`);
     
     try {
+        // The property and the user is already validated at the middleware
+        const { id } = req.params;
+        
+        console.log(`[POST] /user/property/images/set_image/${id}`);
+        
         // All of these checks are kinda useless, because the upload happened before this.
         // maybe just to inform the user?
         
         // Check if there were even files given
         if(!req.files) {
-            console.log(`Not even files were given!`);
+            console.warn(`Not even files were given!`);
             return res.send({
                 messages: [{
                     message: "No images given for the property(1)",
@@ -25,9 +29,6 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
             });
         }
         
-        // The property and the user is already validated at the middleware
-        const { id } = req.params;
-        
         const {
             Property,
         } = req.models;
@@ -35,7 +36,7 @@ setImageRouter.post("/set_image/:id", userFolderMiddleware, uploadProperty.array
         // Validate that the property exists
         const property = await Property.findByPk(id);
         if(!property) {
-            console.log(`Property doesn't exists!!!11`);
+            console.warn(`Property doesn't exists!!!11`);
             return res.send({
                 messages: [{
                     message: "Property doesn't exists.",
