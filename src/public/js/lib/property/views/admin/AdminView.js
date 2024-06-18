@@ -17,13 +17,23 @@ async function togglePublished(event) {
     console.log(`Endpoint: ${endpoint}`);
     const response = await instance.post(endpoint)
         .then((res) => {
-            return res.json();
+            return res.data;
         })
         .catch((err) => {
             console.error(err);
         });
     
-    console.log(`Response: `, response);
+    if(response) {
+        if(event.target.classList.contains("bg-yellow-100")) {
+            event.target.classList.add('bg-green-100', 'text-green-800');
+            event.target.classList.remove("bg-yellow-100", 'text-yellow-800');
+            event.target.value = "Published";
+        } else {
+            event.target.classList.remove('bg-green-100', 'text-green-800');
+            event.target.classList.add("bg-yellow-100", 'text-yellow-800');
+            event.target.value = "Not published";
+        }
+    }
 }
 
 /**
