@@ -1,0 +1,28 @@
+extends ../index
+
+block content
+    h2(class="text-2xl font-extrabold text-center my-10")=page
+    
+    a(
+        href="/user/property/admin"
+        class="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white uppercase my-5 block w-full md:w-auto"
+    ) Go back
+    
+    //- pre=JSON.stringify(messages, undefined, 2)
+    
+    div(class="mx-auto max-w-4xl bg-white shadow")
+        if messages.length 
+            ul
+                each message in messages
+                    li(class="border-gray-200 border-b p-5")
+                        p(class="font-bold text-gray-800") Name
+                            span(class="mx-2 font-normal")= message.user.name
+                        
+                        p(class="font-bold text-gray-800") Message
+                            span(class="mx-2 font-normal")= message.message
+                        
+                        p(class="font-bold text-gray-800") Sent
+                            span(class="mx-2 font-normal")= message.createdAt
+        
+        else
+            p(class="text-center text-gray-600") There are no messages

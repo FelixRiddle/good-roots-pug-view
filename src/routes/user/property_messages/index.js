@@ -1,12 +1,69 @@
 import express from "express";
 import GeneralPropertyInformation from "../../../lib/model/GeneralPropertyInformation.js";
 
-const propertyMesssagesRouter = express.Router();
+const propertyMessagesRouter = express.Router();
+
+/**
+ * Endpoint to see all property messages
+ */
+propertyMessagesRouter.get("/:id", async(req, res) => {
+    try {
+        const { id } = req.params;
+        
+        console.log(`[GET] /user/property_messages/${id}`);
+        
+        const {
+            User,
+            Property,
+            PropertySellerMessage
+        } = req.models;
+        
+        // Property exists
+        const property = await Property.findByPk(id);
+        if(!property) {
+            return res.render("user/property/admin");
+        }
+        
+        // The user is the owner
+        const isOwner = property.userId === req.user.id;
+        if(!isOwner) {
+            return res.render("user/property/admin");
+        }
+        
+        // Messages are related to general property information
+        const generalPropertyInformation = new GeneralPropertyInformation(req.models, id);
+        const model = await generalPropertyInformation.get();
+        if(!model) {
+            return res.render("user/property/admin");
+        }
+        
+        // Sequelize and others should learn the 'builder pattern' of Rust programming language
+        // TODO: We can't fetch thousands of messages, this has to be paginated
+        // Get messages
+        const messages = await PropertySellerMessage.findAll({
+            where: {
+                generalPropertyInformationId: id,
+            },
+            include: [{
+                model: User,
+                // as: "user",
+                attributes: ["id", "name"],
+            }]
+        });
+        
+        return res.render("user/property_messages", {
+            messages,
+        });
+    } catch(err) {
+        console.error(err);
+        return res.render("user/property/admin");
+    }
+});
 
 /**
  * User sends a message to a property owner - The route
  */
-propertyMesssagesRouter.post("/", async (req, res) => {
+propertyMessagesRouter.post("/", async (req, res) => {
     try {
         console.log(`[POST] /user/property_messages`);
         
@@ -81,5 +138,5 @@ propertyMesssagesRouter.post("/", async (req, res) => {
     }
 })
 
-export default propertyMesssagesRouter;
+export default propertyMessagesRouter;
 
