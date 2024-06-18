@@ -1,5 +1,6 @@
 import express from "express";
 import GeneralPropertyInformation from "../../../lib/model/GeneralPropertyInformation.js";
+import { dateUserView } from "../../../lib/helpers/date.js";
 
 const propertyMessagesRouter = express.Router();
 
@@ -53,6 +54,7 @@ propertyMessagesRouter.get("/:id", async(req, res) => {
         
         return res.render("user/property_messages", {
             messages,
+            dateUserView
         });
     } catch(err) {
         console.error(err);
