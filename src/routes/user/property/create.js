@@ -33,7 +33,6 @@ createPropertyRouter.get(`/create`, async (req, res) => {
     }
 });
 
-// FIX: This has no validation???
 createPropertyRouter.post(`/create`, validatePropertyData, async (req, res) => {
     // Insert on the database
     try {

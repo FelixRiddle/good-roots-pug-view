@@ -32,12 +32,13 @@ div(
     //- Edit property
     div(class="sm:w-1/4 md:w-2/6 lg:flex-1 flex flex-col gap-2 lg:flex-row")
         //- Set published
-        form(action="#") 
-            input(
-                type="submit"
-                class=`px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer w-full ${property.published ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`
-                value=`${property.published ? "Published" : "Not published"}`
-            )
+        input(
+            type="submit"
+            class=`propertyPublished px-2 py-2 md:py-1 text-ms leading-5 font-semibold rounded cursor-pointer w-full
+                ${property.published ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`
+            value=`${property.published ? "Published" : "Not published"}`
+            data-property-id=`${property.id}`
+        )
         
         //- Edit property
         a(

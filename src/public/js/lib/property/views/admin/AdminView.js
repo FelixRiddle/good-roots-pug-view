@@ -1,5 +1,31 @@
 import axios from "axios";
 
+// Create axios instance
+const instance = axios.create({
+    baseURL: `${window.origin}/user/property`,
+    timeout: 2000,
+    headers: {'Content-Type': 'application/json'}
+});
+
+/**
+ * Toggle published 
+ */
+async function togglePublished(event) {
+    const { propertyId } = event.target.dataset;
+    
+    const endpoint = `/publish_property/${propertyId}`;
+    console.log(`Endpoint: ${endpoint}`);
+    const response = await instance.post(endpoint)
+        .then((res) => {
+            return res.json();
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    
+    console.log(`Response: `, response);
+}
+
 /**
  * Admin view
  * 
@@ -10,13 +36,6 @@ export default class AdminView {
      * Constructor
      */
     constructor() {
-        // Create axios instance
-        const instance = axios.create({
-            baseURL: `${window.origin}/user/property`,
-            timeout: 2000,
-            headers: {'Content-Type': 'application/json'}
-        });
-        
         this.instance = instance;
     }
     
@@ -105,5 +124,10 @@ export default class AdminView {
                 this.updateProperty(property);
             }
         }
+        
+        const changeStateButtons = document.querySelectorAll(".propertyPublished");
+        changeStateButtons.forEach(button => {
+            button.addEventListener("click", togglePublished);
+        });
     }
 }

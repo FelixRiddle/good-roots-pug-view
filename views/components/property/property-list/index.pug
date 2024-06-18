@@ -15,7 +15,10 @@ div(class="bg-white shadow rounded-lg")
             a(href=`/user/property/admin?page=${currentPage - 1}`
             class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === 1 ? 'pointer-events-none bg-gray-200' : ''}`) Previous
             
-            a(href=`/user/property/admin?page=${currentPage + 1}` class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === pages ? 'pointer-events-none bg-gray-200' : ''}`) Next
+            a(
+                href=`/user/property/admin?page=${currentPage + 1}`
+                class=`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === pages ? 'pointer-events-none bg-gray-200' : ''}`
+            ) Next
         
         //- For larger screens
         div()

@@ -9,7 +9,10 @@ block content
         h2.text-center.text-6xl= page
         
         //- Create properties
-        a(href="/user/property/create" class="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white uppercase my-5 block w-full md:w-auto") Create new property
+        a(
+            href="/user/property/create"
+            class="rounded py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white uppercase my-5 block w-full md:w-auto"
+        ) Create new property
         
         if properties && properties.length
             include ../../components/property/property-list/index

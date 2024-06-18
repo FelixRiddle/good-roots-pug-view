@@ -6,11 +6,15 @@ import { relativePropertyFolder } from "../../../lib/user/userFolder/property/pr
 
 const publishPropertyRouter = express.Router();
 
+/**
+ * Toggle publish would be a better name
+ */
 publishPropertyRouter.post("/publish_property/:id", userFolderMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(`[POST] /user/property/publish_property/${id}`);
         
-        const Property = req.models.Property;
+        const { Property } = req.models;
         
         // Validate that the property exists
         const property = await Property.findByPk(id);
@@ -39,12 +43,8 @@ publishPropertyRouter.post("/publish_property/:id", userFolderMiddleware, async 
         }
         
         // Update property published value
-        const value = req.body.value;
-        if(value) {
-            property.published = 1;
-        } else {
-            property.published = 0;
-        }
+        property.published = !property.published;
+        await property.save();
         
         // Store
         await property.save();
@@ -53,6 +53,7 @@ publishPropertyRouter.post("/publish_property/:id", userFolderMiddleware, async 
         // For now it's not important to communicate when the property is already published
         // You can't redirect the user nice
         return res.send({
+            publishedStatus: property.published,
             messages: [{
                 message: "Property published.",
                 error: false,
