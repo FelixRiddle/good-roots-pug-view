@@ -45,7 +45,7 @@ getAllRouter.get("/get_all/:id", async (req, res) => {
                 message: "Unknown error",
                 error: true,
             }]
-        })
+        });
     }
 });
 
