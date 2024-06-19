@@ -17,7 +17,7 @@ getAllRouter.get("/get_all/:id", async (req, res) => {
         
         const property = await Property.findByPk(propertyId);
         if(!property.published) {
-            return res.send(400).send({
+            return res.status(400).send({
                 messages: [{
                     message: "Property is not public",
                     error: true,
@@ -39,7 +39,7 @@ getAllRouter.get("/get_all/:id", async (req, res) => {
         console.error(err);
         
         // Send nothing back
-        return res.send({
+        return res.status(500).send({
             images: [],
             messages: [{
                 message: "Unknown error",

@@ -32,10 +32,15 @@ viewRoute.get("/view/:id", async (req, res) => {
             }]
         });
         
+        const page404 = `${serverUrl()}/404`;
         // Check that the property exists
         if(!property) {
             console.log(`Property doesn't exists redirect to 404`);
-            const page404 = `${serverUrl()}/404`;
+            return res.redirect(page404);
+        }
+        
+        // If the property is not published redirect to 404
+        if(!property.published) {
             return res.redirect(page404);
         }
         
